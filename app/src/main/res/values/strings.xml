@@ -1,3 +1,11 @@
 <resources>
+    <string name="register_button_string">아직 회원이 아니신가요? <b>회원가입</b></string>
+    <string name="id_label_string">Email</string>
+    <string name="password_label_string">password</string>
+    <string name="login_button_string">Sign In</string>
+    <string name="find_password_button_string"><u>Forgot password?</u></string>
     <string name="app_name">application</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="reset_password_button_string">Reset Password</string>
 </resources>
