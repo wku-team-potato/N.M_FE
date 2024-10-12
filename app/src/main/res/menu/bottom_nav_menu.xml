@@ -1,31 +1,23 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
     <item
-        android:id="@+id/nav_home"
+        android:id="@+id/homeFragment"
         android:icon="@drawable/ic_home"
-        android:title="Home" />
+        android:title="홈" />
     <item
-        android:id="@+id/nav_home2"
+        android:id="@+id/historyFragment"
         android:icon="@drawable/ic_home"
-        android:title="Home" />
+        android:title="검색" />
     <item
-        android:id="@+id/nav_home3"
+        android:id="@+id/homeFragment2"
         android:icon="@drawable/ic_home"
-        android:title="Home" />
+        android:title="추가" />
     <item
-        android:id="@+id/nav_home4"
+        android:id="@+id/communityFragment"
         android:icon="@drawable/ic_home"
-        android:title="Home" />
+        android:title="알림" />
     <item
-        android:id="@+id/nav_home5"
+        android:id="@+id/settingFragment"
         android:icon="@drawable/ic_home"
-        android:title="Home" />
-<!--    <item-->
-<!--        android:id="@+id/nav_search"-->
-<!--        android:icon="@drawable/ic_search"-->
-<!--        android:title="Search" />-->
-<!--    <item-->
-<!--        android:id="@+id/nav_profile"-->
-<!--        android:icon="@drawable/ic_profile"-->
-<!--        android:title="Profile" />-->
+        android:title="프로필" />
 </menu>
