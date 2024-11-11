@@ -13,6 +13,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import com.example.application.R
 import com.example.application.RetrofitInstance
+import com.example.application.SessionManger
 import com.example.application.databinding.ActivitySignInBinding
 import com.example.application.ui.auth.functions.data.SignInResponse
 import com.example.application.ui.auth.functions.repository.SignInRepository
@@ -25,6 +26,8 @@ class SignInActivity : AppCompatActivity() {
 
     private lateinit var signInViewModel: SignInViewModel
 
+    private lateinit var sessionManger: SessionManger
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
@@ -34,6 +37,8 @@ class SignInActivity : AppCompatActivity() {
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
             insets
         }
+
+        sessionManger = SessionManger(this)
 
         binding.signUpButton.setOnClickListener {
             startActivity(Intent(this@SignInActivity, SignUpActivity::class.java))
@@ -75,18 +80,10 @@ class SignInActivity : AppCompatActivity() {
 
     private fun handleLoginSuccess(result: SignInResponse) {
         val csrfToken = result.csrfToken
-        saveSessionData(csrfToken)
+        sessionManger.saveCsrfToken(csrfToken)
 
         val intent = Intent(this@SignInActivity, MainActivity::class.java)
         startActivity(intent)
         finishAffinity()
-    }
-
-    private fun saveSessionData(csrfToken: String?) {
-        val sharedPreferences = getSharedPreferences("user_session", MODE_PRIVATE)
-        sharedPreferences.edit().apply {
-            putString("csrfToken", csrfToken)
-            apply()
-        }
     }
 }
