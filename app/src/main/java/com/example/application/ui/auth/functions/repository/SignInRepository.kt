@@ -5,6 +5,7 @@ import com.example.application.ui.auth.functions.data.SignInRequest
 import com.example.application.ui.auth.functions.data.SignInResponse
 import com.example.application.ui.auth.functions.service.SignInService
 
+
 class SignInRepository (private val signInService: SignInService) {
 
     suspend fun signInUser(username: String, password: String): SignInResponse? {
@@ -19,7 +20,17 @@ class SignInRepository (private val signInService: SignInService) {
                 ?.find { it.trim().startsWith("csrftoken=") }
                 ?.substringAfter("csrftoken=")
 
-            response.body()?.copy(csrfToken = csrfToken)
+            val sessionId = response.headers().values("Set-Cookie")
+                .find { it.startsWith("sessionid=") }
+                ?.split(";")
+                ?.firstOrNull { it.trim().startsWith("sessionid=") }
+                ?.substringAfter("sessionid=")
+
+            Log.d("csrf", "CSRF Token: $csrfToken")
+            Log.d("세션ID", "Session ID: $sessionId")
+
+            response.body()?.copy(csrfToken = csrfToken, sessionId = sessionId)
+
         } else {
             null
         }

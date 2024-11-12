@@ -6,4 +6,6 @@ object Config {
     // Auth
     const val SIGNIN_ENDPOINT = "auth/login/"
     const val SIGNUP_ENDPOINT = "auth/signup/"
+    const val PersonalInfo_ENDPOINT = "profile/heightweightrecord/list/"
+    const val PersonalInfoCreate_ENDPOINT = "profile/heightweight/update/"
 }

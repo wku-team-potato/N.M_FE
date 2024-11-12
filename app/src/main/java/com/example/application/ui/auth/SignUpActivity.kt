@@ -38,10 +38,19 @@ class SignUpActivity : AppCompatActivity() {
 
         binding.signUpButton.setOnClickListener{
             val username = binding.idEditText.text.toString()
-            val password = binding.password1EditText.text.toString()
+            val password1 = binding.password1EditText.text.toString()
+            val password2 = binding.password2EditText.text.toString()
             val nickname = binding.nameEditText.text.toString()
 
-            signUpViewModel.signUpUser(username, password, nickname)
+            if (password1 != password2){
+                Toast.makeText(this, "비밀번호가 일치하지 않습니다. 다시 입력해주세요.", Toast.LENGTH_SHORT).show()
+                return@setOnClickListener
+            }
+            if (username.isEmpty() || password1.isEmpty() || password2.isEmpty() || nickname.isEmpty()){
+                Toast.makeText(this, "모두 작성해주세요.", Toast.LENGTH_SHORT).show()
+                return@setOnClickListener
+            }
+            signUpViewModel.signUpUser(username, password1, nickname)
         }
 
         signUpViewModel.signUpResult.observe(this, Observer { result ->
@@ -49,36 +58,16 @@ class SignUpActivity : AppCompatActivity() {
                 startActivity(
                     Intent(
                         this@SignUpActivity,
-                        PersonalInformationActivity::class.java
+                        SignInActivity::class.java
                     ).apply {
                         addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP or Intent.FLAG_ACTIVITY_CLEAR_TOP)
                     })
-
-                finishAffinity()
+                finish()
             } else {
-                /***
-                 * 회원가입 실패 시 액션
-                 */
                 Toast.makeText(this, "회원가입 실패. 다시 시도해주세요.", Toast.LENGTH_SHORT).show()
             }
         })
 
-//        initUi()
-    }
 
-    private fun initUi() = with(binding) {
-        toolbar.setNavigationOnClickListener { finish() }
-
-        signUpButton.setOnClickListener {
-            startActivity(
-                Intent(
-                    this@SignUpActivity,
-                    PersonalInformationActivity::class.java
-                ).apply {
-                    addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP or Intent.FLAG_ACTIVITY_CLEAR_TOP)
-                })
-
-            finishAffinity()
-        }
     }
 }

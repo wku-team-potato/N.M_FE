@@ -42,6 +42,8 @@ android {
 dependencies {
     implementation(libs.androidx.navigation.fragment.ktx)
     implementation(libs.androidx.navigation.ui.ktx)
+    implementation(libs.androidx.core.ktx)
+    implementation(libs.androidx.core.ktx)
     coreLibraryDesugaring("com.android.tools:desugar_jdk_libs:2.0.3")
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.appcompat)

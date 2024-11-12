@@ -2,7 +2,6 @@ package com.example.application.ui.main
 
 import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.coordinatorlayout.widget.CoordinatorLayout
@@ -16,7 +15,7 @@ import androidx.lifecycle.Lifecycle
 import androidx.viewpager2.adapter.FragmentStateAdapter
 import androidx.viewpager2.widget.ViewPager2
 import com.example.application.R
-import com.example.application.SessionManger
+import com.example.application.SessionManager
 import com.example.application.databinding.ActivityMainBinding
 import com.example.application.ui.main.pages.HealthFragment
 import com.example.application.ui.main.pages.LeaderboardFragment
@@ -27,7 +26,7 @@ import com.example.application.ui.meals.FoodSearchActivity
 class MainActivity : AppCompatActivity() {
     private val binding by lazy { ActivityMainBinding.inflate(layoutInflater) }
 
-    private lateinit var sessionManager: SessionManger
+//    private lateinit var sessionManager: SessionManager
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -39,7 +38,7 @@ class MainActivity : AppCompatActivity() {
             insets
         }
 
-        sessionManager = SessionManger(this)
+//        sessionManager = SessionManager(this)
 //        Log.d("csrfToken", sessionManager.getCsrfToken().toString())
 
         ViewCompat.setOnApplyWindowInsetsListener(binding.viewPager) { v, insets ->
