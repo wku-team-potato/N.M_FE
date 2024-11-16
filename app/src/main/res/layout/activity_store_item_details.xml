@@ -78,9 +78,11 @@
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
-        <View
-            android:layout_width="0dp"
+        <TextView
+            android:id="@+id/description_text_view"
+            android:layout_width="match_parent"
             android:layout_height="0dp"
+            android:text="상세 설명"
             android:layout_weight="1" />
 
         <com.google.android.material.button.MaterialButton

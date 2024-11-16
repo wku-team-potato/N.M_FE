@@ -2,21 +2,39 @@ package com.example.application.ui.main.pages
 
 import android.content.Intent
 import android.os.Bundle
-import android.os.Parcel
-import android.os.Parcelable
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.recyclerview.widget.RecyclerView
+import android.widget.TextView
+import androidx.activity.result.contract.ActivityResultContracts
+import androidx.appcompat.app.AppCompatActivity
+import androidx.lifecycle.ViewModelProvider
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.application.R
+import com.example.application.RetrofitInstance
 import com.example.application.databinding.FragmentStoreBinding
-import com.example.application.databinding.ItemStoreBinding
+import com.example.application.ui.store.functions.repository.StoreRepository
+import com.example.application.ui.store.functions.viewmodel.StoreViewModel
+import com.example.application.ui.store.functions.viewmodel.StoreViewModelFactory
 import com.example.application.ui.store.StoreItemDetailsActivity
+import com.example.application.ui.store.StoreAdapter
+import com.example.application.ui.store.functions.repository.ProfilePointRepository
 
 class StoreFragment : BaseFragment() {
     private var _binding: FragmentStoreBinding? = null
-    private val binding
-        get() = _binding!!
+    private val binding get() = _binding!!
+
+    private lateinit var storeViewModel: StoreViewModel
+    private lateinit var storeAdapter: StoreAdapter
+
+    // 상세 페이지에서 결과를 반환
+    private val detailsLauncher =
+        registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
+            if (result.resultCode == AppCompatActivity.RESULT_OK) {
+                storeViewModel.loadPoints() // 포인트 새로고침
+            }
+        }
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -32,12 +50,6 @@ class StoreFragment : BaseFragment() {
         super.onDestroyView()
     }
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-
-        initUi()
-    }
-
     private fun initUi() = with(binding) {
         toolbar.setOnMenuItemClickListener {
             if (it.itemId == R.id.action_my) {
@@ -46,85 +58,54 @@ class StoreFragment : BaseFragment() {
 
             return@setOnMenuItemClickListener true
         }
+    }
 
-        recyclerView.adapter = StoreItemAdapter().apply {
-            onItemClickListener = {
-                startActivity(
-                    Intent(
-                        requireContext(),
-                        StoreItemDetailsActivity::class.java
-                    ).apply {
-                        addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP or Intent.FLAG_ACTIVITY_CLEAR_TOP)
-                        putExtra("data", it)
-                    })
-            }
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
+        initUi()
+        initViewModel()
+        setupRecyclerView()
+        observeViewModel()
+        storeViewModel.loadItems()
+        storeViewModel.loadPoints()
+    }
+
+    private fun initViewModel() {
+        val storeRepository = StoreRepository(RetrofitInstance.storeService)
+        val profilePointRepository = ProfilePointRepository(RetrofitInstance.profilePointService)
+        val factory = StoreViewModelFactory(storeRepository, profilePointRepository)
+        storeViewModel = ViewModelProvider(this, factory).get(StoreViewModel::class.java)
+    }
+
+    // UI 업데이트
+    private fun observeViewModel() {
+        // 아이템 목록
+        storeViewModel.items.observe(viewLifecycleOwner) { items ->
+            Log.d("StoreFragment", "Loaded items: ${items.size}")
+            storeAdapter.updateItems(items)
+        }
+
+        // 포인트
+        storeViewModel.points.observe(viewLifecycleOwner) { points ->
+            Log.d("StoreFragment", "Loaded points: $points")
+            binding.myPointContainer.findViewById<TextView>(R.id.point_text_view).text = "${points} p"
         }
     }
 
-    private class StoreItemAdapter : RecyclerView.Adapter<StoreItemAdapter.StoreItemViewHolder>() {
-        var onItemClickListener: ((StoreItemModel) -> Unit)? = null
+    // RecyclerView 초기화
+    private fun setupRecyclerView() {
+        // Adapter 생성
+        storeAdapter = StoreAdapter { item ->
 
-        private val items = listOf(
-            StoreItemModel(R.drawable.img_vita_500, "비타민", 12880),
-            StoreItemModel(R.drawable.img_vita_1000, "대박 진짜 비타민", 12880),
-        )
-
-        override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): StoreItemViewHolder {
-            val inflater = LayoutInflater.from(parent.context)
-            val binding = ItemStoreBinding.inflate(inflater, parent, false)
-            return StoreItemViewHolder(binding)
+            // 상세페이지 시작
+            val intent = Intent(requireContext(), StoreItemDetailsActivity::class.java)
+            intent.putExtra("data", item)
+            detailsLauncher.launch(intent)
         }
-
-        override fun getItemCount() = items.size
-
-        override fun onBindViewHolder(holder: StoreItemViewHolder, position: Int) {
-            val item = items[position]
-
-            with(holder.binding) {
-                root.setOnClickListener {
-                    onItemClickListener?.invoke(item)
-                }
-
-                imageView.setImageResource(item.image)
-                nameTextView.text = item.name
-                pointTextView.text = "+ %dp".format(item.point)
-            }
-        }
-
-        class StoreItemViewHolder(val binding: ItemStoreBinding) :
-            RecyclerView.ViewHolder(binding.root)
+        binding.recyclerView.layoutManager = LinearLayoutManager(requireContext())
+        binding.recyclerView.adapter = storeAdapter
     }
 
-    data class StoreItemModel(
-        val image: Int,
-        val name: String,
-        val point: Int,
-    ) : Parcelable {
-        constructor(parcel: Parcel) : this(
-            parcel.readInt(),
-            parcel.readString()!!,
-            parcel.readInt()
-        ) {
-        }
 
-        override fun writeToParcel(parcel: Parcel, flags: Int) {
-            parcel.writeInt(image)
-            parcel.writeString(name)
-            parcel.writeInt(point)
-        }
-
-        override fun describeContents(): Int {
-            return 0
-        }
-
-        companion object CREATOR : Parcelable.Creator<StoreItemModel> {
-            override fun createFromParcel(parcel: Parcel): StoreItemModel {
-                return StoreItemModel(parcel)
-            }
-
-            override fun newArray(size: Int): Array<StoreItemModel?> {
-                return arrayOfNulls(size)
-            }
-        }
-    }
 }

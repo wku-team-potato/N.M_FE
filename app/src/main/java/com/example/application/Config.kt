@@ -8,4 +8,7 @@ object Config {
     const val SIGNUP_ENDPOINT = "auth/signup/"
     const val PersonalInfo_ENDPOINT = "profile/heightweightrecord/list/"
     const val PersonalInfoCreate_ENDPOINT = "profile/heightweight/update/"
+    const val Store_ENDPOINT = "store/items/list/"
+    const val Point_ENDPOINT = "profile/totalpoints/retrieve/"
+    const val PointBuy_ENDPOINT = "store/items/{id}/buy/"
 }

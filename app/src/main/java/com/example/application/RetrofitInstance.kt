@@ -4,6 +4,8 @@ import com.example.application.ui.auth.functions.service.FirstPersonalInfoServic
 import com.example.application.ui.auth.functions.service.PersonalInfoService
 import com.example.application.ui.auth.functions.service.SignInService
 import com.example.application.ui.auth.functions.service.SignUpService
+import com.example.application.ui.store.functions.service.ProfilePointService
+import com.example.application.ui.store.functions.service.StoreService
 import okhttp3.OkHttpClient
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
@@ -37,5 +39,13 @@ object RetrofitInstance {
 
     val personalInfoService : PersonalInfoService by lazy{
         retrofit.create(PersonalInfoService::class.java)
+    }
+
+    val storeService : StoreService by lazy{
+        retrofit.create(StoreService::class.java)
+    }
+
+    val profilePointService : ProfilePointService by lazy{
+        retrofit.create(ProfilePointService::class.java)
     }
 }
