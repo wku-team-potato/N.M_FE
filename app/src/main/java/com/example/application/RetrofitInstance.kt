@@ -4,6 +4,7 @@ import com.example.application.ui.auth.functions.service.FirstPersonalInfoServic
 import com.example.application.ui.auth.functions.service.PersonalInfoService
 import com.example.application.ui.auth.functions.service.SignInService
 import com.example.application.ui.auth.functions.service.SignUpService
+import com.example.application.ui.profile.function.service.ProfileService
 import com.example.application.ui.store.functions.service.ProfilePointService
 import com.example.application.ui.store.functions.service.StoreService
 import okhttp3.OkHttpClient
@@ -48,4 +49,9 @@ object RetrofitInstance {
     val profilePointService : ProfilePointService by lazy{
         retrofit.create(ProfilePointService::class.java)
     }
+
+    val profileService : ProfileService by lazy{
+        retrofit.create(ProfileService::class.java)
+    }
+
 }
