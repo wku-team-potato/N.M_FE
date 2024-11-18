@@ -12,4 +12,5 @@ object Config {
     const val PointBuy_ENDPOINT = "store/items/{id}/buy/"
     const val Profile_ENDPOINT = "profile/heightweightrecord/list/"
     const val ProfileUpdate_ENDPOINT = "profile/usernameheightweight/update/"
+    const val REWARD_ENDPOINT = "point/transaction/"
 }

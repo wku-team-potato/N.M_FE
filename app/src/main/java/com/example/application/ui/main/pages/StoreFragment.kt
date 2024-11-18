@@ -50,6 +50,12 @@ class StoreFragment : BaseFragment() {
         super.onDestroyView()
     }
 
+    // 프래그먼트 복귀 시 포인트 다시 조회
+    override fun onResume() {
+        super.onResume()
+        storeViewModel.loadPoints()
+    }
+
     private fun initUi() = with(binding) {
         toolbar.setOnMenuItemClickListener {
             if (it.itemId == R.id.action_my) {

@@ -29,18 +29,18 @@ open class BaseFragment : Fragment() {
             editButton.setOnClickListener {
                 editButton.isVisible = false
                 doneButton.isVisible = true
-                idEditText.isEnabled = true
+                nicknameEditText.isEnabled = true
                 heightEditText.isEnabled = true
                 weightEditText.isEnabled = true
             }
 
             doneButton.setOnClickListener {
-                idEditText.isEnabled = false
+                nicknameEditText.isEnabled = false
                 heightEditText.isEnabled = false
                 weightEditText.isEnabled = false
 
                 val updatedProfile = ProfileResponse(
-                    user_id = idEditText.text.toString(),
+                    username = nicknameEditText.text.toString(),
                     height = heightEditText.text.toString().toFloat(),
                     weight = weightEditText.text.toString().toFloat()
                 )
@@ -68,9 +68,12 @@ open class BaseFragment : Fragment() {
 
         profileViewModel.latestRecord.observe(viewLifecycleOwner) { record ->
             record?.let {
-                binding.idEditText.setText(it.user_id)
-                binding.heightEditText.setText("${it.height}")
-                binding.weightEditText.setText("${it.weight}")
+                binding.nicknameEditText.setText(it.username)
+                val formattedHeight = if (it.height % 1f == 0f) it.height.toInt().toString() else it.height.toString()
+                val formattedWeight = if (it.weight % 1f == 0f) it.weight.toInt().toString() else it.weight.toString()
+
+                binding.heightEditText.setText(formattedHeight)
+                binding.weightEditText.setText(formattedWeight)
             }
         }
 

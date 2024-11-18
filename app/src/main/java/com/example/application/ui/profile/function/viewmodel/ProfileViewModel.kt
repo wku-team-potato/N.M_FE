@@ -38,7 +38,7 @@ class ProfileViewModel(private val repository: ProfileRepository) : ViewModel() 
         viewModelScope.launch {
             try {
                 val result = repository.updateProfileInfo(updatedData)
-                _updateResult.value = result != null // If successful, return true
+                _updateResult.value = result != null
             } catch (e: Exception) {
                 _updateResult.value = false
             }

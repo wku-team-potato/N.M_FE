@@ -49,7 +49,7 @@
             app:hintEnabled="false">
 
             <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/id_edit_text"
+                android:id="@+id/nickname_edit_text"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="닉네임"
@@ -78,7 +78,7 @@
                 android:layout_height="wrap_content"
                 android:hint="키"
                 android:imeOptions="actionNext"
-                android:inputType="number"
+                android:inputType="numberDecimal"
                 android:singleLine="true" />
 
         </com.google.android.material.textfield.TextInputLayout>
@@ -103,7 +103,7 @@
                 android:layout_height="wrap_content"
                 android:hint="체중"
                 android:imeOptions="actionDone"
-                android:inputType="number"
+                android:inputType="numberDecimal"
                 android:singleLine="true" />
 
         </com.google.android.material.textfield.TextInputLayout>

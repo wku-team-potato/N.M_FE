@@ -1,19 +1,23 @@
 package com.example.application.ui.reward
 
 import android.os.Bundle
-import android.view.LayoutInflater
-import android.view.ViewGroup
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
-import androidx.recyclerview.widget.RecyclerView
+import androidx.lifecycle.ViewModelProvider
 import com.example.application.R
+import com.example.application.RetrofitInstance
 import com.example.application.databinding.ActivityRewardBinding
-import com.example.application.databinding.ItemRewardBinding
+import com.example.application.ui.reward.function.repository.RewardRepository
+import com.example.application.ui.reward.function.viewmodel.RewardViewModel
+import com.example.application.ui.reward.function.viewmodel.RewardViewModelFactory
+import com.example.application.ui.store.functions.repository.ProfilePointRepository
 
 class RewardActivity : AppCompatActivity() {
     private val binding by lazy { ActivityRewardBinding.inflate(layoutInflater) }
+    private lateinit var rewardViewModel: RewardViewModel
+    private val rewardAdapter = RewardAdapter()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -24,47 +28,35 @@ class RewardActivity : AppCompatActivity() {
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
             insets
         }
-
+        initViewModel()
         initUi()
+        observeViewModel()
     }
 
     private fun initUi() = with(binding) {
         toolbar.setNavigationOnClickListener { finish() }
-        recyclerView.adapter = RewardAdapter()
+        recyclerView.adapter = rewardAdapter
     }
 
-    private class RewardAdapter : RecyclerView.Adapter<RewardAdapter.RewardItemViewHolder>() {
-        private val items = listOf(
-            RewardModel("출석체크", 300, "24일차 출석 완료"),
-            RewardModel("출석체크", 300, "23일차 출석 완료"),
-            RewardModel("출석체크", 300, "22일차 출석 완료"),
-        )
+    private fun initViewModel() {
+        val profilePointRepository = ProfilePointRepository(RetrofitInstance.profilePointService)
+        val rewardRepository = RewardRepository(RetrofitInstance.rewardService)
+        val factory = RewardViewModelFactory(profilePointRepository, rewardRepository)
+        rewardViewModel = ViewModelProvider(this, factory).get(RewardViewModel::class.java)
 
-        override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RewardItemViewHolder {
-            val inflater = LayoutInflater.from(parent.context)
-            val binding = ItemRewardBinding.inflate(inflater, parent, false)
-            return RewardItemViewHolder(binding)
-        }
-
-        override fun getItemCount() = items.size
-
-        override fun onBindViewHolder(holder: RewardItemViewHolder, position: Int) {
-            val item = items[position]
-
-            with(holder.binding) {
-                typeTextView.text = item.type
-                pointTextView.text = "+ %dp".format(item.point)
-                descriptionTextView.text = item.description
-            }
-        }
-
-        class RewardItemViewHolder(val binding: ItemRewardBinding) :
-            RecyclerView.ViewHolder(binding.root)
+        rewardViewModel.loadTotalPoints() // 포인트 조회
+        rewardViewModel.loadRewardRecords() // 리워드 기록 조회
     }
 
-    private data class RewardModel(
-        val type: String,
-        val point: Int,
-        val description: String,
-    )
+    private fun observeViewModel() = with(binding) {
+        // 포인트 반영
+        rewardViewModel.totalPoints.observe(this@RewardActivity) { points ->
+            activityPointTextView.text = "$points p"
+        }
+
+        // 리워드 기록 반영
+        rewardViewModel.rewardRecords.observe(this@RewardActivity) { records ->
+            rewardAdapter.updateItems(records)
+        }
+    }
 }

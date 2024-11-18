@@ -5,6 +5,7 @@ import com.example.application.ui.auth.functions.service.PersonalInfoService
 import com.example.application.ui.auth.functions.service.SignInService
 import com.example.application.ui.auth.functions.service.SignUpService
 import com.example.application.ui.profile.function.service.ProfileService
+import com.example.application.ui.reward.function.service.RewardService
 import com.example.application.ui.store.functions.service.ProfilePointService
 import com.example.application.ui.store.functions.service.StoreService
 import okhttp3.OkHttpClient
@@ -54,4 +55,7 @@ object RetrofitInstance {
         retrofit.create(ProfileService::class.java)
     }
 
+    val rewardService : RewardService by lazy{
+        retrofit.create(RewardService::class.java)
+    }
 }
