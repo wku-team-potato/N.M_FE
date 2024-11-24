@@ -48,6 +48,7 @@
                         android:layout_height="wrap_content">
 
                         <TextView
+                            android:id = "@+id/myName"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="기린친구사자"
@@ -82,6 +83,7 @@
                                 android:textAppearance="?attr/textAppearanceBodyMedium" />
 
                             <TextView
+                                android:id="@+id/myRankingGoals"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:gravity="center"
@@ -104,6 +106,7 @@
                                 android:textAppearance="?attr/textAppearanceBodyMedium" />
 
                             <TextView
+                                android:id="@+id/myRankingAttend"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:gravity="center"
@@ -122,12 +125,17 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="16dp">
-
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="vertical"
                     android:padding="16dp">
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="연속 출석 순위"
+                        android:textAlignment="center"/>
 
                     <LinearLayout
                         android:layout_width="match_parent"
@@ -141,6 +149,7 @@
                             android:orientation="vertical">
 
                             <TextView
+                                android:id="@+id/attendFirstRank"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:gravity="center"
@@ -148,6 +157,7 @@
                                 android:textAppearance="?attr/textAppearanceBodyMedium" />
 
                             <TextView
+                                android:id="@+id/attendFirstName"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:gravity="center"
@@ -155,6 +165,7 @@
                                 android:textAppearance="?attr/textAppearanceBodyMedium" />
 
                             <TextView
+                                android:id="@+id/attendFirstData"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:gravity="center"
@@ -170,6 +181,7 @@
                             android:orientation="vertical">
 
                             <TextView
+                                android:id="@+id/attendSecondRank"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:gravity="center"
@@ -177,6 +189,7 @@
                                 android:textAppearance="?attr/textAppearanceBodyMedium" />
 
                             <TextView
+                                android:id="@+id/attendSecondName"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:gravity="center"
@@ -184,6 +197,7 @@
                                 android:textAppearance="?attr/textAppearanceBodyMedium" />
 
                             <TextView
+                                android:id="@+id/attendSecondData"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:gravity="center"
@@ -199,6 +213,7 @@
                             android:orientation="vertical">
 
                             <TextView
+                                android:id="@+id/attendThirdRank"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:gravity="center"
@@ -206,6 +221,7 @@
                                 android:textAppearance="?attr/textAppearanceBodyMedium" />
 
                             <TextView
+                                android:id="@+id/attendThirdName"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:gravity="center"
@@ -213,6 +229,7 @@
                                 android:textAppearance="?attr/textAppearanceBodyMedium" />
 
                             <TextView
+                                android:id="@+id/attendThirdData"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:gravity="center"
@@ -238,6 +255,12 @@
                     android:orientation="vertical"
                     android:padding="16dp">
 
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="연속 목표 달성 순위"
+                        android:textAlignment="center"/>
+
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
@@ -250,6 +273,7 @@
                             android:orientation="vertical">
 
                             <TextView
+                                android:id="@+id/goalFirstRank"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:gravity="center"
@@ -257,6 +281,7 @@
                                 android:textAppearance="?attr/textAppearanceBodyMedium" />
 
                             <TextView
+                                android:id="@+id/goalFirstName"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:gravity="center"
@@ -264,6 +289,7 @@
                                 android:textAppearance="?attr/textAppearanceBodyMedium" />
 
                             <TextView
+                                android:id="@+id/goalFirstData"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:gravity="center"
@@ -279,6 +305,7 @@
                             android:orientation="vertical">
 
                             <TextView
+                                android:id="@+id/goalSecondRank"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:gravity="center"
@@ -286,6 +313,7 @@
                                 android:textAppearance="?attr/textAppearanceBodyMedium" />
 
                             <TextView
+                                android:id="@+id/goalSecondName"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:gravity="center"
@@ -293,6 +321,7 @@
                                 android:textAppearance="?attr/textAppearanceBodyMedium" />
 
                             <TextView
+                                android:id="@+id/goalSecondData"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:gravity="center"
@@ -308,6 +337,7 @@
                             android:orientation="vertical">
 
                             <TextView
+                                android:id="@+id/goalThirdRank"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:gravity="center"
@@ -315,6 +345,7 @@
                                 android:textAppearance="?attr/textAppearanceBodyMedium" />
 
                             <TextView
+                                android:id="@+id/goalThirdName"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:gravity="center"
@@ -322,6 +353,7 @@
                                 android:textAppearance="?attr/textAppearanceBodyMedium" />
 
                             <TextView
+                                android:id="@+id/goalThirdData"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:gravity="center"

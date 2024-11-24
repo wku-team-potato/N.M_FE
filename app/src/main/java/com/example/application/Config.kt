@@ -13,4 +13,6 @@ object Config {
     const val Profile_ENDPOINT = "profile/heightweightrecord/list/"
     const val ProfileUpdate_ENDPOINT = "profile/usernameheightweight/update/"
     const val REWARD_ENDPOINT = "point/transaction/"
+    const val MyLeaderBoard_ENDPOINT = "profile/rankings/my/"
+    const val TopLeaderBoard_ENDPOINT = "profile/rankings/top3/"
 }
