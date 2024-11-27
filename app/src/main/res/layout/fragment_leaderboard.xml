@@ -10,15 +10,27 @@
     <com.google.android.material.appbar.AppBarLayout
         style="@style/Widget.MaterialComponents.AppBarLayout.Primary"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:fitsSystemWindows="true">
 
         <com.google.android.material.appbar.MaterialToolbar
             android:id="@+id/toolbar"
             style="@style/Widget.MaterialComponents.Toolbar.Primary"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:logo="@drawable/ic_logo_24"
-            app:menu="@menu/menu_main" />
+            app:logo="@drawable/ic_logo_24">
+
+            <ImageView
+                android:id="@+id/my_page_button"
+                android:layout_width="56dp"
+                android:layout_height="56dp"
+                android:layout_gravity="right"
+                android:background="?attr/selectableItemBackgroundBorderless"
+                android:padding="13dp"
+                android:src="@drawable/ic_user_512"
+                app:tint="?attr/colorOnPrimary" />
+
+        </com.google.android.material.appbar.MaterialToolbar>
 
     </com.google.android.material.appbar.AppBarLayout>
 
@@ -30,29 +42,40 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:clipToPadding="false"
             android:orientation="vertical"
-            android:padding="16dp">
+            android:paddingVertical="16dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="16dp"
+                android:text="리더보드"
+                android:textAppearance="?attr/textAppearanceHeadlineMedium"
+                android:textStyle="bold" />
 
             <com.google.android.material.card.MaterialCardView
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="16dp"
+                android:layout_marginTop="16dp">
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="vertical"
-                    android:padding="16dp">
+                    android:paddingHorizontal="16dp"
+                    android:paddingVertical="24dp">
 
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content">
 
                         <TextView
-                            android:id = "@+id/myName"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="기린친구사자"
-                            android:textAppearance="?attr/textAppearanceBodyMedium"
+                            android:textAppearance="?attr/textAppearanceTitleLarge"
                             android:textColor="?attr/colorPrimary" />
 
                         <TextView
@@ -60,19 +83,19 @@
                             android:layout_height="wrap_content"
                             android:layout_marginLeft="8dp"
                             android:text="님"
-                            android:textAppearance="?attr/textAppearanceBodyMedium" />
+                            android:textAppearance="?attr/textAppearanceBodyLarge" />
 
                     </LinearLayout>
 
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="8dp">
+                        android:layout_marginTop="24dp"
+                        android:orientation="vertical">
 
                         <LinearLayout
-                            android:layout_width="0dp"
+                            android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:layout_weight="1"
                             android:orientation="vertical">
 
                             <TextView
@@ -80,22 +103,21 @@
                                 android:layout_height="wrap_content"
                                 android:gravity="center"
                                 android:text="목표 달성 랭킹"
-                                android:textAppearance="?attr/textAppearanceBodyMedium" />
+                                android:textAppearance="?attr/textAppearanceBodyLarge" />
 
                             <TextView
-                                android:id="@+id/myRankingGoals"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:gravity="center"
                                 android:text="34위"
-                                android:textAppearance="?attr/textAppearanceBodyMedium" />
+                                android:textAppearance="?attr/textAppearanceTitleLarge" />
 
                         </LinearLayout>
 
                         <LinearLayout
-                            android:layout_width="0dp"
+                            android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:layout_weight="1"
+                            android:layout_marginTop="24dp"
                             android:orientation="vertical">
 
                             <TextView
@@ -103,15 +125,14 @@
                                 android:layout_height="wrap_content"
                                 android:gravity="center"
                                 android:text="출석 랭킹"
-                                android:textAppearance="?attr/textAppearanceBodyMedium" />
+                                android:textAppearance="?attr/textAppearanceBodyLarge" />
 
                             <TextView
-                                android:id="@+id/myRankingAttend"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:gravity="center"
                                 android:text="44위"
-                                android:textAppearance="?attr/textAppearanceBodyMedium" />
+                                android:textAppearance="?attr/textAppearanceTitleLarge" />
 
                         </LinearLayout>
 
@@ -121,21 +142,21 @@
 
             </com.google.android.material.card.MaterialCardView>
 
+            <com.google.android.material.divider.MaterialDivider
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_marginVertical="16dp" />
+
             <com.google.android.material.card.MaterialCardView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="16dp">
+                android:layout_marginHorizontal="16dp">
+
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="vertical"
                     android:padding="16dp">
-
-                    <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:text="연속 출석 순위"
-                        android:textAlignment="center"/>
 
                     <LinearLayout
                         android:layout_width="match_parent"
@@ -146,18 +167,25 @@
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
+                            android:gravity="center_horizontal"
                             android:orientation="vertical">
 
+                            <ImageView
+                                android:layout_width="56dp"
+                                android:layout_height="56dp"
+                                android:layout_marginBottom="8dp"
+                                android:adjustViewBounds="true"
+                                android:src="@drawable/ic_silver_512" />
+
                             <TextView
-                                android:id="@+id/attendFirstRank"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:gravity="center"
-                                android:text="1위"
-                                android:textAppearance="?attr/textAppearanceBodyMedium" />
+                                android:text="2위"
+                                android:textAppearance="?attr/textAppearanceBodyMedium"
+                                android:textStyle="bold" />
 
                             <TextView
-                                android:id="@+id/attendFirstName"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:gravity="center"
@@ -165,7 +193,6 @@
                                 android:textAppearance="?attr/textAppearanceBodyMedium" />
 
                             <TextView
-                                android:id="@+id/attendFirstData"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:gravity="center"
@@ -178,18 +205,25 @@
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
+                            android:gravity="center_horizontal"
                             android:orientation="vertical">
 
+                            <ImageView
+                                android:layout_width="56dp"
+                                android:layout_height="56dp"
+                                android:layout_marginBottom="8dp"
+                                android:adjustViewBounds="true"
+                                android:src="@drawable/ic_gold_512" />
+
                             <TextView
-                                android:id="@+id/attendSecondRank"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:gravity="center"
-                                android:text="2위"
-                                android:textAppearance="?attr/textAppearanceBodyMedium" />
+                                android:text="1위"
+                                android:textAppearance="?attr/textAppearanceBodyMedium"
+                                android:textStyle="bold" />
 
                             <TextView
-                                android:id="@+id/attendSecondName"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:gravity="center"
@@ -197,7 +231,6 @@
                                 android:textAppearance="?attr/textAppearanceBodyMedium" />
 
                             <TextView
-                                android:id="@+id/attendSecondData"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:gravity="center"
@@ -210,18 +243,25 @@
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
+                            android:gravity="center_horizontal"
                             android:orientation="vertical">
 
+                            <ImageView
+                                android:layout_width="56dp"
+                                android:layout_height="56dp"
+                                android:layout_marginBottom="8dp"
+                                android:adjustViewBounds="true"
+                                android:src="@drawable/ic_bronze_512" />
+
                             <TextView
-                                android:id="@+id/attendThirdRank"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:gravity="center"
                                 android:text="3위"
-                                android:textAppearance="?attr/textAppearanceBodyMedium" />
+                                android:textAppearance="?attr/textAppearanceBodyMedium"
+                                android:textStyle="bold" />
 
                             <TextView
-                                android:id="@+id/attendThirdName"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:gravity="center"
@@ -229,7 +269,6 @@
                                 android:textAppearance="?attr/textAppearanceBodyMedium" />
 
                             <TextView
-                                android:id="@+id/attendThirdData"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:gravity="center"
@@ -247,6 +286,7 @@
             <com.google.android.material.card.MaterialCardView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginHorizontal="16dp"
                 android:layout_marginTop="16dp">
 
                 <LinearLayout
@@ -254,12 +294,6 @@
                     android:layout_height="wrap_content"
                     android:orientation="vertical"
                     android:padding="16dp">
-
-                    <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:text="연속 목표 달성 순위"
-                        android:textAlignment="center"/>
 
                     <LinearLayout
                         android:layout_width="match_parent"
@@ -270,18 +304,25 @@
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
+                            android:gravity="center_horizontal"
                             android:orientation="vertical">
 
+                            <ImageView
+                                android:layout_width="56dp"
+                                android:layout_height="56dp"
+                                android:layout_marginBottom="8dp"
+                                android:adjustViewBounds="true"
+                                android:src="@drawable/ic_silver_512" />
+
                             <TextView
-                                android:id="@+id/goalFirstRank"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:gravity="center"
-                                android:text="1위"
-                                android:textAppearance="?attr/textAppearanceBodyMedium" />
+                                android:text="2위"
+                                android:textAppearance="?attr/textAppearanceBodyMedium"
+                                android:textStyle="bold" />
 
                             <TextView
-                                android:id="@+id/goalFirstName"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:gravity="center"
@@ -289,7 +330,6 @@
                                 android:textAppearance="?attr/textAppearanceBodyMedium" />
 
                             <TextView
-                                android:id="@+id/goalFirstData"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:gravity="center"
@@ -302,18 +342,25 @@
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
+                            android:gravity="center_horizontal"
                             android:orientation="vertical">
 
+                            <ImageView
+                                android:layout_width="56dp"
+                                android:layout_height="56dp"
+                                android:layout_marginBottom="8dp"
+                                android:adjustViewBounds="true"
+                                android:src="@drawable/ic_gold_512" />
+
                             <TextView
-                                android:id="@+id/goalSecondRank"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:gravity="center"
-                                android:text="2위"
-                                android:textAppearance="?attr/textAppearanceBodyMedium" />
+                                android:text="1위"
+                                android:textAppearance="?attr/textAppearanceBodyMedium"
+                                android:textStyle="bold" />
 
                             <TextView
-                                android:id="@+id/goalSecondName"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:gravity="center"
@@ -321,7 +368,6 @@
                                 android:textAppearance="?attr/textAppearanceBodyMedium" />
 
                             <TextView
-                                android:id="@+id/goalSecondData"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:gravity="center"
@@ -334,18 +380,25 @@
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
+                            android:gravity="center_horizontal"
                             android:orientation="vertical">
 
+                            <ImageView
+                                android:layout_width="56dp"
+                                android:layout_height="56dp"
+                                android:layout_marginBottom="8dp"
+                                android:adjustViewBounds="true"
+                                android:src="@drawable/ic_bronze_512" />
+
                             <TextView
-                                android:id="@+id/goalThirdRank"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:gravity="center"
                                 android:text="3위"
-                                android:textAppearance="?attr/textAppearanceBodyMedium" />
+                                android:textAppearance="?attr/textAppearanceBodyMedium"
+                                android:textStyle="bold" />
 
                             <TextView
-                                android:id="@+id/goalThirdName"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:gravity="center"
@@ -353,7 +406,6 @@
                                 android:textAppearance="?attr/textAppearanceBodyMedium" />
 
                             <TextView
-                                android:id="@+id/goalThirdData"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:gravity="center"

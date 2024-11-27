@@ -3,13 +3,13 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
     <item
         android:id="@+id/action_health"
-        android:icon="@drawable/ic_heart_24"
+        android:icon="@drawable/ic_health_24"
         android:title="건강"
         app:showAsAction="always" />
 
     <item
         android:id="@+id/action_leaderboard"
-        android:icon="@drawable/ic_rank_24"
+        android:icon="@drawable/ic_leaderboard_24"
         android:title="리더보드"
         app:showAsAction="always" />
 
@@ -19,7 +19,7 @@
 
     <item
         android:id="@+id/action_reward"
-        android:icon="@drawable/ic_gift_24"
+        android:icon="@drawable/ic_reward_24"
         android:title="리워드"
         app:showAsAction="always" />
 
