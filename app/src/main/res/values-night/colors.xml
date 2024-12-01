@@ -140,4 +140,9 @@
     <color name="md_theme_surfaceContainer_highContrast">#1E2021</color>
     <color name="md_theme_surfaceContainerHigh_highContrast">#292A2B</color>
     <color name="md_theme_surfaceContainerHighest_highContrast">#333536</color>
+
+    <color name="health_cabo">#795548</color>
+    <color name="health_protein">#F44336</color>
+    <color name="health_fat">#4CAF50</color>
+    <color name="health_cal">#2196F3</color>
 </resources>

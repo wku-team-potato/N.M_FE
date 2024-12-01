@@ -140,4 +140,16 @@
     <color name="md_theme_surfaceContainer_highContrast">#EEEDEF</color>
     <color name="md_theme_surfaceContainerHigh_highContrast">#E8E8E9</color>
     <color name="md_theme_surfaceContainerHighest_highContrast">#E3E2E4</color>
+
+    <color name="health_cabo">#795548</color>
+    <color name="health_protein">#F44336</color>
+    <color name="health_fat">#4CAF50</color>
+    <color name="health_cal">#2196F3</color>
+    <color name="health_gray">#9E9E9E</color>
+
+    <!-- Custom colors -->
+    <color name="leaderboard_pastel_blue">#AFCBFF</color>
+    <color name="leaderboard_pastel_pink">#FFD1DC</color>
+    <color name="leaderboard_pastel_mint">#C8F7DC</color>
+    <color name="leaderboard_pastel_yellow">#FFF5BA</color>
 </resources>

@@ -2,11 +2,18 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools">
 
-    <uses-permission android:name="android.permission.INTERNET"/>
+    <uses-permission android:name="android.permission.INTERNET" />
+
+    <uses-permission android:name="android.permission.ACTIVITY_RECOGNITION"/>
+    <uses-permission android:name="android.permission.health.READ_STEPS" />
+    <uses-permission android:name="android.permission.health.WRITE_STEPS" />
+
+    <queries>
+        <package android:name="com.google.android.apps.healthdata" />
+    </queries>
 
     <application
-        android:name=".MyApplication"
-        android:usesCleartextTraffic="true"
+        android:name=".utils.MyApplication"
         android:allowBackup="true"
         android:dataExtractionRules="@xml/data_extraction_rules"
         android:fullBackupContent="@xml/backup_rules"
@@ -15,53 +22,58 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
+        android:usesCleartextTraffic="true"
         tools:targetApi="31">
         <activity
-            android:name=".ui.store.StoreItemDetailsActivity"
+            android:name=".ui.view.store.StoreItemDetailsActivity"
             android:exported="false" />
         <activity
-            android:name=".ui.reward.RewardActivity"
+            android:name=".ui.view.reward.RewardActivity"
             android:exported="false" />
         <activity
-            android:name=".ui.meals.FoodSearchActivity"
+            android:name=".ui.view.meals.FoodSearchActivity"
             android:exported="false" />
         <activity
-            android:name=".ui.meals.MealsActivity"
+            android:name=".ui.view.meals.MealsActivity"
             android:exported="false" />
         <activity
-            android:name=".ui.meals.CalorieActivity"
+            android:name=".ui.view.meals.CalorieActivity"
             android:exported="false" />
         <activity
-            android:name=".ui.auth.PersonalInformationActivity"
+            android:name=".ui.view.auth.PersonalInformationActivity"
             android:exported="false" />
         <activity
-            android:name=".ui.auth.SignUpActivity"
+            android:name=".ui.view.auth.SignUpActivity"
             android:exported="false" />
         <activity
-            android:name=".ui.auth.SignInActivity"
+            android:name=".ui.view.auth.SignInActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
         <activity
-            android:name=".ui.main.MainActivity"
+            android:name=".ui.view.main.MainActivity"
             android:exported="false" />
-
-        <service
-            android:name="com.google.android.gms.metadata.ModuleDependencies"
-            android:enabled="false"
-            android:exported="false"
-            tools:ignore="MissingClass">
+        <activity
+            android:name=".ui.view.permission.PermissionActivity"
+            android:exported="true">
             <intent-filter>
-                <action android:name="com.google.android.gms.metadata.MODULE_DEPENDENCIES" />
+                <action android:name="androidx.health.ACTION_SHOW_PERMISSIONS_RATIONALE" />
             </intent-filter>
-
-            <meta-data
-                android:name="photopicker_activity:0:required"
-                android:value="" />
-        </service>
+        </activity>
+        <activity-alias
+            android:name="ViewPermissionUsageActivity"
+            android:exported="true"
+            android:targetActivity=".ui.view.permission.PermissionActivity"
+            android:permission="android.permission.START_VIEW_PERMISSION_USAGE">
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW_PERMISSION_USAGE" />
+                <category android:name="android.intent.category.HEALTH_PERMISSIONS" />
+            </intent-filter>
+        </activity-alias>
     </application>
 
 </manifest>

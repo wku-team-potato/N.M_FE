@@ -1,0 +1,18 @@
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:left="2dp"
+        android:right="2dp"
+        android:top="2dp"
+        android:bottom="2dp">
+        <shape>
+            <solid android:color="#80000000" /> <!-- 그림자 색상 -->
+            <corners android:radius="20dp" />
+        </shape>
+    </item>
+    <item>
+        <shape>
+            <solid android:color="#FF6200EE" /> <!-- 배경 색상 -->
+            <corners android:radius="20dp" />
+        </shape>
+    </item>
+</layer-list>
