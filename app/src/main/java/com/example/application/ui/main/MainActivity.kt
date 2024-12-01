@@ -26,7 +26,6 @@ import com.example.application.ui.meals.FoodSearchActivity
 class MainActivity : AppCompatActivity() {
     private val binding by lazy { ActivityMainBinding.inflate(layoutInflater) }
 
-//    private lateinit var sessionManager: SessionManager
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -38,8 +37,6 @@ class MainActivity : AppCompatActivity() {
             insets
         }
 
-//        sessionManager = SessionManager(this)
-//        Log.d("csrfToken", sessionManager.getCsrfToken().toString())
 
         ViewCompat.setOnApplyWindowInsetsListener(binding.viewPager) { v, insets ->
             val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())

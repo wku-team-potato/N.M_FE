@@ -9,6 +9,7 @@ import com.example.application.ui.meals.function.data.MealDetailResponse
 import com.example.application.ui.meals.function.data.MealResponse
 import com.example.application.ui.meals.function.data.MealSummaryResponse
 import com.example.application.ui.meals.function.data.MealTotalResponse
+import com.example.application.ui.meals.function.data.MealUpdateRequest
 import com.example.application.ui.meals.function.repository.MealRepository
 import kotlinx.coroutines.launch
 
@@ -22,7 +23,7 @@ class MealViewModel(private val repository: MealRepository) : ViewModel() {
     fun loadMealSummary(date: String) {
         viewModelScope.launch {
             try {
-                Log.d("MealViewModel", "loadMealSummary called with date: $date") // 로그 추가
+                Log.d("MealViewModel", "loadMealSummary called with date: $date")
                 val response = repository.getMealSummary(date)
                 Log.d("MealViewModel", "API Response: $response")
 
@@ -52,6 +53,26 @@ class MealViewModel(private val repository: MealRepository) : ViewModel() {
         }
     }
 
+    fun updateMeal(id: Int, foodId: Int, mealType: String, servingSize: Int, date: String) {
+        viewModelScope.launch {
+            try {
+                val body = MealUpdateRequest(foodId, mealType, servingSize, date)
+                repository.updateMeal(id, body)
+            } catch (e: Exception) {
+                Log.e("MealViewModel", "Error updating meal: ${e.message}")
+            }
+        }
+    }
+
+    fun deleteMeal(id: Int) {
+        viewModelScope.launch {
+            try {
+                repository.deleteMeal(id)
+            } catch (e: Exception) {
+                Log.e("MealViewModel", "Error deleting meal: ${e.message}")
+            }
+        }
+    }
 }
 
 private fun MealDetailResponse.roundValues() = MealDetailResponse(

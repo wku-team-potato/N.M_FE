@@ -27,4 +27,5 @@ interface MealService {
     suspend fun deleteMeal(
         @Path("id") id:Int
     )
+
 }

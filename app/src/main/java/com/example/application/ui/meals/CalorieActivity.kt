@@ -3,15 +3,19 @@ package com.example.application.ui.meals
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
+import android.view.LayoutInflater
+import android.view.ViewGroup
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.example.application.R
 import com.example.application.RetrofitInstance
 import com.example.application.databinding.ActivityCalorieBinding
+import com.example.application.databinding.ItemCalorieBinding
 import com.example.application.ui.meals.function.repository.MealRepository
 import com.example.application.ui.meals.function.viewmodel.MealViewModel
 import com.example.application.ui.meals.function.viewmodel.MealViewModelFactory
@@ -44,6 +48,12 @@ class CalorieActivity : AppCompatActivity() {
         fetchMealSummary()
     }
 
+    override fun onResume() {
+        super.onResume()
+        Log.d("CalorieActivity", "onResume called, refreshing data for date: $selectedDate")
+        fetchMealSummary()
+    }
+
     private fun initUi() = with(binding) {
         toolbar.setNavigationOnClickListener { finish() }
         recyclerView.layoutManager = LinearLayoutManager(this@CalorieActivity)
@@ -62,6 +72,7 @@ class CalorieActivity : AppCompatActivity() {
             updateAdapter(mealList, calorieData)
         }
 
+        // ViewModel에 API 요청 전달
         mealViewModel.loadMealSummary(selectedDate)
     }
 
@@ -70,7 +81,7 @@ class CalorieActivity : AppCompatActivity() {
             onItemClickListener = { mealTime ->
                 Log.d("CalorieActivity", "Clicked on: $mealTime")
 
-                val mealType = when (mealTime) {
+                val mealType = when (mealTime){
                     "아침" -> "breakfast"
                     "점심" -> "lunch"
                     "저녁" -> "dinner"
@@ -80,12 +91,13 @@ class CalorieActivity : AppCompatActivity() {
                 val intent = Intent(this@CalorieActivity, MealActivity::class.java).apply {
                     putExtra("title", mealTime)
                     putExtra("date", selectedDate)
-                    putExtra("mealType", mealType) // mealType 전달
+                    putExtra("mealType", mealType)
                 }
                 startActivity(intent)
             }
         }
     }
 
+    // 확장 함수: Double -> Int 변환, null 또는 빈 값 처리
     private fun Double?.toIntOrZero(): Int = this?.toInt() ?: 0
 }

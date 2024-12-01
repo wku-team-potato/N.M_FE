@@ -5,6 +5,7 @@ import com.example.application.ui.auth.functions.service.PersonalInfoService
 import com.example.application.ui.auth.functions.service.SignInService
 import com.example.application.ui.auth.functions.service.SignUpService
 import com.example.application.ui.leaderboard.function.service.LeaderBoardService
+import com.example.application.ui.meals.function.service.FoodService
 import com.example.application.ui.meals.function.service.HealthService
 import com.example.application.ui.meals.function.service.MealService
 import com.example.application.ui.profile.function.service.ProfileService
@@ -72,5 +73,9 @@ object RetrofitInstance {
 
     val healthService : HealthService by lazy{
         retrofit.create(HealthService::class.java)
+    }
+
+    val foodService : FoodService by lazy{
+        retrofit.create(FoodService::class.java)
     }
 }

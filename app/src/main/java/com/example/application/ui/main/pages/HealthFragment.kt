@@ -9,6 +9,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.core.content.ContextCompat
 import androidx.core.view.isVisible
+import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
 import com.example.application.R
@@ -25,6 +26,7 @@ import com.example.application.ui.meals.function.viewmodel.HealthViewModel
 import com.example.application.ui.meals.function.viewmodel.HealthViewModelFactory
 import com.example.application.ui.meals.function.viewmodel.MealViewModel
 import com.example.application.ui.meals.function.viewmodel.MealViewModelFactory
+import com.example.application.ui.meals.function.viewmodel.SharedMealViewModel
 import com.github.mikephil.charting.charts.LineChart
 import com.github.mikephil.charting.charts.PieChart
 import com.github.mikephil.charting.data.BarData
@@ -57,6 +59,8 @@ class HealthFragment : BaseFragment() {
     private val binding get() = _binding!!
     private lateinit var mealViewModel : MealViewModel
     private lateinit var healthViewModel: HealthViewModel
+    private val sharedMealViewModel: SharedMealViewModel by activityViewModels()
+
 
     private var selectedDate = MutableStateFlow(LocalDate.now())
     private val dateFormatter = DateTimeFormatter.ofPattern("dd")
@@ -79,8 +83,40 @@ class HealthFragment : BaseFragment() {
         super.onDestroyView()
     }
 
+    override fun onResume() {
+        super.onResume()
+        val formattedApiDate = selectedDate.value.format(apiDateFormatter)
+        Log.d("HealthFragment", "Refreshing data for date: $formattedApiDate")
+
+        lifecycleScope.launch {
+            try {
+                mealViewModel.loadMealSummary(formattedApiDate)
+                mealViewModel.mealSummary.observe(viewLifecycleOwner) { summary ->
+                    if (summary != null && summary.summary.calorie > 0.0) {
+                        binding.noRecordContainer.isVisible = false
+                        updatePieCharts(summary)
+                        updateCalorieBar(summary.summary.calorie)
+                        Log.d("HealthFragment", "Data successfully updated for date: $formattedApiDate")
+                    } else {
+                        binding.noRecordContainer.isVisible = true
+                        Log.d("HealthFragment", "No data available for date: $formattedApiDate")
+                    }
+                }
+            } catch (e: Exception) {
+                Log.e("HealthFragment", "Error while refreshing data: ${e.message}")
+            }
+        }
+    }
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        sharedMealViewModel.refreshTrigger.observe(viewLifecycleOwner) { refresh ->
+            if (refresh == true) {
+                Log.d("HealthFragment", "Refresh signal received")
+                refreshUI()
+            }
+        }
 
         initUi()
         val healthRepository = HealthRepository(RetrofitInstance.healthService)
@@ -310,5 +346,10 @@ class HealthFragment : BaseFragment() {
             legend.isEnabled = false
             invalidate()
         }
+    }
+
+    private fun refreshUI() {
+        val formattedApiDate = selectedDate.value.format(apiDateFormatter)
+        mealViewModel.loadMealSummary(formattedApiDate)
     }
 }
