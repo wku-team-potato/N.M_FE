@@ -19,5 +19,6 @@ object Config {
     const val MealDetail_ENDPOINT = "meal/list/{date}"
     const val MealUpdate_ENDPOINT = "meal/update/{id}"
     const val MealDelete_ENDPOINT = "meal/delete/{id}"
-    const val MealSearch_ENDPOINT = "nutrition/foods/search/id/{food_name}"
+    const val MealSearch_ENDPOINT = "nutrition/foods/search/name/{food_name}/"
+    const val MealAdd_ENDPOINT = "meal/create/"
 }

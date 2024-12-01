@@ -1,5 +1,6 @@
 package com.example.application.ui.main.pages
 
+import android.content.Context
 import android.content.Intent
 import android.graphics.Color
 import android.os.Bundle
@@ -17,7 +18,9 @@ import com.example.application.RetrofitInstance
 import com.example.application.common.extensions.displayText
 import com.example.application.databinding.FragmentHealthBinding
 import com.example.application.databinding.LayoutCalendarDayBinding
+import com.example.application.ui.main.MainActivity
 import com.example.application.ui.meals.CalorieActivity
+import com.example.application.ui.meals.MealActivity
 import com.example.application.ui.meals.function.data.HealthResponse
 import com.example.application.ui.meals.function.data.MealSummaryResponse
 import com.example.application.ui.meals.function.repository.HealthRepository
@@ -129,6 +132,7 @@ class HealthFragment : BaseFragment() {
         lifecycleScope.launch {
             selectedDate.collectLatest {date ->
                 val formattedApiDate = date.format(apiDateFormatter)
+                (activity as? MainActivity)?.updateSelectedDate(formattedApiDate)
                 mealViewModel.loadMealSummary(formattedApiDate)
                 Log.d("HealthFragment", "Selected date for API: $formattedApiDate")
 

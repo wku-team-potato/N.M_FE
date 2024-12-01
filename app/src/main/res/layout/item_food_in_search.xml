@@ -3,51 +3,22 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_marginHorizontal="16dp"
-    android:layout_marginBottom="16dp"
-    app:cardBackgroundColor="?attr/colorSurfaceContainer"
-    app:strokeWidth="0dp">
+    android:layout_margin="8dp">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:gravity="center_vertical"
-        android:paddingVertical="24dp"
-        android:paddingLeft="16dp"
-        android:paddingRight="8dp">
+        android:orientation="horizontal"
+        android:padding="16dp">
 
-        <com.google.android.material.textview.MaterialTextView
+        <TextView
             android:id="@+id/food_name_text_view"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginRight="8dp"
             android:layout_weight="1"
-            android:autoSizeTextType="uniform"
-            android:ellipsize="end"
-            android:maxLines="1"
             android:text="흰쌀밥"
-            android:textAppearance="?attr/textAppearanceTitleMedium"
-            app:autoSizeMaxTextSize="16sp"
-            app:autoSizeMinTextSize="10sp"
-            app:autoSizeStepGranularity="1sp" />
-
-
-
-        <com.google.android.material.button.MaterialButton
-            android:id="@+id/plus_button"
-            style="@style/Widget.Material3.Button.IconButton"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="8dp"
-            android:insetTop="0dp"
-            android:insetBottom="0dp"
-            android:minWidth="40dp"
-            android:minHeight="40dp"
-            android:padding="8dp"
-            app:backgroundTint="@android:color/transparent"
-            app:icon="@drawable/baseline_add_18"
-            app:iconSize="24dp" />
+            android:textSize="20dp"
+            android:textAppearance="?attr/textAppearanceBody1" />
 
     </LinearLayout>
-
 </com.google.android.material.card.MaterialCardView>

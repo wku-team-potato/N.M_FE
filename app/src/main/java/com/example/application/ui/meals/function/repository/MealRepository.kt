@@ -1,6 +1,7 @@
 package com.example.application.ui.meals.function.repository
 
 import android.util.Log
+import com.example.application.ui.meals.function.data.MealAddRequest
 import com.example.application.ui.meals.function.data.MealResponse
 import com.example.application.ui.meals.function.data.MealSummaryResponse
 import com.example.application.ui.meals.function.data.MealUpdateRequest
@@ -38,5 +39,15 @@ class MealRepository(private val service: MealService) {
             Log.e("MealRepository", "Error deleting meal with id $id: ${e.message}")
             throw e
         }
+    }
+
+    suspend fun addMeal(foodId: Int, servingSize: Int, mealType: String, date: String) {
+        val mealData = MealAddRequest(
+            food_id = foodId,
+            serving_size = servingSize,
+            meal_type = mealType,
+            date = date
+        )
+        service.addMeal(mealData)
     }
 }

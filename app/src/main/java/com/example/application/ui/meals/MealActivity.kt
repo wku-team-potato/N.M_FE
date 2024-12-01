@@ -40,6 +40,10 @@ class MealActivity : AppCompatActivity() {
     private val modifiedList = mutableListOf<MealResponse>()
     private val deletedList = mutableListOf<MealResponse>()
 
+    private var selectedDate: String = ""
+    private var mealType: String = ""
+
+
     private val adapter by lazy {
         MealAdapter(
             onItemModified = { meal, count, quantity ->
@@ -68,10 +72,11 @@ class MealActivity : AppCompatActivity() {
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
             insets
         }
-        val selectedDate = intent.getStringExtra("date") ?: ""
-        val mealType = intent.getStringExtra("mealType") ?: ""
+        selectedDate = intent.getStringExtra("date") ?: ""
+        mealType = intent.getStringExtra("mealType") ?: ""
 
         Log.d("MealActivity", "Selected date: $selectedDate, MealType: $mealType")
+
         viewModel.fetchMealList(selectedDate)
         viewModel.mealList.observe(this) { meals ->
             val filteredMeals = meals.filter { it.meal_type == mealType }
@@ -92,9 +97,9 @@ class MealActivity : AppCompatActivity() {
         recyclerView.adapter = adapter
 
         addFoodButton.setOnClickListener {
-            startActivity(Intent(this@MealActivity, FoodSearchActivity::class.java).apply {
-                addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP or Intent.FLAG_ACTIVITY_CLEAR_TOP)
-            })
+            val intent = Intent(this@MealActivity, FoodSearchActivity::class.java)
+            intent.putExtra("date", selectedDate)
+            startActivity(intent)
         }
 
         doneButton.setOnClickListener {
