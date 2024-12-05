@@ -3,8 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <uses-permission android:name="android.permission.INTERNET" />
-
-    <uses-permission android:name="android.permission.ACTIVITY_RECOGNITION"/>
+    <uses-permission android:name="android.permission.ACTIVITY_RECOGNITION" />
     <uses-permission android:name="android.permission.health.READ_STEPS" />
     <uses-permission android:name="android.permission.health.WRITE_STEPS" />
 
@@ -25,6 +24,9 @@
         android:usesCleartextTraffic="true"
         tools:targetApi="31">
         <activity
+            android:name=".ui.view.settings.SettingsActivity"
+            android:exported="false" />
+        <activity
             android:name=".ui.view.store.StoreItemDetailsActivity"
             android:exported="false" />
         <activity
@@ -32,10 +34,12 @@
             android:exported="false" />
         <activity
             android:name=".ui.view.meals.FoodSearchActivity"
-            android:exported="false" />
+            android:exported="false"
+            android:windowSoftInputMode="adjustResize" />
         <activity
             android:name=".ui.view.meals.MealsActivity"
-            android:exported="false" />
+            android:exported="false"
+            android:windowSoftInputMode="adjustResize" />
         <activity
             android:name=".ui.view.meals.CalorieActivity"
             android:exported="false" />
@@ -64,13 +68,15 @@
                 <action android:name="androidx.health.ACTION_SHOW_PERMISSIONS_RATIONALE" />
             </intent-filter>
         </activity>
+
         <activity-alias
-            android:name="ViewPermissionUsageActivity"
+            android:name=".ViewPermissionUsageActivity"
             android:exported="true"
-            android:targetActivity=".ui.view.permission.PermissionActivity"
-            android:permission="android.permission.START_VIEW_PERMISSION_USAGE">
+            android:permission="android.permission.START_VIEW_PERMISSION_USAGE"
+            android:targetActivity=".ui.view.permission.PermissionActivity">
             <intent-filter>
                 <action android:name="android.intent.action.VIEW_PERMISSION_USAGE" />
+
                 <category android:name="android.intent.category.HEALTH_PERMISSIONS" />
             </intent-filter>
         </activity-alias>

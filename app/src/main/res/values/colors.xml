@@ -152,4 +152,11 @@
     <color name="leaderboard_pastel_pink">#FFD1DC</color>
     <color name="leaderboard_pastel_mint">#C8F7DC</color>
     <color name="leaderboard_pastel_yellow">#FFF5BA</color>
+
+    <!-- Chart colors -->
+    <color name="chart_line">#FF6200EE</color>
+    <color name="chart_point">#FF3700B3</color>
+    <color name="chart_text">#FF000000</color>
+    <color name="chart_highlight">#FFBB86FC</color>
+    <color name="chart_fill">#336200EE</color>
 </resources>

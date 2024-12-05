@@ -97,6 +97,7 @@
                                         android:textColor="@color/md_theme_surfaceContainerHighest_highContrast"/>
 
                                     <TextView
+                                        android:id="@+id/kcal_percent"
                                         android:layout_width="wrap_content"
                                         android:layout_height="wrap_content"
                                         android:padding="2dp"
@@ -170,6 +171,7 @@
                                         android:textColor="@color/md_theme_surfaceContainerHighest_highContrast"/>
 
                                     <TextView
+                                        android:id="@+id/cabo_percent"
                                         android:layout_width="wrap_content"
                                         android:layout_height="wrap_content"
                                         android:padding="2dp"
@@ -196,6 +198,7 @@
                                         android:textColor="@color/md_theme_surfaceContainerHighest_highContrast"/>
 
                                     <TextView
+                                        android:id="@+id/protein_percent"
                                         android:layout_width="wrap_content"
                                         android:layout_height="wrap_content"
                                         android:padding="2dp"
@@ -222,6 +225,7 @@
                                         android:textColor="@color/md_theme_surfaceContainerHighest_highContrast"/>
 
                                     <TextView
+                                        android:id="@+id/fat_percent"
                                         android:layout_width="wrap_content"
                                         android:layout_height="wrap_content"
                                         android:padding="2dp"
@@ -251,17 +255,41 @@
                     android:padding="4dp"
                     android:layout_margin="4dp">
 
-                    <TextView
+                    <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="오늘의 영양 섭취 현황"
-                        android:textSize="24sp"
-                        android:textStyle="bold"
-                        android:padding="4dp"
-                        android:elevation="4dp"
-                        android:letterSpacing="0.05"
-                        android:fontFamily="sans-serif"
-                        android:paddingBottom="4dp"/>
+                        android:orientation="horizontal">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="오늘의 영양 섭취 현황"
+                            android:textSize="24sp"
+                            android:textStyle="bold"
+                            android:padding="4dp"
+                            android:elevation="4dp"
+                            android:letterSpacing="0.05"
+                            android:fontFamily="sans-serif"
+                            android:paddingBottom="4dp"/>
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal"
+                            android:gravity="end">
+
+                            <com.google.android.material.button.MaterialButton
+                                android:id="@+id/button_nutrition"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="end"
+                                android:text="자세히 보기"
+                                style="@style/Widget.MaterialComponents.Button.TextButton"
+                                android:textColor="?attr/colorPrimary" />
+
+                        </LinearLayout>
+
+                    </LinearLayout>
 
                     <GridLayout
                         android:layout_width="match_parent"
@@ -274,10 +302,13 @@
                         <com.google.android.material.card.MaterialCardView
                             android:background="@drawable/rounded_background"
                             android:backgroundTint="@color/md_theme_surfaceVariant"
-                            app:strokeColor="@color/md_theme_inverseOnSurface"
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
-                            android:layout_columnWeight="1">
+                            android:layout_columnWeight="1"
+                            app:strokeWidth="0dp"
+                            app:cardCornerRadius="16dp"
+                            app:cardElevation="4dp"
+                            android:layout_margin="8dp">
 
                             <LinearLayout
                                 android:layout_width="match_parent"
@@ -305,6 +336,7 @@
                                 </LinearLayout>
 
                                 <TextView
+                                    android:id="@+id/kcal_text"
                                     android:layout_width="match_parent"
                                     android:layout_height="wrap_content"
                                     android:layout_marginTop="8dp"
@@ -313,6 +345,7 @@
                                     android:textColor="@color/md_theme_primary"/>
 
                                 <ProgressBar
+                                    android:id="@+id/kcal_progress"
                                     android:layout_width="match_parent"
                                     android:layout_height="8dp"
                                     style="?android:attr/progressBarStyleHorizontal"
@@ -338,7 +371,10 @@
                             android:layout_height="wrap_content"
                             android:layout_columnWeight="1"
                             android:backgroundTint="@color/md_theme_surfaceVariant"
-                            app:strokeColor="@color/md_theme_inverseOnSurface">
+                            app:strokeWidth="0dp"
+                            app:cardCornerRadius="16dp"
+                            app:cardElevation="4dp"
+                            android:layout_margin="8dp">
 
                             <LinearLayout
                                 android:layout_width="match_parent"
@@ -366,6 +402,7 @@
                                 </LinearLayout>
 
                                 <TextView
+                                    android:id="@+id/cabo_text"
                                     android:layout_width="match_parent"
                                     android:layout_height="wrap_content"
                                     android:layout_marginTop="8dp"
@@ -374,6 +411,7 @@
                                     android:textColor="@color/md_theme_primary"/>
 
                                 <ProgressBar
+                                    android:id="@+id/cabo_progress"
                                     android:layout_width="match_parent"
                                     android:layout_height="8dp"
                                     style="?android:attr/progressBarStyleHorizontal"
@@ -399,7 +437,10 @@
                             android:layout_height="wrap_content"
                             android:layout_columnWeight="1"
                             android:backgroundTint="@color/md_theme_surfaceVariant"
-                            app:strokeColor="@color/md_theme_inverseOnSurface">
+                            app:strokeWidth="0dp"
+                            app:cardCornerRadius="16dp"
+                            app:cardElevation="4dp"
+                            android:layout_margin="8dp">
 
                             <LinearLayout
                                 android:layout_width="match_parent"
@@ -427,6 +468,7 @@
                                 </LinearLayout>
 
                                 <TextView
+                                    android:id="@+id/protein_text"
                                     android:layout_width="match_parent"
                                     android:layout_height="wrap_content"
                                     android:layout_marginTop="8dp"
@@ -435,6 +477,7 @@
                                     android:textColor="@color/md_theme_primary" />
 
                                 <ProgressBar
+                                    android:id="@+id/protein_progress"
                                     android:layout_width="match_parent"
                                     android:layout_height="8dp"
                                     style="?android:attr/progressBarStyleHorizontal"
@@ -459,8 +502,12 @@
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:layout_columnWeight="1"
+                            android:background="@drawable/rounded_background"
+                            app:strokeWidth="0dp"
+                            app:cardCornerRadius="16dp"
+                            app:cardElevation="4dp"
                             android:backgroundTint="@color/md_theme_surfaceVariant"
-                            app:strokeColor="@color/md_theme_inverseOnSurface">
+                            android:layout_margin="8dp">
 
                             <LinearLayout
                                 android:layout_width="match_parent"
@@ -488,6 +535,7 @@
                                 </LinearLayout>
 
                                 <TextView
+                                    android:id="@+id/fat_text"
                                     android:layout_width="match_parent"
                                     android:layout_height="wrap_content"
                                     android:layout_marginTop="8dp"
@@ -496,6 +544,7 @@
                                     android:textColor="@color/md_theme_primary"/>
 
                                 <ProgressBar
+                                    android:id="@+id/fat_progress"
                                     android:layout_width="match_parent"
                                     android:layout_height="8dp"
                                     style="?android:attr/progressBarStyleHorizontal"
@@ -522,6 +571,91 @@
                     android:padding="4dp"
                     android:layout_margin="4dp"
                     android:orientation="vertical">
+
+                    <com.google.android.material.card.MaterialCardView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/rounded_background"
+                        android:backgroundTint="@color/md_theme_surfaceVariant"
+                        app:strokeWidth="0dp"
+                        app:cardCornerRadius="16dp"
+                        app:cardElevation="4dp"
+                        android:layout_margin="8dp">
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:orientation="vertical"
+                            android:padding="16dp">
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:orientation="horizontal">
+
+                                <ImageView
+                                    android:layout_width="24dp"
+                                    android:layout_height="24dp"
+                                    android:backgroundTint="@color/md_theme_primary"
+                                    android:src="@drawable/ic_weight" />
+
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginStart="8dp"
+                                    android:text="체중"
+                                    android:textAppearance="?attr/textAppearanceBodyMedium"/>
+
+                            </LinearLayout>
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:orientation="horizontal"
+                                android:gravity="center"
+                                android:padding="16dp">
+
+                                <com.google.android.material.button.MaterialButton
+                                    android:id="@+id/button_decrease_weight"
+                                    android:layout_width="52dp"
+                                    android:layout_height="52dp"
+                                    android:insetLeft="0dp"
+                                    android:insetTop="0dp"
+                                    android:insetRight="0dp"
+                                    android:insetBottom="0dp"
+                                    app:icon="@drawable/ic_minus"
+                                    app:iconGravity="textStart"
+                                    app:iconSize="24dp"
+                                    app:iconPadding="0dp" />
+
+                                <TextView
+                                    android:id="@+id/weight_text"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginStart="24dp"
+                                    android:layout_marginEnd="24dp"
+                                    android:textSize="36sp"
+                                    android:text="48.0kg"
+                                    android:textAppearance="?attr/textAppearanceBodyMedium"/>
+
+                                <com.google.android.material.button.MaterialButton
+                                    android:id="@+id/button_increase_weight"
+                                    android:layout_width="52dp"
+                                    android:layout_height="52dp"
+                                    android:insetLeft="0dp"
+                                    android:insetTop="0dp"
+                                    android:insetRight="0dp"
+                                    android:insetBottom="0dp"
+                                    app:icon="@drawable/ic_plus"
+                                    app:iconGravity="textStart"
+                                    app:iconSize="24dp"
+                                    app:iconPadding="0dp" />
+
+                            </LinearLayout>
+
+                        </LinearLayout>
+
+                    </com.google.android.material.card.MaterialCardView>
 
                     <TextView
                         android:layout_width="match_parent"
@@ -577,9 +711,11 @@
                         <com.google.android.material.card.MaterialCardView
                             android:layout_margin="4dp"
                             android:layout_weight="1"
-                            android:background="@drawable/rounded_background"
                             android:backgroundTint="@color/md_theme_surfaceVariant"
-                            app:strokeColor="@color/md_theme_inverseOnSurface"
+                            android:background="@drawable/rounded_background"
+                            app:strokeWidth="0dp"
+                            app:cardCornerRadius="16dp"
+                            app:cardElevation="4dp"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_columnWeight="1">
@@ -623,6 +759,9 @@
                             android:layout_margin="4dp"
                             android:layout_weight="1"
                             android:background="@drawable/rounded_background"
+                            app:strokeWidth="0dp"
+                            app:cardCornerRadius="16dp"
+                            app:cardElevation="4dp"
                             android:backgroundTint="@color/md_theme_surfaceVariant"
                             app:strokeColor="@color/md_theme_inverseOnSurface"
                             android:layout_width="match_parent"

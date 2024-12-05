@@ -7,7 +7,7 @@ import okhttp3.Response
 class AuthInterceptor(private val sessionManager: SessionManager) : Interceptor {
     override fun intercept(chain: Interceptor.Chain): Response {
         val request = chain.request()
-        val url = request.url().toString()
+        val url = request.url.toString()
 
         if (url.contains("login") || url.contains("signup")){
             return chain.proceed(request)

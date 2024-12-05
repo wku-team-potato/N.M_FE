@@ -145,4 +145,11 @@
     <color name="health_protein">#F44336</color>
     <color name="health_fat">#4CAF50</color>
     <color name="health_cal">#2196F3</color>
+
+    <!-- chart -->
+    <color name="chart_line">#FFBB86FC</color>
+    <color name="chart_point">#FF6200EE</color>
+    <color name="chart_text">#FFFFFFFF</color>
+    <color name="chart_highlight">#FF3700B3</color>
+    <color name="chart_fill">#33BB86FC</color>
 </resources>

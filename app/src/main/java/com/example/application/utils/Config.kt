@@ -2,6 +2,7 @@ package com.example.application.utils
 
 object Config {
     const val BASE_URL = "http://4.217.250.21:8000/api/v1/"
+    const val AI_BASE_URL = "http://123.111.25.252:8000/api/v1/"
 
     const val SIGNIN_ENDPOINT = "auth/login/"
     const val SIGNUP_ENDPOINT = "auth/signup/"
@@ -15,4 +16,15 @@ object Config {
     const val REWARD_ENDPOINT = "point/transaction/"
     const val MyLeaderBoard_ENDPOINT = "profile/rankings/my/"
     const val TopLeaderBoard_ENDPOINT = "profile/rankings/top3/"
+    const val MealSummary_ENDPOINT = "meal/summary/{date}/"
+    const val MealDetail_ENDPOINT = "meal/list/{date}"
+    const val MealUpdate_ENDPOINT = "meal/update/{id}"
+    const val MealDelete_ENDPOINT = "meal/delete/{id}"
+    const val MealSearch_ENDPOINT = "nutrition/foods/search/name/{food_name}/"
+    const val MealAdd_ENDPOINT = "meal/create/"
+
+    const val MEALSEARCH_ID_ENDPOINT = "nutrition/foods/search/id/{food_id}/"
+
+    const val AI_ENDPOINT = "detection/"
+    const val LOGOUT = "auth/logout/"
 }

@@ -91,7 +91,7 @@ class StoreFragment : BaseFragment() {
         // 포인트
         storeViewModel.points.observe(viewLifecycleOwner) { points ->
             Log.d("StoreFragment", "Loaded points: $points")
-            binding.myPointContainer.findViewById<TextView>(R.id.point_text_view).text = "${points} p"
+//            binding.myPointContainer.findViewById<TextView>(R.id.point_text_view).text = "${points} p"
         }
     }
 

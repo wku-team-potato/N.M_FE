@@ -107,14 +107,16 @@ class LeaderboardFragment : BaseFragment() {
                     myRankingAttendIcon.visibility = View.GONE
                     myRankingAttend.text = "기록 없음"
                 } else {
+                    Log.d("LeaderBoardFragment", it.rankings.consecutive_attendance_rank.toString())
                     updateMyRanking(it.rankings.consecutive_attendance_rank, myRankingAttend, myRankingAttendIcon)
                 }
 
-                if (it.user_info.cumulative_attendance_days == 0) {
+                if (it.user_info.consecutive_goals_achieved == 0) {
                     myRankingGoals.visibility = View.VISIBLE
                     myRankingGoalIcon.visibility = View.GONE
                     myRankingGoals.text = "기록 없음"
                 } else {
+                    Log.d("LeaderBoardFragment", it.rankings.consecutive_goals_rank.toString())
                     updateMyRanking(it.rankings.consecutive_goals_rank, myRankingGoals, myRankingGoalIcon)
                 }
             }

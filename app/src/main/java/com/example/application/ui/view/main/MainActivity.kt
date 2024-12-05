@@ -3,6 +3,8 @@ package com.example.application.ui.view.main
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
+import android.provider.Settings
+import android.util.Log
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.coordinatorlayout.widget.CoordinatorLayout
@@ -25,12 +27,15 @@ import com.example.application.ui.view.main.pages.LeaderboardFragment
 import com.example.application.ui.view.main.pages.RewardFragment
 import com.example.application.ui.view.main.pages.StoreFragment
 import com.example.application.ui.view.meals.FoodSearchActivity
+import com.example.application.ui.view.settings.SettingsActivity
 import com.example.application.utils.HealthPermissions
 
 class MainActivity : AppCompatActivity() {
     private val binding by lazy { ActivityMainBinding.inflate(layoutInflater) }
 
 //    private lateinit var sessionManager: SessionManager
+
+    var selectedDate: String = java.time.LocalDate.now().toString()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -54,6 +59,7 @@ class MainActivity : AppCompatActivity() {
         toolbar.setOnMenuItemClickListener {
             if (it.itemId == R.id.action_my) {
 //                showMyPage()
+                startActivity(Intent(this, SettingsActivity::class.java))
             }
 
             return@setOnMenuItemClickListener true
@@ -146,6 +152,7 @@ class MainActivity : AppCompatActivity() {
 
         addButton.setOnClickListener {
             startActivity(Intent(this@MainActivity, FoodSearchActivity::class.java).apply {
+                putExtra("date", selectedDate)
                 addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP or Intent.FLAG_ACTIVITY_CLEAR_TOP)
             })
         }
@@ -163,5 +170,10 @@ class MainActivity : AppCompatActivity() {
                 else -> StoreFragment()
             }
         }
+    }
+
+    fun updateSelectedDate(date: String) {
+        selectedDate = date
+        Log.d("MainActivity", "Updated date by HealthFragment: $selectedDate")
     }
 }

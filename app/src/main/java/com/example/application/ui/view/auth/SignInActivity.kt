@@ -61,9 +61,31 @@ class SignInActivity : AppCompatActivity() {
         }
 
         val signInRepository = SignInRepository(RetrofitInstance.signInService)
-        val viewModelFactory = SignInViewModelFactory(signInRepository)
+        val viewModelFactory = SignInViewModelFactory(signInRepository, sessionManager)
 
         signInViewModel = ViewModelProvider(this, viewModelFactory).get(SignInViewModel::class.java)
+
+        signInViewModel.checkSession()
+
+        val sharedPreferences = getSharedPreferences("AutoLoginPrefs", MODE_PRIVATE)
+        val editor = sharedPreferences.edit()
+
+        binding.autoLoginCheckbox.setOnCheckedChangeListener { _, isChecked ->
+            editor.putBoolean("AUTO_LOGIN", isChecked)
+            editor.apply()
+        }
+
+        val isAutoLoginEnabled = sharedPreferences.getBoolean("AUTO_LOGIN", false)
+
+        binding.autoLoginCheckbox.isChecked = isAutoLoginEnabled
+
+        signInViewModel.isLoggedIn.observe(this, Observer { isLoggedIn ->
+            if (isLoggedIn && isAutoLoginEnabled) {
+                val intent = Intent(this@SignInActivity, MainActivity::class.java)
+                startActivity(intent)
+                finishAffinity()  // SignInActivity 종료
+            }
+        })
 
         binding.signInButton.setOnClickListener {
             val username = binding.idEditText.text.toString()
