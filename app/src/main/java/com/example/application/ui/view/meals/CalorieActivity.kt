@@ -13,6 +13,7 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.application.R
 import com.example.application.databinding.ActivityCalorieBinding
+import com.example.application.ui.meals.function.data.MealDetailResponse
 import com.example.application.ui.meals.function.repository.MealRepository
 import com.example.application.ui.meals.function.viewmodel.MealViewModel
 import com.example.application.ui.meals.function.viewmodel.MealViewModelFactory
@@ -76,16 +77,21 @@ class CalorieActivity : AppCompatActivity() {
                 mealSummary.lunch.calorie.toIntOrZero(),
                 mealSummary.dinner.calorie.toIntOrZero()
             )
+            val nutrientData = listOf(
+                mealSummary.breakfast,
+                mealSummary.lunch,
+                mealSummary.dinner
+            )
             Log.d("CalorieActivity", "Calorie data: $calorieData")
-            updateAdapter(mealList, calorieData)
+            updateAdapter(mealList, calorieData, nutrientData)
         }
 
         // ViewModel에 API 요청 전달
         calorieViewModel.getMealSummary(selectedDate)
     }
 
-    private fun updateAdapter(mealList: List<String>, calorieData: List<Int>) {
-        binding.recyclerView.adapter = CalorieAdapter(mealList, calorieData).apply {
+    private fun updateAdapter(mealList: List<String>, calorieData: List<Int>, nutrientData: List<MealDetailResponse>) {
+        binding.recyclerView.adapter = CalorieAdapter(mealList, calorieData, nutrientData).apply {
             onItemClickListener = { mealTime ->
                 Log.d("CalorieActivity", "Clicked on: $mealTime")
 
