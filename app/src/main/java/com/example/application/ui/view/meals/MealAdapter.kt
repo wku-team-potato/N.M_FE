@@ -27,7 +27,7 @@ class MealAdapter(
         holder.bind(item, onItemModified) {
             holder.binding.root.postDelayed({
                 removeItemAt(holder.bindingAdapterPosition, item)
-            }, 100) // 삭제 시 delay 추가
+            }, 300) // 삭제 시 delay 추가
         }
     }
 
