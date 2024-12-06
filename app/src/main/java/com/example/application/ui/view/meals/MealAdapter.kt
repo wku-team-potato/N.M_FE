@@ -25,7 +25,9 @@ class MealAdapter(
         val item = items[position]
         Log.d("MealAdapter", "Binding item at position: $position with item: $item")
         holder.bind(item, onItemModified) {
-            removeItemAt(position, item)
+            holder.binding.root.postDelayed({
+                removeItemAt(holder.bindingAdapterPosition, item)
+            }, 100) // 삭제 시 delay 추가
         }
     }
 
@@ -43,10 +45,11 @@ class MealAdapter(
             notifyItemRemoved(position)
             notifyItemRangeChanged(position, items.size)
             onItemRemoved(meal)
+            Log.d("MealAdapter", "Deleted : ${meal.food.food_name} at ${position}")
         }
     }
 
-    class MealViewHolder(private val binding: ItemFoodInMealsBinding) :
+    class MealViewHolder(val binding: ItemFoodInMealsBinding) :
         RecyclerView.ViewHolder(binding.root) {
         fun bind(
             meal: MealResponse,
