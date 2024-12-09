@@ -22,6 +22,7 @@ import androidx.viewpager2.adapter.FragmentStateAdapter
 import androidx.viewpager2.widget.ViewPager2
 import com.example.application.R
 import com.example.application.databinding.ActivityMainBinding
+import com.example.application.ui.view.main.pages.GroupFragment
 import com.example.application.ui.view.main.pages.HealthFragment
 import com.example.application.ui.view.main.pages.LeaderboardFragment
 import com.example.application.ui.view.main.pages.RewardFragment
@@ -45,9 +46,17 @@ class MainActivity : AppCompatActivity() {
         window.statusBarColor = ContextCompat.getColor(this, R.color.md_theme_primary)
         WindowInsetsControllerCompat(window, window.decorView).isAppearanceLightStatusBars = false
 
+        // Top padding
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main)) { v, insets ->
             val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
             v.setPadding(0, systemBars.top, 0, 0)
+            insets
+        }
+
+        // Bottom navigation view
+        binding.bottomNavigationView.setOnApplyWindowInsetsListener{ view, insets ->
+            val navBarHeight = insets.systemWindowInsetBottom
+            binding.viewPager.setPadding(0, 0, 0, navBarHeight)
             insets
         }
 
@@ -112,8 +121,8 @@ class MainActivity : AppCompatActivity() {
                         toolbarTitle.text = "리더보드"
                     }
                     2 -> {
-                        bottomNavigationView.selectedItemId = R.id.action_reward
-                        toolbarTitle.text = "리워드"
+                        bottomNavigationView.selectedItemId = R.id.action_group
+                        toolbarTitle.text = "그룹"
                     }
                     else -> {
                         bottomNavigationView.selectedItemId = R.id.action_store
@@ -136,7 +145,7 @@ class MainActivity : AppCompatActivity() {
                     return@setOnItemSelectedListener true
                 }
 
-                R.id.action_reward -> {
+                R.id.action_group -> {
                     viewPager.currentItem = 2
                     return@setOnItemSelectedListener true
                 }
@@ -166,7 +175,7 @@ class MainActivity : AppCompatActivity() {
             return when (position) {
                 0 -> HealthFragment()
                 1 -> LeaderboardFragment()
-                2 -> RewardFragment()
+                2 -> GroupFragment()
                 else -> StoreFragment()
             }
         }

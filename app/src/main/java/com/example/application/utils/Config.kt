@@ -27,4 +27,20 @@ object Config {
 
     const val AI_ENDPOINT = "detection/"
     const val LOGOUT = "auth/logout/"
+
+    const val GROUP_MY_ENDPOINT = "groups/list/"
+
+    const val PROPILE_BY_ID_ENDPOINT = "profile/userprofile/{user_id}/"
+
+    const val GROUP_CREATE_ENDPOINT = "groups/create/"
+
+    const val GROUP_DELETE_ENDPOINT = "groups/delete/{id}/"
+
+    const val GROUP_LEAVE_ENDPOINT = "groups/leave/{group_id}/"
+
+    const val GROUP_ALL_ENDPOINT = "groups/all/"
+
+    const val GROUP_SEARCH_ENDPOINT = "groups/search/{search}/"
+
+    const val GROUP_JOIN_ENDPOINT = "groups/join/"
 }
