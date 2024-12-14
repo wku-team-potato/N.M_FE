@@ -190,7 +190,16 @@ class FoodSearchActivity : AppCompatActivity() {
             return
         }
 
-        foodSearchViewModel.addSelectedFoods(mealType, date)
+        foodSearchViewModel.addSelectedFoods(mealType, date) {
+            // 성공 시 MealActivity로 이동
+            val intent = Intent(this, MealsActivity::class.java).apply {
+                putExtra("mealType", mealType)
+                putExtra("date", date)
+            }
+            Log.d("FoodSearchActivity", "MealType: $mealType, Date: $date")
+            startActivity(intent)
+            finish()
+        }
         Log.d("FoodSearchActivity", "Submitting mealType: $mealType with foods: ${foodSearchViewModel.selectedFoods.value}")
     }
 

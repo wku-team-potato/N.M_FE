@@ -91,7 +91,9 @@ class FoodSearchViewModel(
                             Log.d("FoodSearchViewModel", "_selectedFoods: ${_selectedFoods.value}")
 
                             // 데이터 업데이트 후 addSelectedFoods 호출
-                            addSelectedFoods(mealType, date)
+                            addSelectedFoods(mealType, date){
+                                _operationResult.postValue("음식이 성공적으로 추가되었습니다!")
+                            }
                         } catch (e: Exception) {
                             Log.e("FoodSearchViewModel", "Failed to fetch food for labels: ${e.message}")
                             _selectedFoods.postValue(emptyList())
@@ -125,7 +127,7 @@ class FoodSearchViewModel(
     /**
      * 선택된 음식 추가
      */
-    fun addSelectedFoods(mealType: String, date: String) = viewModelScope.launch {
+    fun addSelectedFoods(mealType: String, date: String, onSuccess : () -> Unit) = viewModelScope.launch {
         val foods = _selectedFoods.value.orEmpty()
 
         Log.d("FoodSearchViewModel", "Adding foods: $foods to mealType: $mealType, date: $date")
@@ -146,6 +148,7 @@ class FoodSearchViewModel(
                     )
                 }
                 _operationResult.postValue("음식 ${foods.size}개가 성공적으로 추가되었습니다!")
+                onSuccess()
             },
             onError = {
                 _operationResult.postValue("음식 추가 실패: ${it.message}")

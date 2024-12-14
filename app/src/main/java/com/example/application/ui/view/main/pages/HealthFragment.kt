@@ -445,6 +445,13 @@ class HealthFragment : BaseFragment() {
 
             init {
                 view.setOnClickListener {
+                    val today = LocalDate.now()
+
+                    if (day.date.isAfter(today)) {
+                        Toast.makeText(requireContext(), "해당 날짜는 선택할 수 없습니다.", Toast.LENGTH_SHORT).show()
+                        return@setOnClickListener
+                    }
+
                     if (selectedDate.value != day.date) {
                         val oldDate = selectedDate.value
                         selectedDate.value = day.date

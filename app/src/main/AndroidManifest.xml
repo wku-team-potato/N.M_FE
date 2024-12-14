@@ -83,6 +83,9 @@
                 <action android:name="androidx.health.ACTION_SHOW_PERMISSIONS_RATIONALE" />
             </intent-filter>
         </activity>
+        <activity
+            android:name=".ui.view.reward.PurchaseHistoryActivity"
+            android:exported="false"/>
 
         <activity-alias
             android:name=".ViewPermissionUsageActivity"

@@ -738,67 +738,34 @@
                                     android:fontFamily="sans-serif"
                                     android:paddingBottom="4dp"/>
 
-                                <TextView
-                                    android:id="@+id/step_count_3"
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:text="1231"
-                                    android:textSize="18sp"
-                                    android:textStyle="bold"
-                                    android:layout_gravity="center"
-                                    android:layout_margin="8dp"
-                                    android:elevation="4dp"
-                                    android:letterSpacing="0.05"
-                                    android:fontFamily="sans-serif" />
-
-                            </LinearLayout>
-
-                        </com.google.android.material.card.MaterialCardView>
-
-                        <com.google.android.material.card.MaterialCardView
-                            android:layout_margin="4dp"
-                            android:layout_weight="1"
-                            android:background="@drawable/rounded_background"
-                            app:strokeWidth="0dp"
-                            app:cardCornerRadius="16dp"
-                            app:cardElevation="4dp"
-                            android:backgroundTint="@color/md_theme_surfaceVariant"
-                            app:strokeColor="@color/md_theme_inverseOnSurface"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_columnWeight="1">
-
-                            <LinearLayout
-                                android:padding="8dp"
-                                android:layout_width="match_parent"
-                                android:layout_height="match_parent"
-                                android:orientation="vertical">
-
-                                <TextView
+                                <LinearLayout
                                     android:layout_width="match_parent"
-                                    android:layout_height="wrap_content"
-                                    android:text="걸음수"
-                                    android:textSize="12sp"
-                                    android:textStyle="bold"
-                                    android:padding="4dp"
-                                    android:elevation="4dp"
-                                    android:letterSpacing="0.05"
-                                    android:fontFamily="sans-serif"
-                                    android:paddingBottom="4dp"/>
-
-                                <TextView
-                                    android:layout_margin="8dp"
-                                    android:id="@+id/step_count_2"
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:text="1231"
-                                    android:textSize="18sp"
-                                    android:textStyle="bold"
+                                    android:layout_height="match_parent"
+                                    android:orientation="horizontal"
                                     android:layout_gravity="center"
-                                    android:elevation="4dp"
-                                    android:letterSpacing="0.05"
-                                    android:fontFamily="sans-serif" />
+                                    android:gravity="center">
 
+                                    <ImageView
+                                        android:id="@+id/step_icon"
+                                        android:layout_width="24dp"
+                                        android:layout_height="24dp"
+                                        android:layout_marginEnd="4dp"
+                                        android:src="@drawable/ic_step" />
+
+                                    <TextView
+                                        android:layout_margin="8dp"
+                                        android:id="@+id/step_count_2"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:text="1231"
+                                        android:textSize="18sp"
+                                        android:textStyle="bold"
+                                        android:layout_gravity="center"
+                                        android:elevation="4dp"
+                                        android:letterSpacing="0.05"
+                                        android:fontFamily="sans-serif" />
+
+                                </LinearLayout>
                             </LinearLayout>
 
                         </com.google.android.material.card.MaterialCardView>
