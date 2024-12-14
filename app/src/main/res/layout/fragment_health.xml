@@ -25,8 +25,8 @@
     <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        app:layout_behavior="com.google.android.material.appbar.AppBarLayout$ScrollingViewBehavior"
-        tools:context=".ui.view.main.pages.HealthFragment">
+        app:layout_behavior="com.google.android.material.appbar.AppBarLayout$ScrollingViewBehavior">
+<!--        tools:context=".ui.view.main.pages.HealthFragment">-->
 
         <androidx.core.widget.NestedScrollView
             android:id="@+id/record_container"
@@ -782,7 +782,6 @@
 
 
             </LinearLayout>
-
 
         </androidx.core.widget.NestedScrollView>
     </FrameLayout>

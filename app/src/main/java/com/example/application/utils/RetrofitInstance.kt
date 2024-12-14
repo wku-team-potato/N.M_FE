@@ -3,6 +3,7 @@ package com.example.application.utils
 import android.util.Log
 import com.example.application.data.service.DetectionService
 import com.example.application.data.service.FirstPersonalInfoService
+import com.example.application.data.service.GroupMyService
 import com.example.application.data.service.LeaderBoardService
 import com.example.application.data.service.LogoutService
 import com.example.application.data.service.PersonalInfoService
@@ -127,5 +128,9 @@ object RetrofitInstance {
 
     val logoutService: LogoutService by lazy {
         retrofit.create(LogoutService::class.java)
+    }
+
+    val groupMyService: GroupMyService by lazy {
+        retrofit.create(GroupMyService::class.java)
     }
 }

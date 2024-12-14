@@ -18,7 +18,7 @@
         android:title="" />
 
     <item
-        android:id="@+id/action_reward"
+        android:id="@+id/action_group"
         android:icon="@drawable/ic_gift_24"
         android:title="리워드"
         app:showAsAction="always" />

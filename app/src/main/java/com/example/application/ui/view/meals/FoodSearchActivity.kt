@@ -207,7 +207,7 @@ class FoodSearchActivity : AppCompatActivity() {
 
     private fun toggleContainers(query: String) = with(binding) {
         imageContainer.isVisible = query.isBlank()
-        recordButton             .isVisible = query.isNotBlank()
+        recordButton.isVisible = query.isNotBlank()
     }
 
     private fun showToast(message: String) {

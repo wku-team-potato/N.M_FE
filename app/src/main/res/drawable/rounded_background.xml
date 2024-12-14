@@ -11,7 +11,7 @@
     </item>
     <item>
         <shape>
-            <solid android:color="#FF6200EE" /> <!-- 배경 색상 -->
+            <solid android:color="@color/md_theme_surfaceVariant" /> <!-- 배경 색상 -->
             <corners android:radius="20dp" />
         </shape>
     </item>
