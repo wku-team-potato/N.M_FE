@@ -1,8 +1,8 @@
 package com.example.application.utils
 
 object Config {
-    const val BASE_URL = "http://4.217.250.21:8000/api/v1/"
-    const val AI_BASE_URL = "http://123.111.25.252:8000/api/v1/"
+    const val BASE_URL = "http://4.217.250.21:80/api/v1/"
+    const val AI_BASE_URL = "http://123.111.25.252:80/api/v1/"
 
     const val SIGNIN_ENDPOINT = "auth/login/"
     const val SIGNUP_ENDPOINT = "auth/signup/"

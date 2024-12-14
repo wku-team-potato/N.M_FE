@@ -3,23 +3,18 @@ package com.example.application.ui.view.meals
 import android.app.Activity
 import android.content.ActivityNotFoundException
 import android.content.Intent
-import android.graphics.Bitmap
-import android.graphics.BitmapFactory
-import android.graphics.Rect
 import android.net.Uri
 import android.os.Bundle
 import android.provider.MediaStore
 import android.util.Log
 import android.view.View
-import android.view.WindowManager
 import android.widget.AdapterView
 import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
 import androidx.activity.result.PickVisualMediaRequest
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.view.ViewCompat
-import androidx.core.view.WindowInsetsCompat
+import androidx.core.content.FileProvider
 import androidx.core.view.isVisible
 import androidx.core.widget.doAfterTextChanged
 import androidx.lifecycle.lifecycleScope
@@ -46,6 +41,8 @@ class FoodSearchActivity : AppCompatActivity() {
     private var mealType: String = ""
     private var date: String = ""
 
+    private var photoUri: Uri? = null
+
     private val pickMedia = registerForActivityResult(ActivityResultContracts.PickVisualMedia()) { uri ->
         uri?.let {
             Log.d("PhotoPicker", "Selected URI: $uri")
@@ -55,11 +52,13 @@ class FoodSearchActivity : AppCompatActivity() {
 
     private val takePicture =
         registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
-            val photoUri: Uri? = result.data?.data
-            photoUri?.let {
-                Log.d("PhotoPicker", "Captured URI: $it")
-                handleImageSelection(it)
-            } ?: Log.e("PhotoPicker", "No photo captured")
+            if (result.resultCode == Activity.RESULT_OK) {
+                photoUri?.let {
+                    handleImageSelection(it) // 카메라로 찍은 이미지 업로드 처리
+                } ?: Log.e("FoodSearchActivity", "Photo URI is null")
+            } else {
+                Log.e("FoodSearchActivity", "Camera capture failed")
+            }
         }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -107,12 +106,33 @@ class FoodSearchActivity : AppCompatActivity() {
         }
 
         cameraButton.setOnClickListener {
-            val takePictureIntent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
-            try {
-                takePicture.launch(takePictureIntent)
-            } catch (e: ActivityNotFoundException) {
-                Log.e("FoodSearchActivity", "Camera not available", e)
+//            val takePictureIntent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
+//            try {
+//                takePicture.launch(takePictureIntent)
+//            } catch (e: ActivityNotFoundException) {
+//                Log.e("FoodSearchActivity", "Camera not available", e)
+//            }
+            val phtoFile = File.createTempFile(
+                "temp_photo",
+                ".jpg",
+                externalCacheDir
+            )
+
+            photoUri = FileProvider.getUriForFile(
+                this@FoodSearchActivity,
+                "${packageName}.provider",
+                phtoFile
+            )
+
+            val intent = Intent(MediaStore.ACTION_IMAGE_CAPTURE).apply {
+                putExtra(MediaStore.EXTRA_OUTPUT, photoUri) // 저장 위치 설정
+                putExtra("android.intent.extras.CAMERA_FACING", 0) // 후면 카메라 (0: 후면, 1: 전면)
+                putExtra("android.intent.extras.LENS_FACING_BACK", 0) // Android Q 이상 후면 카메라
+                putExtra("android.intent.extras.CAMERA_FACING_BACK", true) // 후면 카메라 우선
             }
+
+            takePicture.launch(intent)
+
         }
 
         mealTypeSpinner.onItemSelectedListener = createMealTypeListener()

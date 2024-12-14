@@ -10,6 +10,7 @@ import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.core.view.WindowInsetsControllerCompat
 import androidx.lifecycle.ViewModelProvider
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.application.R
 import com.example.application.data.repository.LogoutRepository
 import com.example.application.databinding.ActivitySettingsBinding
@@ -39,8 +40,6 @@ class SettingsActivity : AppCompatActivity() {
             insets
         }
 
-        Log.d("Logout", "Settings activity started")
-
         val sessionManager = SessionManager(this)
 
         val repository = LogoutRepository(RetrofitInstance.logoutService)
@@ -61,9 +60,19 @@ class SettingsActivity : AppCompatActivity() {
             }
         }
 
+        binding.editUserBtn.setOnClickListener {
+            
+        }
+
         binding.btnLogout.setOnClickListener {
             settingsViewModel.logoutUser()
         }
 
+        initUi()
+
+    }
+
+    private fun initUi() = with(binding) {
+        toolbar.setNavigationOnClickListener { finish() }
     }
 }

@@ -2,6 +2,7 @@ package com.example.application.ui.viewmodel
 
 import android.app.Activity
 import android.app.Application
+import android.net.Uri
 import android.util.Log
 import android.widget.Toast
 import androidx.lifecycle.LiveData
@@ -53,6 +54,9 @@ class FoodSearchViewModel(
      * 이미지 업로드 및 결과 처리
      */
     fun uploadImage(filePath: String, mealType: String, date: String) {
+        Log.d("FoodSearchViewModel", "Uploading image: $filePath")
+        Log.d("FoodSearchViewModel", "Meal type: $mealType, Date: $date")
+
         detectionRepository.uploadImage(filePath) { response ->
             response?.let {
                 val detectedLabels = it.result.mapNotNull { result -> result.label?.toInt() }

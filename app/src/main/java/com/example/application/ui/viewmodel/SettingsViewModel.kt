@@ -15,6 +15,8 @@ class SettingsViewModel(
     private val _logoutResult = MutableLiveData<LogoutResponse>()
     val logoutResult get() = _logoutResult
 
+
+
     fun logoutUser() {
         viewModelScope.launch {
             _logoutResult.value = logoutRepository.logoutUser()

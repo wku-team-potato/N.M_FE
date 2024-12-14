@@ -270,6 +270,8 @@ class LeaderboardFragment : BaseFragment() {
             if (rankingData[0].username == userName) {
                 firstName.text = "나"
                 firstName.setTextColor(Color.BLUE)
+            } else {
+                firstName.setTextColor(Color.BLACK)
             }
         }
 
@@ -290,6 +292,8 @@ class LeaderboardFragment : BaseFragment() {
             if (rankingData[1].username == userName) {
                 secondName.text = "나"
                 secondName.setTextColor(Color.BLUE)
+            } else {
+                secondName.setTextColor(Color.BLACK)
             }
         }
 
@@ -310,6 +314,8 @@ class LeaderboardFragment : BaseFragment() {
             if (rankingData[2].username == userName) {
                 thirdName.text = "나"
                 thirdName.setTextColor(Color.BLUE)
+            } else {
+                thirdName.setTextColor(Color.BLACK)
             }
         }
     }
