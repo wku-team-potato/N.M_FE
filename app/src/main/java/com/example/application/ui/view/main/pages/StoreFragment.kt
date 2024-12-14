@@ -6,16 +6,16 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.TextView
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.example.application.R
 import com.example.application.utils.RetrofitInstance
 import com.example.application.databinding.FragmentStoreBinding
 import com.example.application.data.repository.StoreRepository
 import com.example.application.data.repository.ProfilePointRepository
+import com.example.application.ui.view.reward.PurchaseHistoryActivity
+import com.example.application.ui.view.reward.RewardActivity
 import com.example.application.ui.view.store.StoreAdapter
 import com.example.application.ui.view.store.StoreItemDetailsActivity
 import com.example.application.ui.viewmodel.StoreViewModel
@@ -57,9 +57,15 @@ class StoreFragment : BaseFragment() {
     }
 
     private fun initUi() = with(binding) {
+        myPoint.setOnClickListener {
+            val intent = Intent(requireContext(), RewardActivity::class.java)
+            startActivity(intent)
+        }
 
-
-
+        purchaseHistory.setOnClickListener {
+            val intent = Intent(requireContext(), PurchaseHistoryActivity::class.java)
+            startActivity(intent)
+        }
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -80,6 +86,7 @@ class StoreFragment : BaseFragment() {
         storeViewModel = ViewModelProvider(this, factory).get(StoreViewModel::class.java)
     }
 
+
     // UI 업데이트
     private fun observeViewModel() {
         // 아이템 목록
@@ -91,7 +98,7 @@ class StoreFragment : BaseFragment() {
         // 포인트
         storeViewModel.points.observe(viewLifecycleOwner) { points ->
             Log.d("StoreFragment", "Loaded points: $points")
-//            binding.myPointContainer.findViewById<TextView>(R.id.point_text_view).text = "${points} p"
+            binding.tvPoint.text = "${points} p"
         }
     }
 

@@ -5,7 +5,7 @@
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".view.reward.RewardActivity">
+    tools:context="ui.view.reward.RewardActivity">
 
     <com.google.android.material.appbar.AppBarLayout
         style="@style/Widget.MaterialComponents.AppBarLayout.Primary"
