@@ -1,5 +1,0 @@
-<?xml version="1.0" encoding="utf-8"?>
-<shape xmlns:android="http://schemas.android.com/apk/res/android">
-    <solid android:color="@color/md_theme_inverseOnSurface_mediumContrast" /> <!-- 배경 색상 -->
-    <corners android:topLeftRadius="20dp" android:topRightRadius="20dp" /> <!-- 아래 두 부분만 둥글게 처리 -->
-</shape>
