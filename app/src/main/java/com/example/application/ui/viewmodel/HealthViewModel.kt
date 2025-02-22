@@ -20,11 +20,11 @@ import kotlinx.coroutines.launch
 class HealthViewModel(private val healthRepository: HealthRepository,
     private val mealRepository: MealRepository,
     private val profileRepository: ProfileRepository) : ViewModel() {
-    private val _mealSummary = MutableLiveData<MealSummaryResponse>()
     private val _mealList = MutableLiveData<List<MealResponse>>()
     private val _weightList = MutableLiveData<List<HealthResponse>>()
     private val _userInfo = MutableLiveData<ProfileResponse?>()
 
+    private val _mealSummary = MutableLiveData<MealSummaryResponse>()
     val mealSummary: LiveData<MealSummaryResponse> = _mealSummary
     val mealList: LiveData<List<MealResponse>> get() = _mealList
     val weightList: LiveData<List<HealthResponse>> get() = _weightList

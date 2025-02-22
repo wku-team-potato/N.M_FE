@@ -8,10 +8,14 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Button
+import android.widget.TextView
+import androidx.appcompat.app.AlertDialog
 import androidx.core.view.isVisible
 import androidx.core.widget.doAfterTextChanged
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.application.R
+import com.example.application.data.model.groups.response.GroupResponse
 import com.example.application.databinding.FragmentMyGroupBinding
 import com.example.application.databinding.FragmentSearchGroupBinding
 import com.example.application.ui.view.main.pages.GroupFragment
@@ -67,20 +71,37 @@ class SearchGroupFragment : Fragment() {
             }
         }
 
-        viewModel.myGroups.observe(viewLifecycleOwner) { groups ->
-            adapter.updateData(viewModel.groupsAll.value ?: emptyList(), groups)
+//        viewModel.myGroups.observe(viewLifecycleOwner) { groups ->
+//            adapter.updateData(viewModel.groupsAll.value ?: emptyList(), groups)
+//        }
+
+        viewModel.myGroups.observe(viewLifecycleOwner) { joinedGroups ->
+            val allGroups = viewModel.groupsAll.value ?: emptyList()
+            adapter.updateData(allGroups, joinedGroups)
         }
 
-        viewModel.groupsAll.observe(viewLifecycleOwner) { groups ->
-            if (groups.isEmpty()) {
+        viewModel.groupsAll.observe(viewLifecycleOwner) { allGroups ->
+            val joinedGroups = viewModel.myGroups.value ?: emptyList()
+            if (allGroups.isEmpty()) {
                 binding.recyclerViewMyGroup.visibility = View.GONE
                 binding.tvEmptyGroupMessage.visibility = View.VISIBLE
             } else {
                 binding.recyclerViewMyGroup.visibility = View.VISIBLE
                 binding.tvEmptyGroupMessage.visibility = View.GONE
-                adapter.updateData(groups, viewModel.myGroups.value ?: emptyList())
+                adapter.updateData(allGroups, joinedGroups)
             }
         }
+
+//        viewModel.groupsAll.observe(viewLifecycleOwner) { groups ->
+//            if (groups.isEmpty()) {
+//                binding.recyclerViewMyGroup.visibility = View.GONE
+//                binding.tvEmptyGroupMessage.visibility = View.VISIBLE
+//            } else {
+//                binding.recyclerViewMyGroup.visibility = View.VISIBLE
+//                binding.tvEmptyGroupMessage.visibility = View.GONE
+//                adapter.updateData(groups, viewModel.myGroups.value ?: emptyList())
+//            }
+//        }
 
         return binding.root
     }
@@ -88,4 +109,5 @@ class SearchGroupFragment : Fragment() {
     private fun handleLoadingState(isLoading: Boolean) {
         binding.llLoading.isVisible = isLoading
     }
+
 }

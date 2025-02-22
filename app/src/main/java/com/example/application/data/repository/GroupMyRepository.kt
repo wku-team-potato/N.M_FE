@@ -3,9 +3,12 @@ package com.example.application.data.repository
 import android.util.Log
 import com.example.application.data.model.groups.request.GroupCreateRequest
 import com.example.application.data.model.groups.request.GroupJoinRequest
+import com.example.application.data.model.groups.request.GroupPublicRequest
 import com.example.application.data.model.groups.response.GroupCreateResponse
+import com.example.application.data.model.groups.response.GroupDetailResponse
 import com.example.application.data.model.groups.response.GroupJoinResponse
 import com.example.application.data.model.groups.response.GroupLeaveResponse
+import com.example.application.data.model.groups.response.GroupMemberResponse
 import com.example.application.data.model.groups.response.GroupResponse
 import com.example.application.data.service.GroupMyService
 import org.json.JSONException
@@ -35,6 +38,25 @@ class GroupMyRepository(private val service: GroupMyService) {
     suspend fun joinGroup(groupJoinRequest: GroupJoinRequest): GroupJoinResponse {
         return service.joinGroup(groupJoinRequest)
     }
+
+    suspend fun groupDetail(groupId: Int): GroupDetailResponse {
+        return service.groupDetail(groupId)
+    }
+
+    suspend fun getMyGroupInfo(groupId: Int): List<GroupMemberResponse> {
+        return service.getMyGroupInfo(groupId)
+    }
+
+    suspend fun updateGroupPublic(groupId: Int, isPublic: GroupPublicRequest): String {
+        val response = service.updateGroupPublic(groupId, isPublic)
+        if (response.isSuccessful) {
+            return "Group updated successfully"
+        } else {
+            throw Exception("그룹 업데이트 실패: ${response.code()}")
+        }
+    }
+
+
 
 //    suspend fun leaveGroup(groupId: Int) : String {
 //        Log.d("GroupMyRepository", "Deleting group with id: $groupId")

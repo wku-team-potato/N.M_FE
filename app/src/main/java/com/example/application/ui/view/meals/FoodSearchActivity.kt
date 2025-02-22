@@ -85,7 +85,14 @@ class FoodSearchActivity : AppCompatActivity() {
             Toast.makeText(this, message, Toast.LENGTH_SHORT).show()
             if (message.contains("추가")) {
                 setResult(Activity.RESULT_OK, Intent().apply { putExtra("mealType", mealType) })
+                val intent = Intent(this, MealsActivity::class.java).apply {
+                    putExtra("mealType", mealType)
+                    putExtra("date", date)
+                }
+                Log.d("FoodSearchActivity2", "MealType: $mealType, Date: $date")
+//                startActivity(intent)
                 finish()
+//                finish()
             }
         }
 
@@ -171,6 +178,23 @@ class FoodSearchActivity : AppCompatActivity() {
         }
 
         recordButton.setOnClickListener { validateAndSubmit() }
+
+        foodSearchViewModel.isLoading.observe(this@FoodSearchActivity) { isLoading ->
+            if (isLoading) {
+                mainContainer.visibility = View.GONE
+                llLoading.visibility = View.VISIBLE
+            } else {
+                llLoading.visibility = View.GONE
+                mainContainer.visibility = View.VISIBLE
+            }
+
+        }
+
+        foodSearchViewModel.errorMessage.observe(this@FoodSearchActivity) { errorMessage ->
+            errorMessage?.let {
+                Toast.makeText(this@FoodSearchActivity, it, Toast.LENGTH_SHORT).show()
+            }
+        }
     }
 
     private fun handleImageSelection(uri: Uri) {
@@ -196,8 +220,9 @@ class FoodSearchActivity : AppCompatActivity() {
                 putExtra("mealType", mealType)
                 putExtra("date", date)
             }
+            setResult(Activity.RESULT_OK, Intent().apply { putExtra("mealType", mealType) })
             Log.d("FoodSearchActivity", "MealType: $mealType, Date: $date")
-            startActivity(intent)
+//            startActivity(intent)
             finish()
         }
         Log.d("FoodSearchActivity", "Submitting mealType: $mealType with foods: ${foodSearchViewModel.selectedFoods.value}")

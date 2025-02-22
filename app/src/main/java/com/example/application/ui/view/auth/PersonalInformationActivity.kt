@@ -46,6 +46,11 @@ class PersonalInformationActivity : AppCompatActivity() {
             val height = heightEditText.text.toString()
             val weight = weightEditText.text.toString()
 
+            if (height.toInt() <= 0 || weight.toInt() <= 0) {
+                Toast.makeText(this@PersonalInformationActivity, "키와 몸무게는 0보다 커야 합니다.", Toast.LENGTH_SHORT).show()
+                return@setOnClickListener
+            }
+
             if (height.isNotEmpty() && weight.isNotEmpty()) {
                 submitPersonalInfo(height.toInt(), weight.toInt())
             } else {

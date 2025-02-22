@@ -1,14 +1,17 @@
 package com.example.application.ui.view.main.pages
 
 import android.view.LayoutInflater
+import android.view.View
 import android.widget.Toast
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.ViewModelProvider
 import com.example.application.utils.RetrofitInstance
 import com.example.application.databinding.DialogMyPageBinding
 import com.example.application.data.model.response.ProfileResponse
 import com.example.application.data.repository.ProfileRepository
+import com.example.application.ui.meals.function.viewmodel.HealthViewModel
 import com.example.application.ui.viewmodel.ProfileViewModel
 import com.example.application.ui.viewmodel.ProfileViewModelFactory
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
@@ -16,7 +19,7 @@ import com.google.android.material.dialog.MaterialAlertDialogBuilder
 open class BaseFragment : Fragment() {
     private lateinit var profileViewModel : ProfileViewModel
 
-    fun showMyPage() {
+    fun showMyPage(onProfileUpdated: (Boolean) -> Unit) {
         val binding = DialogMyPageBinding.inflate(LayoutInflater.from(requireContext()))
 
         initViewModel(binding)
@@ -26,6 +29,9 @@ open class BaseFragment : Fragment() {
             .show()
 
         with(binding) {
+            idField.visibility = View.GONE
+            heightField.visibility = View.GONE
+
             editButton.setOnClickListener {
                 editButton.isVisible = false
                 doneButton.isVisible = true
@@ -49,10 +55,14 @@ open class BaseFragment : Fragment() {
 
                 profileViewModel.updateResult.observe(viewLifecycleOwner) { success ->
                     if (success) {
-                        Toast.makeText(requireContext(), "프로필 수정 완료", Toast.LENGTH_SHORT).show()
+                        Toast.makeText(requireContext(), "체중 수정 완료", Toast.LENGTH_SHORT).show()
+                        onProfileUpdated(true)
                         dialog.dismiss()
+                        idField.visibility = View.VISIBLE
+                        heightField.visibility = View.VISIBLE
                     } else {
                         Toast.makeText(requireContext(), "프로필 수정 실패", Toast.LENGTH_SHORT).show()
+                        onProfileUpdated(false)
                     }
                 }
 

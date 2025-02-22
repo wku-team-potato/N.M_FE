@@ -15,6 +15,7 @@ import com.example.application.databinding.ItemCalorieBinding
 import com.example.application.ui.meals.function.data.MealDetailResponse
 
 class CalorieAdapter(
+    private val baseCalorie: Int,
     private val mealList: List<String>,
     private val calorieData: List<Int>,
     private val nutrientData: List<MealDetailResponse>
@@ -28,6 +29,7 @@ class CalorieAdapter(
     ) : RecyclerView.ViewHolder(binding.root) {
 
         fun bind(
+            baseCalorie: Int,
             mealType: String,
             calorie: Int,
             nutrients: MealDetailResponse,
@@ -36,9 +38,9 @@ class CalorieAdapter(
             binding.mealtimeTextView.text = mealType
             binding.calorieText.text = "총 칼로리 ${calorie}kcal"
 
-            val baseCarbohydrate = 300
-            val baseProtein = 60
-            val baseFat = 60
+            val baseCarbohydrate = (baseCalorie * 0.5 / 4).toInt()
+            val baseProtein = (baseCalorie * 0.3 / 4).toInt()
+            val baseFat = (baseCalorie * 0.2 / 9).toInt()
 
             val carbohydratePercent = (nutrients.carbohydrate / baseCarbohydrate * 100).toInt()
             val proteinPercent = (nutrients.protein / baseProtein * 100).toInt()
@@ -118,7 +120,7 @@ class CalorieAdapter(
     }
 
     override fun onBindViewHolder(holder: MealViewHolder, position: Int) {
-        holder.bind(mealList[position], calorieData[position], nutrientData[position], onItemClickListener)
+        holder.bind(baseCalorie, mealList[position], calorieData[position], nutrientData[position], onItemClickListener)
     }
 
     override fun getItemCount() = mealList.size

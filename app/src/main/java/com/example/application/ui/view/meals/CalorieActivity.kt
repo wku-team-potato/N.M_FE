@@ -26,6 +26,7 @@ class CalorieActivity : AppCompatActivity() {
 //    private lateinit var mealViewModel: MealViewModel
     private lateinit var calorieViewModel: CalorieViewModel
     private lateinit var selectedDate : String
+    private lateinit var base_kcal: String
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -49,6 +50,8 @@ class CalorieActivity : AppCompatActivity() {
         calorieViewModel = ViewModelProvider(this, calorieFactory).get(CalorieViewModel::class.java)
 
         selectedDate = intent.getStringExtra("selectedDate") ?: ""
+        base_kcal = intent.getStringExtra("baseCalorie") ?: ""
+        Log.d("CalorieActivity", "Received date for API : $base_kcal")
 
         Log.d("CalorieActivity", "Received date for API : $selectedDate")
 
@@ -91,7 +94,7 @@ class CalorieActivity : AppCompatActivity() {
     }
 
     private fun updateAdapter(mealList: List<String>, calorieData: List<Int>, nutrientData: List<MealDetailResponse>) {
-        binding.recyclerView.adapter = CalorieAdapter(mealList, calorieData, nutrientData).apply {
+        binding.recyclerView.adapter = CalorieAdapter(base_kcal.toInt(), mealList, calorieData, nutrientData).apply {
             onItemClickListener = { mealTime ->
                 Log.d("CalorieActivity", "Clicked on: $mealTime")
 

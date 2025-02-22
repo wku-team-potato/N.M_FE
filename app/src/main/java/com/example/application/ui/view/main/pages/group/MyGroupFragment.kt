@@ -38,9 +38,21 @@ class MyGroupFragment : Fragment() {
         (requireParentFragment() as GroupFragment).getSharedViewModel()
     }
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
+    override fun onResume() {
+        super.onResume()
 
+        viewModel.myGroups.observe(viewLifecycleOwner) { groups ->
+            Log.d("MyGroupFragment", "groups: $groups")
+            if (groups.isEmpty()) {
+                binding.recyclerViewMyGroup.visibility = View.GONE
+                binding.tvEmptyGroupMessage.visibility = View.VISIBLE
+                adapter.updateData(emptyList(), viewModel.myInfo.value!!.username)
+            } else {
+                binding.recyclerViewMyGroup.visibility = View.VISIBLE
+                binding.tvEmptyGroupMessage.visibility = View.GONE
+                adapter.updateData(groups, viewModel.myInfo.value!!.username)
+            }
+        }
     }
 
     override fun onCreateView(
@@ -180,8 +192,8 @@ class MyGroupFragment : Fragment() {
         val dialogMessage = dialogView.findViewById<TextView>(R.id.dialogMessage)
 
         // 제목과 메시지 동적으로 설정 가능
-        dialogTitle.text = "삭제 확인"
-        dialogMessage.text = "${group.name}을(를) 삭제하시겠습니까?"
+        dialogTitle.text = "탈퇴 확인"
+        dialogMessage.text = "${group.name}에서 탈퇴하시겠습니까?"
 
         // 버튼 클릭 리스너 설정
         cancelButton.setOnClickListener {

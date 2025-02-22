@@ -11,6 +11,7 @@ import android.view.ViewGroup
 import android.view.WindowManager
 import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
+import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
@@ -47,6 +48,8 @@ class MealsActivity : AppCompatActivity() {
     private var selectedDate: String = ""
     private var mealType: String = ""
 
+    private lateinit var launcher: ActivityResultLauncher<Intent>
+
     private val adapter by lazy {
         MealAdapter(
             onItemModified = { meal, count, quantity ->
@@ -67,6 +70,38 @@ class MealsActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
+        launcher = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
+            if (result.resultCode == Activity.RESULT_OK) {
+
+                val returnMealType = result.data?.getStringExtra("mealType")
+                mealType = returnMealType ?: ""
+                if (returnMealType.equals("breakfast")){
+                        binding.toolbar.title = "아침"
+                    } else if (returnMealType.equals("lunch")){
+                        binding.toolbar.title = "점심"
+                    } else if (returnMealType.equals("dinner")){
+                        binding.toolbar.title = "저녁"
+                    }
+
+                    Log.d("MealActivity", "Selected date: $selectedDate, MealType: $mealType")
+                    observeMealData(mealType)
+                    mealViewModel.fetchMealList(selectedDate)
+            }
+        }
+
+        val redirectToFoodSearch = intent.getBooleanExtra("redirect_to_food_search", false)
+        val date = intent.getStringExtra("date")
+        if (redirectToFoodSearch) {
+            // 2 Depth에 들어오자마자 바로 3 Depth로 이동
+//            startActivity(Intent(this, FoodSearchActivity::class.java).apply {
+//                putExtra("date", date)
+//            })
+            launcher.launch(Intent(this, FoodSearchActivity::class.java).apply {
+                putExtra("date", date)
+            })
+        }
+
         enableEdgeToEdge()
         setContentView(binding.root)
 
@@ -176,6 +211,8 @@ class MealsActivity : AppCompatActivity() {
         recyclerView.adapter = adapter
 
         addFoodButton.setOnClickListener {
+            processChanges_2(selectedDate)
+            // 수정 사항 저장 만약 일부 수정을 하고 음식 검색으로 넘어갔다가 다시 돌아오면 수정 사항이 저장되어야 함
             val intent = Intent(this@MealsActivity, FoodSearchActivity::class.java).apply {
                 putExtra("date", selectedDate)
                 putExtra("mealType", mealType)
@@ -185,7 +222,7 @@ class MealsActivity : AppCompatActivity() {
         }
 
         doneButton.setOnClickListener {
-            processChanges(selectedDate)
+            processChanges(selectedDate) // 수정 사항 저장
             Toast.makeText(this@MealsActivity, "수정 사항이 저장되었습니다.", Toast.LENGTH_SHORT).show()
             finish()
         }
@@ -202,6 +239,30 @@ class MealsActivity : AppCompatActivity() {
                 binding.recyclerView.visibility = RecyclerView.VISIBLE
                 binding.emptyMessage.visibility = RecyclerView.GONE
                 adapter.setItems(filteredMeals)
+            }
+        }
+    }
+
+    private fun processChanges_2(date: String) {
+        lifecycleScope.launch {
+            try {
+                modifiedList.forEach { meal ->
+                    Log.d("MealActivity", "Updating meal: $meal")
+                    mealViewModel.updateMeal(
+                        id = meal.id,
+                        foodId = meal.food_id,
+                        mealType = meal.meal_type,
+                        servingSize = meal.serving_size,
+                        date = date
+                    )
+                }
+
+                deletedList.forEach { meal ->
+                    Log.d("MealActivity", "Deleting meal: $meal")
+                    mealViewModel.deleteMeal(meal.id)
+                }
+            } catch (e: Exception) {
+                Log.e("MealActivity", "Error processing changes: ${e.message}")
             }
         }
     }

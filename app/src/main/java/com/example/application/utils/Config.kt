@@ -44,4 +44,12 @@ object Config {
     const val GROUP_SEARCH_ENDPOINT = "groups/search/{search}/"
 
     const val GROUP_JOIN_ENDPOINT = "groups/join/"
+
+    const val GROUP_DETAIL_ENDPOINT = "groups/members/detail/{id}/"
+
+    const val GROUP_MY_INFO_ENDPOIN = "groups/member/detail/{group_id}/"
+
+    const val GROUP_PUBLIC_UPDATE_ENDPOINT = "groups/update-public/{group_id}/"
+
+    const val GroupLeaderBoard_ENDPOINT = "groups/top-ranking/"
 }

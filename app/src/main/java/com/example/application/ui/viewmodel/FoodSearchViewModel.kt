@@ -37,6 +37,11 @@ class FoodSearchViewModel(
     private val _selectedFoods = MutableLiveData<List<FoodResponse>>()
     val selectedFoods: LiveData<List<FoodResponse>> get() = _selectedFoods
 
+    private val _isLoading = MutableLiveData<Boolean>()
+    val isLoading: LiveData<Boolean> get() = _isLoading
+
+    private val _errorMessage = MutableLiveData<String?>()
+    val errorMessage: LiveData<String?> get() = _errorMessage
 
     /**
      * 음식 선택 토글
@@ -56,6 +61,8 @@ class FoodSearchViewModel(
     fun uploadImage(filePath: String, mealType: String, date: String) {
         Log.d("FoodSearchViewModel", "Uploading image: $filePath")
         Log.d("FoodSearchViewModel", "Meal type: $mealType, Date: $date")
+
+        _isLoading.postValue(true)
 
         detectionRepository.uploadImage(filePath) { response ->
             response?.let {
@@ -97,12 +104,20 @@ class FoodSearchViewModel(
                         } catch (e: Exception) {
                             Log.e("FoodSearchViewModel", "Failed to fetch food for labels: ${e.message}")
                             _selectedFoods.postValue(emptyList())
+                        } finally {
+                            _isLoading.postValue(false)
                         }
                     }
                 } else {
                     Log.e("FoodSearchViewModel", "No valid labels detected in response")
+                    _errorMessage.postValue("음식이 감지되지 않았습니다.")
+                    _isLoading.postValue(false)
                 }
-            } ?: Log.e("FoodSearchViewModel", "Image upload failed")
+            } ?: run {
+                Log.e("FoodSearchViewModel", "Image upload failed")
+                _errorMessage.postValue("이미지 업로드에 실패했습니다.")
+                _isLoading.postValue(false)
+            }
         }
     }
 

@@ -30,6 +30,7 @@ import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import com.example.application.R
 import com.example.application.common.extensions.displayText
+import com.example.application.data.model.response.ProfileResponse
 import com.example.application.data.repository.ProfileRepository
 import com.example.application.databinding.FragmentHealthBinding
 import com.example.application.databinding.LayoutCalendarDayBinding
@@ -51,16 +52,24 @@ import com.github.mikephil.charting.data.Entry
 import com.github.mikephil.charting.data.LineData
 import com.github.mikephil.charting.data.LineDataSet
 import com.github.mikephil.charting.formatter.ValueFormatter
+import com.kizitonwose.calendar.core.CalendarDay
+import com.kizitonwose.calendar.core.CalendarMonth
+import com.kizitonwose.calendar.core.Week
 import com.kizitonwose.calendar.core.WeekDay
 import com.kizitonwose.calendar.core.atStartOfMonth
 import com.kizitonwose.calendar.core.firstDayOfWeekFromLocale
+import com.kizitonwose.calendar.view.MonthDayBinder
+import com.kizitonwose.calendar.view.MonthScrollListener
 import com.kizitonwose.calendar.view.ViewContainer
 import com.kizitonwose.calendar.view.WeekDayBinder
+import com.kizitonwose.calendar.view.WeekScrollListener
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
+import java.math.BigDecimal
+import java.math.RoundingMode
 import java.text.NumberFormat
 import java.text.SimpleDateFormat
 import java.time.LocalDate
@@ -68,6 +77,7 @@ import java.time.LocalDateTime
 import java.time.LocalTime
 import java.time.YearMonth
 import java.time.format.DateTimeFormatter
+import java.util.Calendar
 import java.util.Locale
 
 
@@ -87,6 +97,11 @@ class HealthFragment : BaseFragment() {
     private lateinit var healthViewModel: HealthViewModel
     private lateinit var healthConnectClient: HealthConnectClient
 
+    private var base_kcal = 0
+    private var currentMealSummary: MealSummaryResponse? = null
+    private var currentUserInfo: ProfileResponse? = null
+
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -100,6 +115,14 @@ class HealthFragment : BaseFragment() {
         val formattedApiDate = selectedDate.value.format(apiDateFormatter)
         Log.d("HealthFragment", "Formatted API Date: $formattedApiDate")
 
+//        initObservers()
+        healthViewModel.getUserInfo()
+        healthViewModel.getMealSummary(formattedApiDate)
+        healthViewModel.getWeightList()
+//        initViewModel()
+//        initUi()
+//        initObservers()
+//        setupListeners()
     }
 
     override fun onDestroyView() {
@@ -116,6 +139,16 @@ class HealthFragment : BaseFragment() {
         setupListeners()
         healthViewModel.getUserInfo()
 
+        binding.editWeightHeight.setOnClickListener {
+            showMyPage{ updated ->
+                if(updated){
+                    healthViewModel.getUserInfo()
+                    healthViewModel.getWeightList()
+//                    initObservers()
+                }
+            }
+        }
+
         viewLifecycleOwner.lifecycleScope.launch {
             readStepsData()
             healthViewModel.getWeightList()
@@ -130,21 +163,23 @@ class HealthFragment : BaseFragment() {
         }
     }
 
-    private fun mealSummaryUI(melSummaryResponse: MealSummaryResponse) {
+    private fun mealSummaryUI(melSummaryResponse: MealSummaryResponse, userInfo: ProfileResponse) {
         val breakFast: MealDetailResponse = melSummaryResponse.breakfast
         val lunch: MealDetailResponse = melSummaryResponse.lunch
         val dinner: MealDetailResponse = melSummaryResponse.dinner
         val summary: MealTotalResponse = melSummaryResponse.summary
 
-        val base_kcal = 2400
-        val base_carbohydrate = 300
-        val base_protein = 60
-        val base_fat = 60
+        val weight = userInfo.weight
+        val height = userInfo.height
+        base_kcal = (15.3 * weight + 679).toInt()
+        val base_carbohydrate = (base_kcal * 0.5 / 4).toInt()
+        val base_protein = (base_kcal * 0.3 / 4).toInt()
+        val base_fat = (base_kcal * 0.2 / 9).toInt()
 
-        val s_c_percent = summary.calorie / base_kcal * 100
-        val s_ca_percent = summary.carbohydrate / base_carbohydrate * 100
-        val s_p_percent = summary.protein / base_protein * 100
-        val s_f_percent = summary.fat / base_fat * 100
+        val s_c_percent = summary.calorie / base_kcal.toDouble() * 100
+        val s_ca_percent = summary.carbohydrate / base_carbohydrate.toDouble() * 100
+        val s_p_percent = summary.protein / base_protein.toDouble() * 100
+        val s_f_percent = summary.fat / base_fat.toDouble() * 100
 
         updatePercentView(binding.kcalPercent, s_c_percent, R.color.md_theme_errorContainer_mediumContrast, R.color.md_theme_background_highContrast)
         updatePercentView(binding.caboPercent, s_ca_percent, R.color.md_theme_errorContainer_mediumContrast, R.color.md_theme_background_highContrast)
@@ -165,8 +200,65 @@ class HealthFragment : BaseFragment() {
         updateProgressBar(binding.caboProgress, s_ca_percent, 100, R.color.health_cabo, R.color.health_cabo)
         updateProgressBar(binding.proteinProgress, s_p_percent, 100, R.color.health_protein, R.color.health_protein)
         updateProgressBar(binding.fatProgress, s_f_percent, 100, R.color.health_fat, R.color.health_fat)
-
     }
+
+//    private fun mealSummaryUI(melSummaryResponse: MealSummaryResponse) {
+//        val breakFast: MealDetailResponse = melSummaryResponse.breakfast
+//        val lunch: MealDetailResponse = melSummaryResponse.lunch
+//        val dinner: MealDetailResponse = melSummaryResponse.dinner
+//        val summary: MealTotalResponse = melSummaryResponse.summary
+//
+//        healthViewModel.userInfo.observe(viewLifecycleOwner) { userInfo ->
+//            userInfo?.let {
+//
+//                val weight = healthViewModel.userInfo.value?.weight ?: 0f
+//                val height = healthViewModel.userInfo.value?.height ?: 0f
+//                base_kcal = (15.3 * weight + 679).toInt()
+//                val base_carbohydrate = (base_kcal * 0.5 / 4).toInt()
+//                val base_protein = (base_kcal * 0.3 / 4).toInt()
+//                val base_fat = (base_kcal * 0.2 / 9).toInt()
+//
+////                val base_kcal = 2400
+////                val base_carbohydrate = 300
+////                val base_protein = 75
+////                val base_fat = 60
+//
+//                val s_c_percent = summary.calorie / base_kcal * 100
+//                val s_ca_percent = summary.carbohydrate / base_carbohydrate * 100
+//                val s_p_percent = summary.protein / base_protein * 100
+//                val s_f_percent = summary.fat / base_fat * 100
+//
+//                Log.d("HealthFragment", "Base Kcal: $s_c_percent")
+//                Log.d("HealthFragment", "Base Carbohydrate: $s_ca_percent")
+//                Log.d("HealthFragment", "Base Protein: $s_p_percent")
+//                Log.d("HealthFragment", "Base Fat: $s_f_percent")
+//
+//                updatePercentView(binding.kcalPercent, s_c_percent, R.color.md_theme_errorContainer_mediumContrast, R.color.md_theme_background_highContrast)
+//                updatePercentView(binding.caboPercent, s_ca_percent, R.color.md_theme_errorContainer_mediumContrast, R.color.md_theme_background_highContrast)
+//                updatePercentView(binding.proteinPercent, s_p_percent, R.color.md_theme_errorContainer_mediumContrast, R.color.md_theme_background_highContrast)
+//                updatePercentView(binding.fatPercent, s_f_percent, R.color.md_theme_errorContainer_mediumContrast, R.color.md_theme_background_highContrast)
+//
+//                val base_calorie_text = "${NumberFormat.getInstance().format(summary.calorie.toInt())} / ${NumberFormat.getInstance().format(base_kcal)}kcal"
+//                val base_carbohydrate_text = "${NumberFormat.getInstance().format(summary.carbohydrate.toInt())} / ${NumberFormat.getInstance().format(base_carbohydrate)}g"
+//                val base_protein_text = "${NumberFormat.getInstance().format(summary.protein.toInt())} / ${NumberFormat.getInstance().format(base_protein)}g"
+//                val base_fat_text = "${NumberFormat.getInstance().format(summary.fat.toInt())} / ${NumberFormat.getInstance().format(base_fat)}g"
+//
+//                binding.kcalText.text = updateGraphicView(base_calorie_text, R.color.health_cal, 36)
+//                binding.caboText.text = updateGraphicView(base_carbohydrate_text, R.color.health_cabo, 36)
+//                binding.proteinText.text = updateGraphicView(base_protein_text, R.color.health_protein, 36)
+//                binding.fatText.text = updateGraphicView(base_fat_text, R.color.health_fat, 36)
+//
+//
+//                updateProgressBar(binding.kcalProgress, s_c_percent, 100, R.color.health_cal, R.color.health_cal)
+//                updateProgressBar(binding.caboProgress, s_ca_percent, 100, R.color.health_cabo, R.color.health_cabo)
+//                updateProgressBar(binding.proteinProgress, s_p_percent, 100, R.color.health_protein, R.color.health_protein)
+//                updateProgressBar(binding.fatProgress, s_f_percent, 100, R.color.health_fat, R.color.health_fat)
+//            }
+//        }
+//
+//
+//
+//    }
 
     private fun updatePercentView(textView: TextView, percent: Double, overLimitColor: Int, defaultColor: Int) {
         textView.text = "${percent.toInt()}%"
@@ -210,24 +302,37 @@ class HealthFragment : BaseFragment() {
         overLimitColor: Int,
         defaultColor: Int
     ) {
-        val progress = progressValue.toInt()
-        progressBar.progress = progress
+        val progress = progressValue.coerceIn(0.0, maxValue.toDouble()).toInt() // 안전한 범위 값으로 설정
 
-        // 100% 초과 시 색상 변경
-        progressBar.progressTintList = ColorStateList.valueOf(
-            ContextCompat.getColor(
-                requireContext(),
-                if (progress > maxValue) overLimitColor else defaultColor
-            )
-        )
+        // 기존 애니메이션을 취소하고 초기화
+        progressBar.clearAnimation()
+        progressBar.progress = 0 // Progress를 초기화
+        progressBar.max = maxValue
 
-        val animator = ObjectAnimator.ofInt(progressBar, "progress", 0, progress)
-        animator.duration = 1000
-        animator.interpolator = LinearInterpolator() // 애니메이션 속도 일정
+        // ProgressBar 색상 설정
+        val color = if (progress > maxValue) overLimitColor else defaultColor
+        progressBar.progressTintList = ColorStateList.valueOf(ContextCompat.getColor(requireContext(), color))
+
+        Log.d("Animate", "Progress: $progress, Max: $maxValue")
+
+        // 애니메이션 실행
+        val animator = ObjectAnimator.ofInt(progressBar, "progress", 0, progress).apply {
+            Log.d("HealthFragment", "Progress: $progress, Max: $maxValue")
+            Log.d("HealthFragment", "Duration: ${calculateDuration(progress, maxValue)}")
+            duration = calculateDuration(progress, maxValue)
+            interpolator = LinearInterpolator()
+        }
+
         animator.start()
 
         Log.d("HealthFragment", "Progress: $progress, Max: $maxValue")
     } // updateProgressBar 초과시 색상 변경 및 흔들림 애니메이션 추가
+
+    private fun calculateDuration(progress: Int, maxValue: Int): Long {
+        val baseDuration = 1000L
+        val minDuration = 300L
+        return (baseDuration * (progress.toDouble() / maxValue)).toLong().coerceAtLeast(minDuration)
+    }
 
     private fun initWeightsChart(weightList: List<HealthResponse>): LineData {
 
@@ -358,37 +463,76 @@ class HealthFragment : BaseFragment() {
         }
     }
 
+//    private fun initObservers() {
+//        healthViewModel.mealSummary.observe(viewLifecycleOwner) { mealSummary ->
+//
+//            if (mealSummary != null) {
+//                mealSummaryUI(mealSummary)
+//            } else {
+//                Log.e("HealthFragment", "Meal summary is null")
+//            }
+//
+//        }
+//
+//        healthViewModel.weightList.observe(viewLifecycleOwner) { weightList ->
+//            Log.d("HealthFragment", "Received weight list: $weightList")
+//            if (!weightList.isNullOrEmpty()) {
+//                setupLineChart(binding.weightChart, weightList.asReversed())
+//            } else {
+//                Log.e("HealthFragment", "Weight list is empty or null")
+//            }
+//        }
+//
+//        healthViewModel.userInfo.observe(viewLifecycleOwner) { userInfo ->
+//            userInfo?.let {
+//                // weight 텍스트 업데이트
+//                binding.weightText.text = String.format("%.1f kg", it.weight)
+//                Log.d("HealthFragment", "Updated weight: ${it.weight}")
+//                viewLifecycleOwner.lifecycleScope.launch {
+//                    healthViewModel.getWeightList()
+//                }
+//            }
+//        }
+//    }
+
     private fun initObservers() {
-        healthViewModel.mealSummary.observe(viewLifecycleOwner) { mealSummary ->
+        // userInfo 관찰
+        healthViewModel.userInfo.observe(viewLifecycleOwner) { userInfo ->
+            userInfo?.let {
+                binding.weightText.text = String.format("%.1f kg", it.weight)
+                // 필요하다면 here healthViewModel.getWeightList() 호출
 
-            if (mealSummary != null) {
-                mealSummaryUI(mealSummary)
-            } else {
-                // mealSummary가 null일 때 처리
+                currentUserInfo = it
+                checkAndCallMealSummaryUI() // 두 값이 모두 있으면 mealSummaryUI 호출
             }
+        }
 
+        // mealSummary 관찰
+        healthViewModel.mealSummary.observe(viewLifecycleOwner) { mealSummary ->
+            mealSummary?.let {
+                currentMealSummary = it
+                checkAndCallMealSummaryUI() // 두 값이 모두 있으면 mealSummaryUI 호출
+            }
         }
 
         healthViewModel.weightList.observe(viewLifecycleOwner) { weightList ->
-            Log.d("HealthFragment", "Received weight list: $weightList")
+            // weightList UI 업데이트
             if (!weightList.isNullOrEmpty()) {
                 setupLineChart(binding.weightChart, weightList.asReversed())
-            } else {
-                Log.e("HealthFragment", "Weight list is empty or null")
-            }
-        }
-
-        healthViewModel.userInfo.observe(viewLifecycleOwner) { userInfo ->
-            userInfo?.let {
-                // weight 텍스트 업데이트
-                binding.weightText.text = String.format("%.1f kg", it.weight)
-                Log.d("HealthFragment", "Updated weight: ${it.weight}")
-                viewLifecycleOwner.lifecycleScope.launch {
-                    healthViewModel.getWeightList()
-                }
             }
         }
     }
+
+    private fun checkAndCallMealSummaryUI() {
+        val userInfo = currentUserInfo
+        val mealSummary = currentMealSummary
+
+        if (userInfo != null && mealSummary != null) {
+            // userInfo와 mealSummary를 모두 파라미터로 전달
+            mealSummaryUI(mealSummary, userInfo)
+        }
+    }
+
 
     private fun initViewModel() {
         val healthRepository = HealthRepository(RetrofitInstance.healthService)
@@ -403,24 +547,38 @@ class HealthFragment : BaseFragment() {
         binding.buttonDecreaseWeight.setOnClickListener {
             val currentWeight = healthViewModel.userInfo.value?.weight ?: 0f
             if (currentWeight > 0f) {
-                healthViewModel.updateUserInfo(currentWeight - 0.1f)
+                val updatedWeight = BigDecimal(currentWeight.toString())
+                    .subtract(BigDecimal("0.1")) // 0.1을 뺌
+                    .setScale(2, RoundingMode.HALF_UP) // 소수점 두 자리 반올림
+                    .toFloat()
+                healthViewModel.updateUserInfo(updatedWeight)
             } else {
                 Toast.makeText(requireContext(), "Weight cannot be less than 0", Toast.LENGTH_SHORT).show()
             }
+            initObservers()
         }
 
         binding.buttonIncreaseWeight.setOnClickListener {
             val currentWeight = healthViewModel.userInfo.value?.weight ?: 0f
-            healthViewModel.updateUserInfo(currentWeight + 0.1f)
+            val updatedWeight = BigDecimal(currentWeight.toString())
+                .add(BigDecimal("0.1")) // 0.1을 뺌
+                .setScale(2, RoundingMode.HALF_UP) // 소수점 두 자리 반올림
+                .toFloat()
+            healthViewModel.updateUserInfo(updatedWeight)
+            initObservers()
         }
     }
 
     private fun initUi() = with(binding) {
 
         initCalendar()
+//        initWeekCalendar()
+//        initMonthCalendar()
 
         binding.buttonNutrition.setOnClickListener{
             startActivity(Intent(requireContext(), CalorieActivity::class.java).apply {
+                Log.d("HealthFragment", base_kcal.toString())
+                putExtra("baseCalorie", base_kcal.toString())
                 putExtra("selectedDate", selectedDate.value.format(apiDateFormatter))
                 addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP or Intent.FLAG_ACTIVITY_CLEAR_TOP)
             })
@@ -437,6 +595,134 @@ class HealthFragment : BaseFragment() {
 //            })
 //        }
     }
+
+//    private fun initWeekCalendar() = with(binding) {
+//        class DayViewContainer(view: View) : ViewContainer(view) {
+//            val bind = LayoutCalendarDayBinding.bind(view)
+//            lateinit var day: WeekDay
+//
+//            init {
+//                view.setOnClickListener {
+//                    if (day.date.isAfter(LocalDate.now())) return@setOnClickListener
+//
+//                    if (selectedDate.value != day.date) {
+//                        val oldDate = selectedDate.value
+//                        selectedDate.value = day.date
+//
+//                        weekCalendarView.notifyDateChanged(day.date)
+//                        monthCalendarView.notifyDateChanged(day.date)
+//
+//                        oldDate?.let {
+//                            weekCalendarView.notifyDateChanged(it)
+//                            monthCalendarView.notifyDateChanged(it)
+//                        }
+//                    }
+//                }
+//            }
+//
+//            fun bind(day: WeekDay) {
+//                this.day = day
+//                bind.exSevenDateText.text = dateFormatter.format(day.date)
+//                bind.exSevenDayText.text = day.date.dayOfWeek.displayText()
+//
+//                val colorRes = if (day.date == selectedDate.value) {
+//                    R.color.md_theme_inversePrimary
+//                } else {
+//                    R.color.md_theme_onPrimary
+//                }
+//                bind.exSevenDateText.setTextColor(ContextCompat.getColor(view.context, colorRes))
+//                bind.exSevenSelectedView.isVisible = day.date == selectedDate.value
+//            }
+//        }
+//
+//        weekCalendarView.dayBinder = object : WeekDayBinder<DayViewContainer> {
+//            override fun create(view: View) = DayViewContainer(view)
+//            override fun bind(container: DayViewContainer, data: WeekDay) = container.bind(data)
+//        }
+//
+//        val currentMonth = YearMonth.now()
+//        weekCalendarView.setup(
+//            currentMonth.minusMonths(5).atStartOfMonth(),
+//            currentMonth.plusMonths(5).atEndOfMonth(),
+//            firstDayOfWeekFromLocale(),
+//        )
+//        weekCalendarView.scrollToDate(LocalDate.now())
+//        weekCalendarView.weekScrollListener = object : WeekScrollListener {
+//            override fun invoke(p1: Week) {
+//                val calendar = Calendar.getInstance().apply {
+//                    set(Calendar.DAY_OF_MONTH, 1)
+//                    set(Calendar.YEAR, p1.days.first().date.year)
+//                    set(Calendar.MONTH, p1.days.first().date.monthValue - 1)
+//                }
+//
+//                yearMonthTextView.text =
+//                    SimpleDateFormat("MMM", Locale.US).format(calendar.time)
+//            }
+//        }
+//    }
+//
+//    private fun initMonthCalendar() = with(binding) {
+//        class DayViewContainer(view: View) : ViewContainer(view) {
+//            val bind = LayoutCalendarDayBinding.bind(view)
+//            lateinit var day: CalendarDay
+//
+//            init {
+//                view.setOnClickListener {
+//                    if (day.date.isAfter(LocalDate.now())) return@setOnClickListener
+//
+//                    val oldDate = selectedDate.value
+//                    selectedDate.value = day.date
+//
+//                    weekCalendarView.notifyDateChanged(day.date)
+//                    monthCalendarView.notifyDateChanged(day.date)
+//
+//                    oldDate?.let {
+//                        weekCalendarView.notifyDateChanged(it)
+//                        monthCalendarView.notifyDateChanged(it)
+//                    }
+//                }
+//            }
+//
+//            fun bind(day: CalendarDay) {
+//                this.day = day
+//                bind.exSevenDateText.text = dateFormatter.format(day.date)
+//                bind.exSevenDayText.text = day.date.dayOfWeek.displayText()
+//
+//                val colorRes = if (day.date == selectedDate.value) {
+//                    R.color.md_theme_inversePrimary
+//                } else {
+//                    R.color.md_theme_onPrimary
+//                }
+//                bind.exSevenDateText.setTextColor(ContextCompat.getColor(view.context, colorRes))
+//                bind.exSevenSelectedView.isVisible = day.date == selectedDate.value
+//            }
+//        }
+//
+//        monthCalendarView.dayBinder = object : MonthDayBinder<DayViewContainer> {
+//            override fun create(view: View) = DayViewContainer(view)
+//            override fun bind(container: DayViewContainer, data: CalendarDay) = container.bind(data)
+//        }
+//
+//        val currentMonth = YearMonth.now()
+//        monthCalendarView.setup(
+//            currentMonth.minusMonths(5),
+//            currentMonth.plusMonths(5),
+//            firstDayOfWeekFromLocale(),
+//        )
+//        monthCalendarView.scrollToDate(LocalDate.now())
+//        monthCalendarView.monthScrollListener = object : MonthScrollListener {
+//            override fun invoke(p1: CalendarMonth) {
+//                val calendar = Calendar.getInstance().apply {
+//                    set(Calendar.DAY_OF_MONTH, 1)
+//                    set(Calendar.YEAR, p1.yearMonth.year)
+//                    set(Calendar.MONTH, p1.yearMonth.monthValue - 1)
+//                }
+//
+//                yearMonthTextView.text =
+//                    SimpleDateFormat("MMM", Locale.US).format(calendar.time)
+//            }
+//        }
+//    }
 
     private fun initCalendar() = with(binding) {
         class DayViewContainer(view: View) : ViewContainer(view) {

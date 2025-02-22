@@ -28,6 +28,7 @@ import com.example.application.ui.view.main.pages.LeaderboardFragment
 import com.example.application.ui.view.main.pages.RewardFragment
 import com.example.application.ui.view.main.pages.StoreFragment
 import com.example.application.ui.view.meals.FoodSearchActivity
+import com.example.application.ui.view.meals.MealsActivity
 import com.example.application.ui.view.settings.SettingsActivity
 import com.example.application.utils.HealthPermissions
 
@@ -160,9 +161,14 @@ class MainActivity : AppCompatActivity() {
         }
 
         addButton.setOnClickListener {
-            startActivity(Intent(this@MainActivity, FoodSearchActivity::class.java).apply {
+//            startActivity(Intent(this@MainActivity, FoodSearchActivity::class.java).apply {
+//                putExtra("date", selectedDate)
+//                addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP or Intent.FLAG_ACTIVITY_CLEAR_TOP)
+//            })
+
+            startActivity(Intent(this@MainActivity, MealsActivity::class.java).apply {
                 putExtra("date", selectedDate)
-                addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP or Intent.FLAG_ACTIVITY_CLEAR_TOP)
+                putExtra("redirect_to_food_search", true) // 3 Depth로 바로 갈지 여부 전달
             })
         }
     }

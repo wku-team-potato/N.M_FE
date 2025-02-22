@@ -9,6 +9,7 @@ import com.example.application.data.model.response.ConsecutiveAttendanceRank
 import com.example.application.data.model.response.ConsecutiveGoalsRank
 import com.example.application.data.model.response.CumulativeAttendanceRank
 import com.example.application.data.model.response.CumulativeGoalsRank
+import com.example.application.data.model.response.GroupRankingResponse
 import com.example.application.data.model.response.MyRankingResponse
 import com.example.application.data.model.response.Rankable
 import com.example.application.data.model.response.TopRankingResponse
@@ -25,6 +26,9 @@ class LeaderBoardViewModel(private val repository: LeaderBoardRepository) : View
     private val _topRankings = MutableLiveData<TopRankingResponse>()
     val topRankings: LiveData<TopRankingResponse> = _topRankings
 
+    private val _groupRankings = MutableLiveData<List<GroupRankingResponse>>()
+    val groupRankings: LiveData<List<GroupRankingResponse>> = _groupRankings
+
     // Category-specific visible data
     private val _consecutiveAttendanceList = MutableLiveData<List<ConsecutiveAttendanceRank>>()
     val consecutiveAttendanceList: LiveData<List<ConsecutiveAttendanceRank>> = _consecutiveAttendanceList
@@ -38,6 +42,9 @@ class LeaderBoardViewModel(private val repository: LeaderBoardRepository) : View
     private val _cumulativeGoalsList = MutableLiveData<List<CumulativeGoalsRank>>()
     val cumulativeGoalsList: LiveData<List<CumulativeGoalsRank>> = _cumulativeGoalsList
 
+    private val _groupRankingsList = MutableLiveData<List<GroupRankingResponse>>()
+    val groupRankingsList: LiveData<List<GroupRankingResponse>> = _groupRankingsList
+
     private val _isConsecutiveAttendanceExpanded = MutableLiveData<Boolean>(false)
     val isConsecutiveAttendanceExpanded: LiveData<Boolean> = _isConsecutiveAttendanceExpanded
 
@@ -50,16 +57,39 @@ class LeaderBoardViewModel(private val repository: LeaderBoardRepository) : View
     private val _isCumulativeGoalsExpanded = MutableLiveData<Boolean>(false)
     val isCumulativeGoalsExpanded: LiveData<Boolean> = _isCumulativeGoalsExpanded
 
+    private val _isGroupRankingExpanded = MutableLiveData<Boolean>(false)
+    val isGroupRankingExpanded: LiveData<Boolean> = _isGroupRankingExpanded
+
+    private val _isLoading = MutableLiveData<Boolean>(false)
+    val isLoading: LiveData<Boolean> = _isLoading
 
     // Current display counts
     private var consecutiveAttendanceDisplayCount = 3
     private var cumulativeAttendanceDisplayCount = 3
     private var consecutiveGoalsDisplayCount = 3
     private var cumulativeGoalsDisplayCount = 3
+    private var groupRankingDisplayCount = 3
 
     private val maxDisplayCount = 10 // Maximum items to display
 
+    fun loadGroupRankings() {
+        viewModelScope.launch {
+            try {
+                val response = repository.getGroupRankings()
+                Log.d("LeaderBoardViewModel", "Group Ranking API Response: $response")
+                _groupRankings.value = response
+
+                val filteredGroupRanking = response.filter { it.rank > 3  && it.total_points != 0}
+                _groupRankingsList.value = filteredGroupRanking.take(7)
+            } catch (e: Exception) {
+                Log.e("LeaderBoardViewModel", "Group Ranking API Error", e)
+            }
+        }
+    }
+
     fun loadMyRanking() {
+        _isLoading.postValue(true)
+
         viewModelScope.launch {
             try {
                 val response = repository.getMyRanking()
@@ -67,6 +97,8 @@ class LeaderBoardViewModel(private val repository: LeaderBoardRepository) : View
                 _myRanking.value = response
             } catch (e: Exception) {
                 Log.e("LeaderBoardViewModel", "My Ranking API Error", e)
+            } finally {
+                _isLoading.postValue(false)
             }
         }
     }
@@ -87,12 +119,33 @@ class LeaderBoardViewModel(private val repository: LeaderBoardRepository) : View
                 _consecutiveGoalsList.value = filteredConsecutiveGoals.take(7)
                 val filteredCumulativeGoals = response.cumulative_goals_rank.filter { it.rank > 3  && it.days != 0}
                 _cumulativeGoalsList.value = filteredCumulativeGoals.take(7)
+
 //                _consecutiveGoalsList.value = response.consecutive_goals_rank.take(10)
 //                _cumulativeGoalsList.value = response.cumulative_goals_rank.take(10)
 
             } catch (e: Exception) {
                 Log.e("LeaderBoardViewModel", "Top Ranking API Error", e)
             }
+        }
+    }
+
+    fun toggleGroupRanking() {
+        _isGroupRankingExpanded.value = !_isGroupRankingExpanded.value!!
+
+        if (_isConsecutiveAttendanceExpanded.value == true) {
+            _isConsecutiveAttendanceExpanded.value = false
+        }
+
+        if (_isCumulativeAttendanceExpanded.value == true) {
+            _isCumulativeAttendanceExpanded.value = false
+        }
+
+        if (_isConsecutiveGoalsExpanded.value == true) {
+            _isConsecutiveGoalsExpanded.value = false
+        }
+
+        if (_isCumulativeGoalsExpanded.value == true) {
+            _isCumulativeGoalsExpanded.value = false
         }
     }
 
@@ -108,6 +161,9 @@ class LeaderBoardViewModel(private val repository: LeaderBoardRepository) : View
         if (_isCumulativeGoalsExpanded.value == true) {
             _isCumulativeGoalsExpanded.value = false
         }
+        if (_isGroupRankingExpanded.value == true) {
+            _isGroupRankingExpanded.value = false
+        }
     }
 
     fun toggleCumulativeAttendance() {
@@ -121,6 +177,9 @@ class LeaderBoardViewModel(private val repository: LeaderBoardRepository) : View
         }
         if (_isCumulativeGoalsExpanded.value == true) {
             _isCumulativeGoalsExpanded.value = false
+        }
+        if (_isGroupRankingExpanded.value == true) {
+            _isGroupRankingExpanded.value = false
         }
     }
 
@@ -136,6 +195,9 @@ class LeaderBoardViewModel(private val repository: LeaderBoardRepository) : View
         if (_isCumulativeGoalsExpanded.value == true) {
             _isCumulativeGoalsExpanded.value = false
         }
+        if (_isGroupRankingExpanded.value == true) {
+            _isGroupRankingExpanded.value = false
+        }
     }
 
     fun toggleCumulativeGoals() {
@@ -149,6 +211,9 @@ class LeaderBoardViewModel(private val repository: LeaderBoardRepository) : View
         }
         if (_isConsecutiveGoalsExpanded.value == true) {
             _isConsecutiveGoalsExpanded.value = false
+        }
+        if (_isGroupRankingExpanded.value == true) {
+            _isGroupRankingExpanded.value = false
         }
     }
 

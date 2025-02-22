@@ -14,6 +14,7 @@ import android.widget.TextView
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.application.R
+import com.example.application.data.model.response.GroupRankingResponse
 import com.example.application.data.model.response.Rankable
 import com.example.application.utils.RetrofitInstance
 import com.example.application.databinding.FragmentLeaderboardBinding
@@ -35,6 +36,7 @@ class LeaderboardFragment : BaseFragment() {
     private lateinit var cumulateGoalAdapter: CumulativeGoalAdapter
     private lateinit var consecutiveAttendanceAdapter: ConsecutiveAttendAdapter
     private lateinit var consecutiveGoalAdapter: ConsecutiveGoalAdapter
+    private lateinit var groupRankingAdapter: GroupRankAdapter
 
     private var user_name: String? = null
 
@@ -62,6 +64,14 @@ class LeaderboardFragment : BaseFragment() {
 
         initViewModel()
         observeViewModel()
+
+        leaderBoardViewModel.isLoading.observe(viewLifecycleOwner) { isLoading ->
+            if (isLoading) {
+                binding.llLoading.visibility = View.VISIBLE
+            } else {
+                binding.llLoading.visibility = View.GONE
+            }
+        }
     }
 
     private fun initAdapter() {
@@ -69,6 +79,7 @@ class LeaderboardFragment : BaseFragment() {
         cumulateGoalAdapter = CumulativeGoalAdapter()
         consecutiveAttendanceAdapter = ConsecutiveAttendAdapter()
         consecutiveGoalAdapter = ConsecutiveGoalAdapter()
+        groupRankingAdapter = GroupRankAdapter()
     }
 
     private fun initRecyclerView() {
@@ -87,6 +98,10 @@ class LeaderboardFragment : BaseFragment() {
         binding.conGoalRecycler.apply {
             layoutManager = LinearLayoutManager(context)
             adapter = consecutiveGoalAdapter
+        }
+        binding.groupRecycler.apply {
+            layoutManager = LinearLayoutManager(context)
+            adapter = groupRankingAdapter
         }
     }
 
@@ -211,6 +226,25 @@ class LeaderboardFragment : BaseFragment() {
             }
         }
 
+        leaderBoardViewModel.groupRankings.observe(viewLifecycleOwner) { ranking ->
+
+            ranking?.let {
+                updateGroupRanking(
+                    ranking,
+                    groupFirst,
+                    groupFirstName,
+                    groupFirstData,
+                    groupSecond,
+                    groupSecondName,
+                    groupSecondData,
+                    groupThird,
+                    groupThirdName,
+                    groupThirdData
+                )
+            }
+
+        }
+
         leaderBoardViewModel.consecutiveAttendanceList.observe(viewLifecycleOwner) { list ->
             consecutiveAttendanceAdapter.submitList(list)
         }
@@ -225,6 +259,10 @@ class LeaderboardFragment : BaseFragment() {
 
         leaderBoardViewModel.cumulativeGoalsList.observe(viewLifecycleOwner) { list ->
             cumulateGoalAdapter.submitList(list)
+        }
+
+        leaderBoardViewModel.groupRankingsList.observe(viewLifecycleOwner) { list ->
+            groupRankingAdapter.submitList(list)
         }
 
         loadRankings()
@@ -320,6 +358,92 @@ class LeaderboardFragment : BaseFragment() {
         }
     }
 
+    private fun updateGroupRanking(
+        rankingData: List<GroupRankingResponse>,
+        first: LinearLayout,
+        firstName: TextView,
+        firstData: TextView,
+        second: LinearLayout,
+        secondName: TextView,
+        secondData: TextView,
+        third: LinearLayout,
+        thirdName: TextView,
+        thirdData: TextView
+    ){
+
+        firstName.text = rankingData[0].group_name
+        firstData.text = "${rankingData[0].total_points}점"
+        secondName.text = rankingData[1].group_name
+        secondData.text = "${rankingData[1].total_points}점"
+        thirdName.text = rankingData[2].group_name
+        thirdData.text = "${rankingData[2].total_points}점"
+
+        Log.d("LeaderBoardFragment", rankingData[0].group_name)
+        Log.d("LeaderBoardFragment", rankingData[1].group_name)
+        Log.d("LeaderBoardFragment", rankingData[2].group_name)
+        Log.d("LeaderBoardFragment", rankingData[0].toString())
+
+//        if (rankingData.size >= 1) {
+//            if (rankingData[0] == 0) {
+//                first.visibility = View.GONE
+//                firstName.visibility = View.GONE
+//                firstData.visibility = View.GONE
+//            } else {
+//                first.visibility = View.VISIBLE
+//                firstName.visibility = View.VISIBLE
+//                firstData.visibility = View.VISIBLE
+//            }
+//
+//            firstName.text = rankingData[0].username
+//            firstData.text = "${rankingData[0].days}일"
+//        }
+//
+//        if (rankingData.size >= 2) {
+//            if (rankingData[1].days == 0) {
+//                second.visibility = View.GONE
+//                secondName.visibility = View.GONE
+//                secondData.visibility = View.GONE
+//            } else {
+//                second.visibility = View.VISIBLE
+//                secondName.visibility = View.VISIBLE
+//                secondData.visibility = View.VISIBLE
+//            }
+//
+//            secondName.text = rankingData[1].username
+//            secondData.text = "${rankingData[1].days}일"
+//
+//            if (rankingData[1].username == userName) {
+//                secondName.text = "나"
+//                secondName.setTextColor(Color.BLUE)
+//            } else {
+//                secondName.setTextColor(Color.BLACK)
+//            }
+//        }
+//
+//        if (rankingData.size >= 3) {
+//            if (rankingData[2].days == 0) {
+//                third.visibility = View.GONE
+//                thirdName.visibility = View.GONE
+//                thirdData.visibility = View.GONE
+//            } else {
+//                third.visibility = View.VISIBLE
+//                thirdName.visibility = View.VISIBLE
+//                thirdData.visibility = View.VISIBLE
+//            }
+//
+//            thirdName.text = rankingData[2].username
+//            thirdData.text = "${rankingData[2].days}일"
+//
+//            if (rankingData[2].username == userName) {
+//                thirdName.text = "나"
+//                thirdName.setTextColor(Color.BLUE)
+//            } else {
+//                thirdName.setTextColor(Color.BLACK)
+//            }
+//        }
+
+    }
+
     private fun updateMyRanking(
         rank: Int,
         textView: TextView,
@@ -344,6 +468,7 @@ class LeaderboardFragment : BaseFragment() {
     private fun loadRankings() {
         leaderBoardViewModel.loadMyRanking()
         leaderBoardViewModel.loadTopRankings()
+        leaderBoardViewModel.loadGroupRankings()
     }
 
     private fun setUpLoadMoreButtons() = with(binding) {
@@ -391,6 +516,19 @@ class LeaderboardFragment : BaseFragment() {
                     cumGoalRecycler.visibility = View.VISIBLE
                 } else {
                     cumGoalRecycler.visibility = View.GONE
+                }
+            }
+
+            groupMoreAttend.setOnClickListener {
+                leaderBoardViewModel.toggleGroupRanking()
+            }
+
+            leaderBoardViewModel.isGroupRankingExpanded.observe(viewLifecycleOwner) { isExpanded ->
+                groupMoreAttend.text = if (isExpanded) "닫기" else "더보기"
+                if (isExpanded) {
+                    groupRecycler.visibility = View.VISIBLE
+                } else {
+                    groupRecycler.visibility = View.GONE
                 }
             }
 

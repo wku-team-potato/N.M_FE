@@ -1,5 +1,6 @@
 import android.text.Spannable
 import android.text.SpannableString
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
@@ -42,7 +43,11 @@ class SearchGroupAdapter(
             binding.joinButton.apply {
                 text = if (isJoined) "가입됨" else "가입하기"
                 isEnabled = !isJoined
-                setOnClickListener { if (!isJoined) onJoinClick(group.group) }
+                setOnClickListener {
+                    if (!isJoined) {
+                        onJoinClick(group.group)
+                    }
+                }
             }
         }
     }
@@ -62,13 +67,18 @@ class SearchGroupAdapter(
         newGroupList: List<GroupViewModel.GroupWithProfile>,
         newJoinedGroupList: List<GroupViewModel.GroupWithProfile>
     ) {
+        Log.d("SearchGroupAdapter", "Updating data: newGroupList=$newGroupList, newJoinedGroupList=$newJoinedGroupList")
+
         val diffCallback = GroupDiffCallback(groupList, newGroupList)
         val diffResult = DiffUtil.calculateDiff(diffCallback)
+
+        Log.d("SearchGroupAdapter", "Updating adapter data: newGroupList=$newGroupList, newJoinedGroupList=$newJoinedGroupList")
 
         groupList = newGroupList
         joinedGroupList = newJoinedGroupList
 
         diffResult.dispatchUpdatesTo(this)
+        notifyDataSetChanged()
     }
 
     class GroupDiffCallback(

@@ -22,7 +22,15 @@
             style="@style/Widget.MaterialComponents.Toolbar.Primary"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:navigationIcon="?attr/homeAsUpIndicator" />
+            app:navigationIcon="?attr/homeAsUpIndicator">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="내 정보"
+                android:textSize="20sp"
+                android:layout_gravity="center"
+                android:textColor="@color/md_theme_background_highContrast" />
+        </com.google.android.material.appbar.MaterialToolbar>
 
     </com.google.android.material.appbar.AppBarLayout>
 
@@ -71,8 +79,10 @@
                             android:id="@+id/edit_user_btn"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_gravity="center"
-                            android:text="정보 수정"
+                            android:layout_gravity="end|center"
+                            android:text="프로필 수정"
+                            android:elevation="4dp"
+                            android:backgroundTint="@color/md_theme_background_highContrast"
                             app:icon="@drawable/ic_edit"
                             style="@style/Widget.MaterialComponents.Button.TextButton"
                             android:textColor="?attr/colorPrimary" />
@@ -85,34 +95,78 @@
                     android:layout_height="wrap_content"
                     android:orientation="horizontal">
 
-                    <TextView
-                        android:id="@+id/tv_user_height"
+                    <LinearLayout
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="키: 180cm"
-                        android:textSize="16sp"
-                        android:textColor="@color/md_theme_primary"
-                        android:layout_margin="16dp"/>
+                        android:orientation="horizontal"
+                        android:layout_margin="16dp">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="키: "
+                            android:textSize="24sp"
+                            android:textColor="@color/md_theme_primary" />
+
+                        <TextView
+                            android:id="@+id/tv_user_height"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="180cm"
+                            android:layout_gravity="center"
+                            android:textSize="16sp"
+                            android:textColor="@color/md_theme_primary" />
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:layout_margin="16dp">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="몸무게: "
+                            android:textSize="24sp"
+                            android:textColor="@color/md_theme_primary" />
+
+                        <TextView
+                            android:id="@+id/tv_user_weight"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="70kg"
+                            android:layout_gravity="center"
+                            android:textSize="16sp"
+                            android:textColor="@color/md_theme_primary" />
+                    </LinearLayout>
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:layout_margin="16dp">
 
                     <TextView
-                        android:id="@+id/tv_user_weight"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="몸무게: 70kg"
-                        android:textSize="16sp"
-                        android:textColor="@color/md_theme_primary"
-                        android:layout_margin="16dp"/>
+                        android:text="포인트: "
+                        android:textSize="24sp"
+                        android:textColor="@color/md_theme_primary" />
 
                     <TextView
                         android:id="@+id/tv_user_point"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="포인트: 1000"
+                        android:layout_gravity="center"
+                        android:text="1000"
                         android:textSize="16sp"
-                        android:textColor="@color/md_theme_primary"
-                        android:layout_margin="16dp"/>
-
+                        android:textColor="@color/md_theme_primary" />
                 </LinearLayout>
+
 
             </LinearLayout>
 
@@ -123,15 +177,19 @@
 
     <com.google.android.material.button.MaterialButton
         android:id="@+id/btn_logout"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="bottom|center_horizontal"
-        android:layout_marginBottom="24dp"
+        android:layout_margin="24dp"
+        android:padding="16dp"
         android:text="로그아웃"
+        app:cornerRadius="8dp"
         style="@style/Widget.MaterialComponents.Button"
-        android:textColor="@color/md_theme_primary"
-        app:icon="@drawable/ic_minus"
-        app:iconTint="@color/design_default_color_primary"
+        android:textColor="@color/md_theme_background_highContrast"
+        android:elevation="4dp"
+        android:backgroundTint="@color/md_theme_primary"
+        app:icon="@drawable/ic_logout"
+        app:iconTint="@color/md_theme_background_highContrast"
         app:iconGravity="textStart" />
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

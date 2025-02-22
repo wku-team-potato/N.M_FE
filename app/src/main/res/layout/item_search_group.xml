@@ -101,17 +101,6 @@
                     android:textAppearance="?attr/textAppearanceBodyMedium"
                     android:textColor="?attr/colorPrimary" />
 
-                <TextView
-                    android:id="@+id/member_count_text_view"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:gravity="start"
-                    android:text="14명"
-                    android:textSize="16sp"
-                    android:textAppearance="?attr/textAppearanceBodyMedium"
-                    android:textColor="?attr/colorPrimary" />
-
             </LinearLayout>
 
             <LinearLayout

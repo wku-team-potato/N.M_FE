@@ -7,6 +7,7 @@
     android:layout_height="match_parent"
     tools:context="ui.view.main.pages.HealthFragment">
 
+
     <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -35,7 +36,7 @@
                     <TextView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="내 기록"
+                        android:text="리더보드"
                         android:textSize="24sp"
                         android:textStyle="bold"
                         android:padding="4dp"
@@ -165,832 +166,1049 @@
 <!--                android:layout_height="1dp"-->
 <!--                android:background="@color/md_theme_primary"-->
 <!--                android:layout_marginVertical="8dp" />-->
+            <!-- 로딩 화면 -->
 
-            <com.google.android.material.card.MaterialCardView
-                android:background="@drawable/rounded_background"
-                android:backgroundTint="@color/md_theme_surfaceVariant"
-                app:strokeColor="@color/md_theme_inverseOnSurface"
+
+
+            <FrameLayout
+                android:id="@+id/ll_leaderboard"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_margin="8dp"
-                android:layout_columnWeight="1">
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="vertical"
-                    android:padding="12dp">
-
+                android:layout_height="match_parent">
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:orientation="horizontal"
-                        android:padding="8dp">
+                        android:orientation="vertical">
 
-                        <ImageView
-                            android:layout_width="48dp"
-                            android:layout_height="48dp"
-                            android:src="@drawable/ic_attendance"
-                            app:tint="@color/material_dynamic_primary0" />
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_gravity="center"
-                            android:fontFamily="sans-serif"
-                            android:letterSpacing="0.05"
-                            android:padding="4dp"
-                            android:text="누적 출석"
-                            android:textColor="@color/material_dynamic_primary0"
-                            android:textSize="24sp"
-                            android:textStyle="bold" />
-
-                    </LinearLayout>
-
-                    <LinearLayout
+                    <com.google.android.material.card.MaterialCardView
+                        android:background="@drawable/rounded_background"
+                        android:backgroundTint="@color/md_theme_surfaceVariant"
+                        app:strokeColor="@color/md_theme_inverseOnSurface"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_margin="8dp"
-                        android:orientation="horizontal"
-                        android:padding="8dp">
+                        android:layout_columnWeight="1">
 
                         <LinearLayout
-                            android:id="@+id/cum_attend_first"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:layout_weight="1"
-                            android:gravity="center"
-                            android:orientation="vertical">
+                            android:orientation="vertical"
+                            android:padding="12dp">
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:orientation="horizontal"
+                                android:padding="8dp">
+
+                                <ImageView
+                                    android:layout_width="48dp"
+                                    android:layout_height="48dp"
+                                    android:src="@drawable/ic_attendance"
+                                    app:tint="@color/material_dynamic_primary0" />
+
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_gravity="center"
+                                    android:fontFamily="sans-serif"
+                                    android:letterSpacing="0.05"
+                                    android:padding="4dp"
+                                    android:text="누적 출석"
+                                    android:textColor="@color/material_dynamic_primary0"
+                                    android:textSize="24sp"
+                                    android:textStyle="bold" />
+
+                            </LinearLayout>
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_margin="8dp"
+                                android:orientation="horizontal"
+                                android:padding="8dp">
+
+                                <LinearLayout
+                                    android:id="@+id/cum_attend_first"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:layout_weight="1"
+                                    android:gravity="center"
+                                    android:orientation="vertical">
+
+                                    <ImageView
+                                        android:id="@+id/cum_attend_first_icon"
+                                        android:layout_width="48dp"
+                                        android:layout_height="48dp"
+                                        android:src="@drawable/ic_first" />
+
+                                    <TextView
+                                        android:id="@+id/cum_attend_first_name"
+                                        android:layout_width="match_parent"
+                                        android:layout_height="wrap_content"
+                                        android:fontFamily="sans-serif"
+                                        android:letterSpacing="0.05"
+                                        android:padding="4dp"
+                                        android:text="목표 순위"
+                                        android:textAlignment="center"
+                                        android:textColor="@color/material_dynamic_primary0"
+                                        android:textSize="16sp"
+                                        android:textStyle="bold" />
+
+                                    <TextView
+                                        android:id="@+id/cum_attend_first_data"
+                                        android:layout_width="match_parent"
+                                        android:layout_height="wrap_content"
+                                        android:fontFamily="sans-serif"
+                                        android:letterSpacing="0.05"
+                                        android:padding="4dp"
+                                        android:text="목표 순위"
+                                        android:textAlignment="center"
+                                        android:textColor="@color/material_dynamic_primary0"
+                                        android:textSize="16sp"
+                                        android:textStyle="bold" />
+
+                                </LinearLayout>
+
+                                <LinearLayout
+                                    android:id="@+id/cum_attend_second"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:layout_weight="1"
+                                    android:gravity="center"
+                                    android:orientation="vertical">
+
+                                    <ImageView
+                                        android:id="@+id/cum_attend_second_icon"
+                                        android:layout_width="48dp"
+                                        android:layout_height="48dp"
+                                        android:src="@drawable/ic_second" />
+
+                                    <TextView
+                                        android:id="@+id/cum_attend_second_name"
+                                        android:layout_width="match_parent"
+                                        android:layout_height="wrap_content"
+                                        android:fontFamily="sans-serif"
+                                        android:letterSpacing="0.05"
+                                        android:padding="4dp"
+                                        android:text="목표 순위"
+                                        android:textAlignment="center"
+                                        android:textColor="@color/material_dynamic_primary0"
+                                        android:textSize="16sp"
+                                        android:textStyle="bold" />
+
+                                    <TextView
+                                        android:id="@+id/cum_attend_second_data"
+                                        android:layout_width="match_parent"
+                                        android:layout_height="wrap_content"
+                                        android:fontFamily="sans-serif"
+                                        android:letterSpacing="0.05"
+                                        android:padding="4dp"
+                                        android:text="목표 순위"
+                                        android:textAlignment="center"
+                                        android:textColor="@color/material_dynamic_primary0"
+                                        android:textSize="16sp"
+                                        android:textStyle="bold" />
+
+                                </LinearLayout>
+
+                                <LinearLayout
+                                    android:id="@+id/cum_attend_third"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:layout_weight="1"
+                                    android:gravity="center"
+                                    android:orientation="vertical">
+
+                                    <ImageView
+                                        android:id="@+id/cum_attend_third_icon"
+                                        android:layout_width="48dp"
+                                        android:layout_height="48dp"
+                                        android:src="@drawable/ic_third" />
+
+                                    <TextView
+                                        android:id="@+id/cum_attend_third_name"
+                                        android:layout_width="match_parent"
+                                        android:layout_height="wrap_content"
+                                        android:fontFamily="sans-serif"
+                                        android:letterSpacing="0.05"
+                                        android:padding="4dp"
+                                        android:text="목표 순위"
+                                        android:textAlignment="center"
+                                        android:textColor="@color/material_dynamic_primary0"
+                                        android:textSize="16sp"
+                                        android:textStyle="bold" />
+
+                                    <TextView
+                                        android:id="@+id/cum_attend_third_data"
+                                        android:layout_width="match_parent"
+                                        android:layout_height="wrap_content"
+                                        android:fontFamily="sans-serif"
+                                        android:letterSpacing="0.05"
+                                        android:padding="4dp"
+                                        android:text="목표 순위"
+                                        android:textAlignment="center"
+                                        android:textColor="@color/material_dynamic_primary0"
+                                        android:textSize="16sp"
+                                        android:textStyle="bold" />
+
+                                </LinearLayout>
+
+                            </LinearLayout>
+
+                            <androidx.recyclerview.widget.RecyclerView
+                                android:id="@+id/cum_attend_recycler"
+                                android:layout_width="match_parent"
+                                android:layout_height="0dp"
+                                android:layout_weight="1"
+                                android:visibility="gone"
+                                tools:listitem="@layout/item_ranking" />
+
+                            <com.google.android.material.button.MaterialButton
+                                android:id="@+id/cum_button_more_attend"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="center"
+                                android:backgroundTint="@color/md_theme_primary"
+                                android:paddingTop="12dp"
+                                android:paddingBottom="12dp"
+                                android:text="더보기"
+                                android:textColor="@color/md_theme_surfaceContainerHighest_highContrast"
+                                android:textSize="16sp"
+                                android:textStyle="bold"
+                                app:cornerRadius="8dp" />
+
+                        </LinearLayout>
+
+                    </com.google.android.material.card.MaterialCardView>
+
+
+        <!--            <com.google.android.material.divider.MaterialDivider-->
+        <!--                android:layout_width="match_parent"-->
+        <!--                android:layout_height="1dp"-->
+        <!--                android:background="@color/md_theme_primary"-->
+        <!--                android:layout_marginVertical="8dp" />-->
+
+                    <com.google.android.material.card.MaterialCardView
+                        android:background="@drawable/rounded_background"
+                        android:backgroundTint="@color/md_theme_surfaceVariant"
+                        app:strokeColor="@color/md_theme_inverseOnSurface"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="8dp"
+                        android:layout_columnWeight="1">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:padding="12dp">
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal"
+                            android:padding="8dp">
 
                             <ImageView
-                                android:id="@+id/cum_attend_first_icon"
                                 android:layout_width="48dp"
                                 android:layout_height="48dp"
-                                android:src="@drawable/ic_first" />
+                                app:tint="@color/material_dynamic_primary0"
+                                android:src="@drawable/ic_attendance" />
 
                             <TextView
-                                android:id="@+id/cum_attend_first_name"
-                                android:layout_width="match_parent"
+                                android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:fontFamily="sans-serif"
-                                android:letterSpacing="0.05"
+                                android:text="연속 출석"
+                                android:layout_gravity="center"
+                                android:textSize="24sp"
+                                android:textStyle="bold"
                                 android:padding="4dp"
-                                android:text="목표 순위"
-                                android:textAlignment="center"
-                                android:textColor="@color/material_dynamic_primary0"
-                                android:textSize="16sp"
-                                android:textStyle="bold" />
-
-                            <TextView
-                                android:id="@+id/cum_attend_first_data"
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:fontFamily="sans-serif"
                                 android:letterSpacing="0.05"
-                                android:padding="4dp"
-                                android:text="목표 순위"
-                                android:textAlignment="center"
-                                android:textColor="@color/material_dynamic_primary0"
-                                android:textSize="16sp"
-                                android:textStyle="bold" />
+                                android:fontFamily="sans-serif"
+                                android:textColor="@color/material_dynamic_primary0"/>
 
                         </LinearLayout>
 
                         <LinearLayout
-                            android:id="@+id/cum_attend_second"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
+                            android:orientation="horizontal"
+                            android:padding="8dp"
+                            android:layout_margin="8dp">
+
+                            <LinearLayout
+                                android:id="@+id/con_attend_first"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:orientation="vertical"
+                                android:gravity="center"
+                                android:layout_weight="1">
+
+                                <ImageView
+                                    android:id="@+id/con_attend_first_icon"
+                                    android:layout_width="48dp"
+                                    android:layout_height="48dp"
+                                    android:src="@drawable/ic_first" />
+
+                                <TextView
+                                    android:id="@+id/con_attend_first_name"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:text="목표 순위"
+                                    android:textAlignment="center"
+                                    android:textSize="16sp"
+                                    android:textStyle="bold"
+                                    android:padding="4dp"
+                                    android:letterSpacing="0.05"
+                                    android:fontFamily="sans-serif"
+                                    android:textColor="@color/material_dynamic_primary0"/>
+
+                                <TextView
+                                    android:id="@+id/con_attend_first_data"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:text="목표 순위"
+                                    android:textAlignment="center"
+                                    android:textSize="16sp"
+                                    android:textStyle="bold"
+                                    android:padding="4dp"
+                                    android:letterSpacing="0.05"
+                                    android:fontFamily="sans-serif"
+                                    android:textColor="@color/material_dynamic_primary0"/>
+
+                            </LinearLayout>
+
+                            <LinearLayout
+                                android:id="@+id/con_attend_second"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:orientation="vertical"
+                                android:gravity="center"
+                                android:layout_weight="1">
+
+                                <ImageView
+                                    android:id="@+id/con_attend_second_icon"
+                                    android:layout_width="48dp"
+                                    android:layout_height="48dp"
+                                    android:src="@drawable/ic_second" />
+
+                                <TextView
+                                    android:id="@+id/con_attend_second_name"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:text="목표 순위"
+                                    android:textAlignment="center"
+                                    android:textSize="16sp"
+                                    android:textStyle="bold"
+                                    android:padding="4dp"
+                                    android:letterSpacing="0.05"
+                                    android:fontFamily="sans-serif"
+                                    android:textColor="@color/material_dynamic_primary0"/>
+
+                                <TextView
+                                    android:id="@+id/con_attend_second_data"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:text="목표 순위"
+                                    android:textAlignment="center"
+                                    android:textSize="16sp"
+                                    android:textStyle="bold"
+                                    android:padding="4dp"
+                                    android:letterSpacing="0.05"
+                                    android:fontFamily="sans-serif"
+                                    android:textColor="@color/material_dynamic_primary0"/>
+
+                            </LinearLayout>
+
+                            <LinearLayout
+                                android:id="@+id/con_attend_third"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:orientation="vertical"
+                                android:gravity="center"
+                                android:layout_weight="1">
+
+                                <ImageView
+                                    android:id="@+id/con_attend_third_icon"
+                                    android:layout_width="48dp"
+                                    android:layout_height="48dp"
+                                    android:src="@drawable/ic_third" />
+
+                                <TextView
+                                    android:id="@+id/con_attend_third_name"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:text="목표 순위"
+                                    android:textAlignment="center"
+                                    android:textSize="16sp"
+                                    android:textStyle="bold"
+                                    android:padding="4dp"
+                                    android:letterSpacing="0.05"
+                                    android:fontFamily="sans-serif"
+                                    android:textColor="@color/material_dynamic_primary0"/>
+
+                                <TextView
+                                    android:id="@+id/con_attend_third_data"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:text="목표 순위"
+                                    android:textAlignment="center"
+                                    android:textSize="16sp"
+                                    android:textStyle="bold"
+                                    android:padding="4dp"
+                                    android:letterSpacing="0.05"
+                                    android:fontFamily="sans-serif"
+                                    android:textColor="@color/material_dynamic_primary0"/>
+
+                            </LinearLayout>
+
+                        </LinearLayout>
+
+                        <androidx.recyclerview.widget.RecyclerView
+                            android:id="@+id/con_attend_recycler"
+                            android:layout_width="match_parent"
+                            android:layout_height="0dp"
                             android:layout_weight="1"
-                            android:gravity="center"
-                            android:orientation="vertical">
+                            android:visibility="gone"
+                            tools:listitem="@layout/item_ranking"/>
+
+                        <com.google.android.material.button.MaterialButton
+                            android:id="@+id/con_attend_button_more_goal"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:backgroundTint="@color/md_theme_primary"
+                            android:textColor="@color/md_theme_surfaceContainerHighest_highContrast"
+                            android:text="더보기"
+                            android:textSize="16sp"
+                            android:textStyle="bold"
+                            app:cornerRadius="8dp"
+                            android:paddingTop="12dp"
+                            android:paddingBottom="12dp" />
+
+                    </LinearLayout>
+
+                    </com.google.android.material.card.MaterialCardView>
+
+        <!--            <com.google.android.material.divider.MaterialDivider-->
+        <!--                android:layout_width="match_parent"-->
+        <!--                android:layout_height="1dp"-->
+        <!--                android:background="@color/md_theme_primary"-->
+        <!--                android:layout_marginVertical="8dp" />-->
+
+                    <com.google.android.material.card.MaterialCardView
+                        android:background="@drawable/rounded_background"
+                        android:backgroundTint="@color/md_theme_surfaceVariant"
+                        app:strokeColor="@color/md_theme_inverseOnSurface"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="8dp"
+                        android:layout_columnWeight="1">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:padding="12dp">
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal"
+                            android:padding="8dp">
 
                             <ImageView
-                                android:id="@+id/cum_attend_second_icon"
                                 android:layout_width="48dp"
                                 android:layout_height="48dp"
-                                android:src="@drawable/ic_second" />
+                                app:tint="@color/material_dynamic_primary0"
+                                android:src="@drawable/ic_attendance" />
 
                             <TextView
-                                android:id="@+id/cum_attend_second_name"
-                                android:layout_width="match_parent"
+                                android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:fontFamily="sans-serif"
-                                android:letterSpacing="0.05"
+                                android:text="누적 목표 달성"
+                                android:layout_gravity="center"
+                                android:textSize="24sp"
+                                android:textStyle="bold"
                                 android:padding="4dp"
-                                android:text="목표 순위"
-                                android:textAlignment="center"
-                                android:textColor="@color/material_dynamic_primary0"
-                                android:textSize="16sp"
-                                android:textStyle="bold" />
-
-                            <TextView
-                                android:id="@+id/cum_attend_second_data"
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:fontFamily="sans-serif"
                                 android:letterSpacing="0.05"
-                                android:padding="4dp"
-                                android:text="목표 순위"
-                                android:textAlignment="center"
-                                android:textColor="@color/material_dynamic_primary0"
-                                android:textSize="16sp"
-                                android:textStyle="bold" />
+                                android:fontFamily="sans-serif"
+                                android:textColor="@color/material_dynamic_primary0"/>
 
                         </LinearLayout>
 
                         <LinearLayout
-                            android:id="@+id/cum_attend_third"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:layout_weight="1"
-                            android:gravity="center"
-                            android:orientation="vertical">
+                            android:orientation="horizontal"
+                            android:padding="8dp"
+                            android:layout_margin="8dp">
 
-                            <ImageView
-                                android:id="@+id/cum_attend_third_icon"
-                                android:layout_width="48dp"
-                                android:layout_height="48dp"
-                                android:src="@drawable/ic_third" />
-
-                            <TextView
-                                android:id="@+id/cum_attend_third_name"
+                            <LinearLayout
+                                android:id="@+id/cum_goal_first"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
-                                android:fontFamily="sans-serif"
-                                android:letterSpacing="0.05"
-                                android:padding="4dp"
-                                android:text="목표 순위"
-                                android:textAlignment="center"
-                                android:textColor="@color/material_dynamic_primary0"
-                                android:textSize="16sp"
-                                android:textStyle="bold" />
+                                android:orientation="vertical"
+                                android:gravity="center"
+                                android:layout_weight="1">
 
-                            <TextView
-                                android:id="@+id/cum_attend_third_data"
+                                <ImageView
+                                    android:id="@+id/cum_goal_first_icon"
+                                    android:layout_width="48dp"
+                                    android:layout_height="48dp"
+                                    android:src="@drawable/ic_first" />
+
+                                <TextView
+                                    android:id="@+id/cum_goal_first_name"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:text="목표 순위"
+                                    android:textAlignment="center"
+                                    android:textSize="16sp"
+                                    android:textStyle="bold"
+                                    android:padding="4dp"
+                                    android:letterSpacing="0.05"
+                                    android:fontFamily="sans-serif"
+                                    android:textColor="@color/material_dynamic_primary0"/>
+
+                                <TextView
+                                    android:id="@+id/cum_goal_first_data"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:text="목표 순위"
+                                    android:textAlignment="center"
+                                    android:textSize="16sp"
+                                    android:textStyle="bold"
+                                    android:padding="4dp"
+                                    android:letterSpacing="0.05"
+                                    android:fontFamily="sans-serif"
+                                    android:textColor="@color/material_dynamic_primary0"/>
+
+                            </LinearLayout>
+
+                            <LinearLayout
+                                android:id="@+id/cum_goal_second"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
-                                android:fontFamily="sans-serif"
-                                android:letterSpacing="0.05"
-                                android:padding="4dp"
-                                android:text="목표 순위"
-                                android:textAlignment="center"
-                                android:textColor="@color/material_dynamic_primary0"
-                                android:textSize="16sp"
-                                android:textStyle="bold" />
+                                android:orientation="vertical"
+                                android:gravity="center"
+                                android:layout_weight="1">
+
+                                <ImageView
+                                    android:id="@+id/cum_goal_second_icon"
+                                    android:layout_width="48dp"
+                                    android:layout_height="48dp"
+                                    android:src="@drawable/ic_second" />
+
+                                <TextView
+                                    android:id="@+id/cum_goal_second_name"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:text="목표 순위"
+                                    android:textAlignment="center"
+                                    android:textSize="16sp"
+                                    android:textStyle="bold"
+                                    android:padding="4dp"
+                                    android:letterSpacing="0.05"
+                                    android:fontFamily="sans-serif"
+                                    android:textColor="@color/material_dynamic_primary0"/>
+
+                                <TextView
+                                    android:id="@+id/cum_goal_second_data"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:text="목표 순위"
+                                    android:textAlignment="center"
+                                    android:textSize="16sp"
+                                    android:textStyle="bold"
+                                    android:padding="4dp"
+                                    android:letterSpacing="0.05"
+                                    android:fontFamily="sans-serif"
+                                    android:textColor="@color/material_dynamic_primary0"/>
+
+                            </LinearLayout>
+
+                            <LinearLayout
+                                android:id="@+id/cum_goal_third"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:orientation="vertical"
+                                android:gravity="center"
+                                android:layout_weight="1">
+
+                                <ImageView
+                                    android:id="@+id/cum_goal_third_icon"
+                                    android:layout_width="48dp"
+                                    android:layout_height="48dp"
+                                    android:src="@drawable/ic_third" />
+
+                                <TextView
+                                    android:id="@+id/cum_goal_third_name"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:text="목표 순위"
+                                    android:textAlignment="center"
+                                    android:textSize="16sp"
+                                    android:textStyle="bold"
+                                    android:padding="4dp"
+                                    android:letterSpacing="0.05"
+                                    android:fontFamily="sans-serif"
+                                    android:textColor="@color/material_dynamic_primary0"/>
+
+                                <TextView
+                                    android:id="@+id/cum_goal_third_data"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:text="목표 순위"
+                                    android:textAlignment="center"
+                                    android:textSize="16sp"
+                                    android:textStyle="bold"
+                                    android:padding="4dp"
+                                    android:letterSpacing="0.05"
+                                    android:fontFamily="sans-serif"
+                                    android:textColor="@color/material_dynamic_primary0"/>
+
+                            </LinearLayout>
 
                         </LinearLayout>
 
+                        <androidx.recyclerview.widget.RecyclerView
+                            android:id="@+id/cum_goal_recycler"
+                            android:layout_width="match_parent"
+                            android:layout_height="0dp"
+                            android:layout_weight="1"
+                            android:visibility="gone"
+                            tools:listitem="@layout/item_ranking"/>
+
+                        <com.google.android.material.button.MaterialButton
+                            android:id="@+id/cum_button_more_goal"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:backgroundTint="@color/md_theme_primary"
+                            android:textColor="@color/md_theme_surfaceContainerHighest_highContrast"
+                            android:text="더보기"
+                            android:textSize="16sp"
+                            android:textStyle="bold"
+                            app:cornerRadius="8dp"
+                            android:paddingTop="12dp"
+                            android:paddingBottom="12dp" />
+
                     </LinearLayout>
 
-                    <androidx.recyclerview.widget.RecyclerView
-                        android:id="@+id/cum_attend_recycler"
-                        android:layout_width="match_parent"
-                        android:layout_height="0dp"
-                        android:layout_weight="1"
-                        android:visibility="gone"
-                        tools:listitem="@layout/item_ranking" />
+                    </com.google.android.material.card.MaterialCardView>
 
-                    <com.google.android.material.button.MaterialButton
-                        android:id="@+id/cum_button_more_attend"
+        <!--            <com.google.android.material.divider.MaterialDivider-->
+        <!--                android:layout_width="match_parent"-->
+        <!--                android:layout_height="1dp"-->
+        <!--                android:background="@color/md_theme_primary"-->
+        <!--                android:layout_marginVertical="8dp" />-->
+
+                    <com.google.android.material.card.MaterialCardView
+                        android:background="@drawable/rounded_background"
+                        android:backgroundTint="@color/md_theme_surfaceVariant"
+                        app:strokeColor="@color/md_theme_inverseOnSurface"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_gravity="center"
-                        android:backgroundTint="@color/md_theme_primary"
-                        android:paddingTop="12dp"
-                        android:paddingBottom="12dp"
-                        android:text="더보기"
-                        android:textColor="@color/md_theme_surfaceContainerHighest_highContrast"
-                        android:textSize="16sp"
-                        android:textStyle="bold"
-                        app:cornerRadius="8dp" />
+                        android:layout_margin="8dp"
+                        android:layout_columnWeight="1">
 
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:padding="12dp">
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal"
+                            android:padding="8dp">
+
+                            <ImageView
+                                android:layout_width="48dp"
+                                android:layout_height="48dp"
+                                app:tint="@color/material_dynamic_primary0"
+                                android:src="@drawable/ic_attendance" />
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="연속 목표 달성"
+                                android:layout_gravity="center"
+                                android:textSize="24sp"
+                                android:textStyle="bold"
+                                android:padding="4dp"
+                                android:letterSpacing="0.05"
+                                android:fontFamily="sans-serif"
+                                android:textColor="@color/material_dynamic_primary0"/>
+
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal"
+                            android:padding="8dp"
+                            android:layout_margin="8dp">
+
+                            <LinearLayout
+                                android:id="@+id/con_goal_first"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:orientation="vertical"
+                                android:gravity="center"
+                                android:layout_weight="1">
+
+                                <ImageView
+                                    android:id="@+id/con_goal_first_icon"
+                                    android:layout_width="48dp"
+                                    android:layout_height="48dp"
+                                    android:src="@drawable/ic_first" />
+
+                                <TextView
+                                    android:id="@+id/con_goal_first_name"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:text="목표 순위"
+                                    android:textAlignment="center"
+                                    android:textSize="16sp"
+                                    android:textStyle="bold"
+                                    android:padding="4dp"
+                                    android:letterSpacing="0.05"
+                                    android:fontFamily="sans-serif"
+                                    android:textColor="@color/material_dynamic_primary0"/>
+
+                                <TextView
+                                    android:id="@+id/con_goal_first_data"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:text="목표 순위"
+                                    android:textAlignment="center"
+                                    android:textSize="16sp"
+                                    android:textStyle="bold"
+                                    android:padding="4dp"
+                                    android:letterSpacing="0.05"
+                                    android:fontFamily="sans-serif"
+                                    android:textColor="@color/material_dynamic_primary0"/>
+
+                            </LinearLayout>
+
+                            <LinearLayout
+                                android:id="@+id/con_goal_second"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:orientation="vertical"
+                                android:gravity="center"
+                                android:layout_weight="1">
+
+                                <ImageView
+                                    android:id="@+id/con_goal_second_icon"
+                                    android:layout_width="48dp"
+                                    android:layout_height="48dp"
+                                    android:src="@drawable/ic_second" />
+
+                                <TextView
+                                    android:id="@+id/con_goal_second_name"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:text="목표 순위"
+                                    android:textAlignment="center"
+                                    android:textSize="16sp"
+                                    android:textStyle="bold"
+                                    android:padding="4dp"
+                                    android:letterSpacing="0.05"
+                                    android:fontFamily="sans-serif"
+                                    android:textColor="@color/material_dynamic_primary0"/>
+
+                                <TextView
+                                    android:id="@+id/con_goal_second_data"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:text="목표 순위"
+                                    android:textAlignment="center"
+                                    android:textSize="16sp"
+                                    android:textStyle="bold"
+                                    android:padding="4dp"
+                                    android:letterSpacing="0.05"
+                                    android:fontFamily="sans-serif"
+                                    android:textColor="@color/material_dynamic_primary0"/>
+
+                            </LinearLayout>
+
+                            <LinearLayout
+                                android:id="@+id/con_goal_third"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:orientation="vertical"
+                                android:gravity="center"
+                                android:layout_weight="1">
+
+                                <ImageView
+                                    android:id="@+id/con_goal_third_icon"
+                                    android:layout_width="48dp"
+                                    android:layout_height="48dp"
+                                    android:src="@drawable/ic_third" />
+
+                                <TextView
+                                    android:id="@+id/con_goal_third_name"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:text="목표 순위"
+                                    android:textAlignment="center"
+                                    android:textSize="16sp"
+                                    android:textStyle="bold"
+                                    android:padding="4dp"
+                                    android:letterSpacing="0.05"
+                                    android:fontFamily="sans-serif"
+                                    android:textColor="@color/material_dynamic_primary0"/>
+
+                                <TextView
+                                    android:id="@+id/con_goal_third_data"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:text="목표 순위"
+                                    android:textAlignment="center"
+                                    android:textSize="16sp"
+                                    android:textStyle="bold"
+                                    android:padding="4dp"
+                                    android:letterSpacing="0.05"
+                                    android:fontFamily="sans-serif"
+                                    android:textColor="@color/material_dynamic_primary0"/>
+
+                            </LinearLayout>
+
+                        </LinearLayout>
+
+                        <androidx.recyclerview.widget.RecyclerView
+                            android:id="@+id/con_goal_recycler"
+                            android:layout_width="match_parent"
+                            android:layout_height="0dp"
+                            android:layout_weight="1"
+                            android:visibility="gone"
+                            tools:listitem="@layout/item_ranking"/>
+
+                        <com.google.android.material.button.MaterialButton
+                            android:id="@+id/con_button_more_goal"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:backgroundTint="@color/md_theme_primary"
+                            android:textColor="@color/md_theme_surfaceContainerHighest_highContrast"
+                            android:text="더보기"
+                            android:textSize="16sp"
+                            android:textStyle="bold"
+                            app:cornerRadius="8dp"
+                            android:paddingTop="12dp"
+                            android:paddingBottom="12dp" />
+
+                    </LinearLayout>
+
+                    </com.google.android.material.card.MaterialCardView>
+
+                        <com.google.android.material.card.MaterialCardView
+                            android:background="@drawable/rounded_background"
+                            android:backgroundTint="@color/md_theme_surfaceVariant"
+                            app:strokeColor="@color/md_theme_inverseOnSurface"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_margin="8dp"
+                            android:layout_columnWeight="1">
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:orientation="vertical"
+                                android:padding="12dp">
+
+                                <LinearLayout
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:orientation="horizontal"
+                                    android:padding="8dp">
+
+                                    <ImageView
+                                        android:layout_width="48dp"
+                                        android:layout_height="48dp"
+                                        android:src="@drawable/ic_attendance"
+                                        app:tint="@color/material_dynamic_primary0" />
+
+                                    <TextView
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:layout_gravity="center"
+                                        android:fontFamily="sans-serif"
+                                        android:letterSpacing="0.05"
+                                        android:padding="4dp"
+                                        android:text="그룹 랭킹"
+                                        android:textColor="@color/material_dynamic_primary0"
+                                        android:textSize="24sp"
+                                        android:textStyle="bold" />
+
+                                </LinearLayout>
+
+                                <LinearLayout
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:layout_margin="8dp"
+                                    android:orientation="horizontal"
+                                    android:padding="8dp">
+
+                                    <LinearLayout
+                                        android:id="@+id/group_first"
+                                        android:layout_width="match_parent"
+                                        android:layout_height="wrap_content"
+                                        android:layout_weight="1"
+                                        android:gravity="center"
+                                        android:orientation="vertical">
+
+                                        <ImageView
+                                            android:id="@+id/group_first_icon"
+                                            android:layout_width="48dp"
+                                            android:layout_height="48dp"
+                                            android:src="@drawable/ic_first" />
+
+                                        <TextView
+                                            android:id="@+id/group_first_name"
+                                            android:layout_width="match_parent"
+                                            android:layout_height="wrap_content"
+                                            android:fontFamily="sans-serif"
+                                            android:letterSpacing="0.05"
+                                            android:padding="4dp"
+                                            android:text="목표 순위"
+                                            android:textAlignment="center"
+                                            android:textColor="@color/material_dynamic_primary0"
+                                            android:textSize="16sp"
+                                            android:textStyle="bold" />
+
+                                        <TextView
+                                            android:id="@+id/group_first_data"
+                                            android:layout_width="match_parent"
+                                            android:layout_height="wrap_content"
+                                            android:fontFamily="sans-serif"
+                                            android:letterSpacing="0.05"
+                                            android:padding="4dp"
+                                            android:text="목표 순위"
+                                            android:textAlignment="center"
+                                            android:textColor="@color/material_dynamic_primary0"
+                                            android:textSize="16sp"
+                                            android:textStyle="bold" />
+
+                                    </LinearLayout>
+
+                                    <LinearLayout
+                                        android:id="@+id/group_second"
+                                        android:layout_width="match_parent"
+                                        android:layout_height="wrap_content"
+                                        android:layout_weight="1"
+                                        android:gravity="center"
+                                        android:orientation="vertical">
+
+                                        <ImageView
+                                            android:id="@+id/group_second_icon"
+                                            android:layout_width="48dp"
+                                            android:layout_height="48dp"
+                                            android:src="@drawable/ic_second" />
+
+                                        <TextView
+                                            android:id="@+id/group_second_name"
+                                            android:layout_width="match_parent"
+                                            android:layout_height="wrap_content"
+                                            android:fontFamily="sans-serif"
+                                            android:letterSpacing="0.05"
+                                            android:padding="4dp"
+                                            android:text="목표 순위"
+                                            android:textAlignment="center"
+                                            android:textColor="@color/material_dynamic_primary0"
+                                            android:textSize="16sp"
+                                            android:textStyle="bold" />
+
+                                        <TextView
+                                            android:id="@+id/group_second_data"
+                                            android:layout_width="match_parent"
+                                            android:layout_height="wrap_content"
+                                            android:fontFamily="sans-serif"
+                                            android:letterSpacing="0.05"
+                                            android:padding="4dp"
+                                            android:text="목표 순위"
+                                            android:textAlignment="center"
+                                            android:textColor="@color/material_dynamic_primary0"
+                                            android:textSize="16sp"
+                                            android:textStyle="bold" />
+
+                                    </LinearLayout>
+
+                                    <LinearLayout
+                                        android:id="@+id/group_third"
+                                        android:layout_width="match_parent"
+                                        android:layout_height="wrap_content"
+                                        android:layout_weight="1"
+                                        android:gravity="center"
+                                        android:orientation="vertical">
+
+                                        <ImageView
+                                            android:id="@+id/group_third_icon"
+                                            android:layout_width="48dp"
+                                            android:layout_height="48dp"
+                                            android:src="@drawable/ic_third" />
+
+                                        <TextView
+                                            android:id="@+id/group_third_name"
+                                            android:layout_width="match_parent"
+                                            android:layout_height="wrap_content"
+                                            android:fontFamily="sans-serif"
+                                            android:letterSpacing="0.05"
+                                            android:padding="4dp"
+                                            android:text="목표 순위"
+                                            android:textAlignment="center"
+                                            android:textColor="@color/material_dynamic_primary0"
+                                            android:textSize="16sp"
+                                            android:textStyle="bold" />
+
+                                        <TextView
+                                            android:id="@+id/group_third_data"
+                                            android:layout_width="match_parent"
+                                            android:layout_height="wrap_content"
+                                            android:fontFamily="sans-serif"
+                                            android:letterSpacing="0.05"
+                                            android:padding="4dp"
+                                            android:text="목표 순위"
+                                            android:textAlignment="center"
+                                            android:textColor="@color/material_dynamic_primary0"
+                                            android:textSize="16sp"
+                                            android:textStyle="bold" />
+
+                                    </LinearLayout>
+
+                                </LinearLayout>
+
+                                <androidx.recyclerview.widget.RecyclerView
+                                    android:id="@+id/group_recycler"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="0dp"
+                                    android:layout_weight="1"
+                                    android:visibility="gone"
+                                    tools:listitem="@layout/item_ranking" />
+
+                                <com.google.android.material.button.MaterialButton
+                                    android:id="@+id/group_more_attend"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:layout_gravity="center"
+                                    android:backgroundTint="@color/md_theme_primary"
+                                    android:paddingTop="12dp"
+                                    android:paddingBottom="12dp"
+                                    android:text="더보기"
+                                    android:textColor="@color/md_theme_surfaceContainerHighest_highContrast"
+                                    android:textSize="16sp"
+                                    android:textStyle="bold"
+                                    app:cornerRadius="8dp" />
+
+                            </LinearLayout>
+
+                        </com.google.android.material.card.MaterialCardView>
                 </LinearLayout>
-
-            </com.google.android.material.card.MaterialCardView>
-
-<!--            <com.google.android.material.divider.MaterialDivider-->
-<!--                android:layout_width="match_parent"-->
-<!--                android:layout_height="1dp"-->
-<!--                android:background="@color/md_theme_primary"-->
-<!--                android:layout_marginVertical="8dp" />-->
-
-            <com.google.android.material.card.MaterialCardView
-                android:background="@drawable/rounded_background"
-                android:backgroundTint="@color/md_theme_surfaceVariant"
-                app:strokeColor="@color/md_theme_inverseOnSurface"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_margin="8dp"
-                android:layout_columnWeight="1">
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:padding="12dp">
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal"
-                    android:padding="8dp">
-
-                    <ImageView
-                        android:layout_width="48dp"
-                        android:layout_height="48dp"
-                        app:tint="@color/material_dynamic_primary0"
-                        android:src="@drawable/ic_attendance" />
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="연속 출석"
-                        android:layout_gravity="center"
-                        android:textSize="24sp"
-                        android:textStyle="bold"
-                        android:padding="4dp"
-                        android:letterSpacing="0.05"
-                        android:fontFamily="sans-serif"
-                        android:textColor="@color/material_dynamic_primary0"/>
-
-                </LinearLayout>
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal"
-                    android:padding="8dp"
-                    android:layout_margin="8dp">
-
-                    <LinearLayout
-                        android:id="@+id/con_attend_first"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:orientation="vertical"
-                        android:gravity="center"
-                        android:layout_weight="1">
-
-                        <ImageView
-                            android:id="@+id/con_attend_first_icon"
-                            android:layout_width="48dp"
-                            android:layout_height="48dp"
-                            android:src="@drawable/ic_first" />
-
-                        <TextView
-                            android:id="@+id/con_attend_first_name"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:text="목표 순위"
-                            android:textAlignment="center"
-                            android:textSize="16sp"
-                            android:textStyle="bold"
-                            android:padding="4dp"
-                            android:letterSpacing="0.05"
-                            android:fontFamily="sans-serif"
-                            android:textColor="@color/material_dynamic_primary0"/>
-
-                        <TextView
-                            android:id="@+id/con_attend_first_data"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:text="목표 순위"
-                            android:textAlignment="center"
-                            android:textSize="16sp"
-                            android:textStyle="bold"
-                            android:padding="4dp"
-                            android:letterSpacing="0.05"
-                            android:fontFamily="sans-serif"
-                            android:textColor="@color/material_dynamic_primary0"/>
-
-                    </LinearLayout>
-
-                    <LinearLayout
-                        android:id="@+id/con_attend_second"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:orientation="vertical"
-                        android:gravity="center"
-                        android:layout_weight="1">
-
-                        <ImageView
-                            android:id="@+id/con_attend_second_icon"
-                            android:layout_width="48dp"
-                            android:layout_height="48dp"
-                            android:src="@drawable/ic_second" />
-
-                        <TextView
-                            android:id="@+id/con_attend_second_name"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:text="목표 순위"
-                            android:textAlignment="center"
-                            android:textSize="16sp"
-                            android:textStyle="bold"
-                            android:padding="4dp"
-                            android:letterSpacing="0.05"
-                            android:fontFamily="sans-serif"
-                            android:textColor="@color/material_dynamic_primary0"/>
-
-                        <TextView
-                            android:id="@+id/con_attend_second_data"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:text="목표 순위"
-                            android:textAlignment="center"
-                            android:textSize="16sp"
-                            android:textStyle="bold"
-                            android:padding="4dp"
-                            android:letterSpacing="0.05"
-                            android:fontFamily="sans-serif"
-                            android:textColor="@color/material_dynamic_primary0"/>
-
-                    </LinearLayout>
-
-                    <LinearLayout
-                        android:id="@+id/con_attend_third"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:orientation="vertical"
-                        android:gravity="center"
-                        android:layout_weight="1">
-
-                        <ImageView
-                            android:id="@+id/con_attend_third_icon"
-                            android:layout_width="48dp"
-                            android:layout_height="48dp"
-                            android:src="@drawable/ic_third" />
-
-                        <TextView
-                            android:id="@+id/con_attend_third_name"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:text="목표 순위"
-                            android:textAlignment="center"
-                            android:textSize="16sp"
-                            android:textStyle="bold"
-                            android:padding="4dp"
-                            android:letterSpacing="0.05"
-                            android:fontFamily="sans-serif"
-                            android:textColor="@color/material_dynamic_primary0"/>
-
-                        <TextView
-                            android:id="@+id/con_attend_third_data"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:text="목표 순위"
-                            android:textAlignment="center"
-                            android:textSize="16sp"
-                            android:textStyle="bold"
-                            android:padding="4dp"
-                            android:letterSpacing="0.05"
-                            android:fontFamily="sans-serif"
-                            android:textColor="@color/material_dynamic_primary0"/>
-
-                    </LinearLayout>
-
-                </LinearLayout>
-
-                <androidx.recyclerview.widget.RecyclerView
-                    android:id="@+id/con_attend_recycler"
-                    android:layout_width="match_parent"
-                    android:layout_height="0dp"
-                    android:layout_weight="1"
-                    android:visibility="gone"
-                    tools:listitem="@layout/item_ranking"/>
-
-                <com.google.android.material.button.MaterialButton
-                    android:id="@+id/con_attend_button_more_goal"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:backgroundTint="@color/md_theme_primary"
-                    android:textColor="@color/md_theme_surfaceContainerHighest_highContrast"
-                    android:text="더보기"
-                    android:textSize="16sp"
-                    android:textStyle="bold"
-                    app:cornerRadius="8dp"
-                    android:paddingTop="12dp"
-                    android:paddingBottom="12dp" />
-
-            </LinearLayout>
-
-            </com.google.android.material.card.MaterialCardView>
-
-<!--            <com.google.android.material.divider.MaterialDivider-->
-<!--                android:layout_width="match_parent"-->
-<!--                android:layout_height="1dp"-->
-<!--                android:background="@color/md_theme_primary"-->
-<!--                android:layout_marginVertical="8dp" />-->
-
-            <com.google.android.material.card.MaterialCardView
-                android:background="@drawable/rounded_background"
-                android:backgroundTint="@color/md_theme_surfaceVariant"
-                app:strokeColor="@color/md_theme_inverseOnSurface"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_margin="8dp"
-                android:layout_columnWeight="1">
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:padding="12dp">
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal"
-                    android:padding="8dp">
-
-                    <ImageView
-                        android:layout_width="48dp"
-                        android:layout_height="48dp"
-                        app:tint="@color/material_dynamic_primary0"
-                        android:src="@drawable/ic_attendance" />
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="누적 목표 달성"
-                        android:layout_gravity="center"
-                        android:textSize="24sp"
-                        android:textStyle="bold"
-                        android:padding="4dp"
-                        android:letterSpacing="0.05"
-                        android:fontFamily="sans-serif"
-                        android:textColor="@color/material_dynamic_primary0"/>
-
-                </LinearLayout>
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal"
-                    android:padding="8dp"
-                    android:layout_margin="8dp">
-
-                    <LinearLayout
-                        android:id="@+id/cum_goal_first"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:orientation="vertical"
-                        android:gravity="center"
-                        android:layout_weight="1">
-
-                        <ImageView
-                            android:id="@+id/cum_goal_first_icon"
-                            android:layout_width="48dp"
-                            android:layout_height="48dp"
-                            android:src="@drawable/ic_first" />
-
-                        <TextView
-                            android:id="@+id/cum_goal_first_name"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:text="목표 순위"
-                            android:textAlignment="center"
-                            android:textSize="16sp"
-                            android:textStyle="bold"
-                            android:padding="4dp"
-                            android:letterSpacing="0.05"
-                            android:fontFamily="sans-serif"
-                            android:textColor="@color/material_dynamic_primary0"/>
-
-                        <TextView
-                            android:id="@+id/cum_goal_first_data"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:text="목표 순위"
-                            android:textAlignment="center"
-                            android:textSize="16sp"
-                            android:textStyle="bold"
-                            android:padding="4dp"
-                            android:letterSpacing="0.05"
-                            android:fontFamily="sans-serif"
-                            android:textColor="@color/material_dynamic_primary0"/>
-
-                    </LinearLayout>
-
-                    <LinearLayout
-                        android:id="@+id/cum_goal_second"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:orientation="vertical"
-                        android:gravity="center"
-                        android:layout_weight="1">
-
-                        <ImageView
-                            android:id="@+id/cum_goal_second_icon"
-                            android:layout_width="48dp"
-                            android:layout_height="48dp"
-                            android:src="@drawable/ic_second" />
-
-                        <TextView
-                            android:id="@+id/cum_goal_second_name"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:text="목표 순위"
-                            android:textAlignment="center"
-                            android:textSize="16sp"
-                            android:textStyle="bold"
-                            android:padding="4dp"
-                            android:letterSpacing="0.05"
-                            android:fontFamily="sans-serif"
-                            android:textColor="@color/material_dynamic_primary0"/>
-
-                        <TextView
-                            android:id="@+id/cum_goal_second_data"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:text="목표 순위"
-                            android:textAlignment="center"
-                            android:textSize="16sp"
-                            android:textStyle="bold"
-                            android:padding="4dp"
-                            android:letterSpacing="0.05"
-                            android:fontFamily="sans-serif"
-                            android:textColor="@color/material_dynamic_primary0"/>
-
-                    </LinearLayout>
-
-                    <LinearLayout
-                        android:id="@+id/cum_goal_third"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:orientation="vertical"
-                        android:gravity="center"
-                        android:layout_weight="1">
-
-                        <ImageView
-                            android:id="@+id/cum_goal_third_icon"
-                            android:layout_width="48dp"
-                            android:layout_height="48dp"
-                            android:src="@drawable/ic_third" />
-
-                        <TextView
-                            android:id="@+id/cum_goal_third_name"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:text="목표 순위"
-                            android:textAlignment="center"
-                            android:textSize="16sp"
-                            android:textStyle="bold"
-                            android:padding="4dp"
-                            android:letterSpacing="0.05"
-                            android:fontFamily="sans-serif"
-                            android:textColor="@color/material_dynamic_primary0"/>
-
-                        <TextView
-                            android:id="@+id/cum_goal_third_data"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:text="목표 순위"
-                            android:textAlignment="center"
-                            android:textSize="16sp"
-                            android:textStyle="bold"
-                            android:padding="4dp"
-                            android:letterSpacing="0.05"
-                            android:fontFamily="sans-serif"
-                            android:textColor="@color/material_dynamic_primary0"/>
-
-                    </LinearLayout>
-
-                </LinearLayout>
-
-                <androidx.recyclerview.widget.RecyclerView
-                    android:id="@+id/cum_goal_recycler"
-                    android:layout_width="match_parent"
-                    android:layout_height="0dp"
-                    android:layout_weight="1"
-                    android:visibility="gone"
-                    tools:listitem="@layout/item_ranking"/>
-
-                <com.google.android.material.button.MaterialButton
-                    android:id="@+id/cum_button_more_goal"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:backgroundTint="@color/md_theme_primary"
-                    android:textColor="@color/md_theme_surfaceContainerHighest_highContrast"
-                    android:text="더보기"
-                    android:textSize="16sp"
-                    android:textStyle="bold"
-                    app:cornerRadius="8dp"
-                    android:paddingTop="12dp"
-                    android:paddingBottom="12dp" />
-
-            </LinearLayout>
-
-            </com.google.android.material.card.MaterialCardView>
-
-<!--            <com.google.android.material.divider.MaterialDivider-->
-<!--                android:layout_width="match_parent"-->
-<!--                android:layout_height="1dp"-->
-<!--                android:background="@color/md_theme_primary"-->
-<!--                android:layout_marginVertical="8dp" />-->
-
-            <com.google.android.material.card.MaterialCardView
-                android:background="@drawable/rounded_background"
-                android:backgroundTint="@color/md_theme_surfaceVariant"
-                app:strokeColor="@color/md_theme_inverseOnSurface"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_margin="8dp"
-                android:layout_columnWeight="1">
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:padding="12dp">
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal"
-                    android:padding="8dp">
-
-                    <ImageView
-                        android:layout_width="48dp"
-                        android:layout_height="48dp"
-                        app:tint="@color/material_dynamic_primary0"
-                        android:src="@drawable/ic_attendance" />
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="연속 목표 달성"
-                        android:layout_gravity="center"
-                        android:textSize="24sp"
-                        android:textStyle="bold"
-                        android:padding="4dp"
-                        android:letterSpacing="0.05"
-                        android:fontFamily="sans-serif"
-                        android:textColor="@color/material_dynamic_primary0"/>
-
-                </LinearLayout>
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal"
-                    android:padding="8dp"
-                    android:layout_margin="8dp">
-
-                    <LinearLayout
-                        android:id="@+id/con_goal_first"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:orientation="vertical"
-                        android:gravity="center"
-                        android:layout_weight="1">
-
-                        <ImageView
-                            android:id="@+id/con_goal_first_icon"
-                            android:layout_width="48dp"
-                            android:layout_height="48dp"
-                            android:src="@drawable/ic_first" />
-
-                        <TextView
-                            android:id="@+id/con_goal_first_name"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:text="목표 순위"
-                            android:textAlignment="center"
-                            android:textSize="16sp"
-                            android:textStyle="bold"
-                            android:padding="4dp"
-                            android:letterSpacing="0.05"
-                            android:fontFamily="sans-serif"
-                            android:textColor="@color/material_dynamic_primary0"/>
-
-                        <TextView
-                            android:id="@+id/con_goal_first_data"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:text="목표 순위"
-                            android:textAlignment="center"
-                            android:textSize="16sp"
-                            android:textStyle="bold"
-                            android:padding="4dp"
-                            android:letterSpacing="0.05"
-                            android:fontFamily="sans-serif"
-                            android:textColor="@color/material_dynamic_primary0"/>
-
-                    </LinearLayout>
-
-                    <LinearLayout
-                        android:id="@+id/con_goal_second"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:orientation="vertical"
-                        android:gravity="center"
-                        android:layout_weight="1">
-
-                        <ImageView
-                            android:id="@+id/con_goal_second_icon"
-                            android:layout_width="48dp"
-                            android:layout_height="48dp"
-                            android:src="@drawable/ic_second" />
-
-                        <TextView
-                            android:id="@+id/con_goal_second_name"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:text="목표 순위"
-                            android:textAlignment="center"
-                            android:textSize="16sp"
-                            android:textStyle="bold"
-                            android:padding="4dp"
-                            android:letterSpacing="0.05"
-                            android:fontFamily="sans-serif"
-                            android:textColor="@color/material_dynamic_primary0"/>
-
-                        <TextView
-                            android:id="@+id/con_goal_second_data"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:text="목표 순위"
-                            android:textAlignment="center"
-                            android:textSize="16sp"
-                            android:textStyle="bold"
-                            android:padding="4dp"
-                            android:letterSpacing="0.05"
-                            android:fontFamily="sans-serif"
-                            android:textColor="@color/material_dynamic_primary0"/>
-
-                    </LinearLayout>
-
-                    <LinearLayout
-                        android:id="@+id/con_goal_third"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:orientation="vertical"
-                        android:gravity="center"
-                        android:layout_weight="1">
-
-                        <ImageView
-                            android:id="@+id/con_goal_third_icon"
-                            android:layout_width="48dp"
-                            android:layout_height="48dp"
-                            android:src="@drawable/ic_third" />
-
-                        <TextView
-                            android:id="@+id/con_goal_third_name"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:text="목표 순위"
-                            android:textAlignment="center"
-                            android:textSize="16sp"
-                            android:textStyle="bold"
-                            android:padding="4dp"
-                            android:letterSpacing="0.05"
-                            android:fontFamily="sans-serif"
-                            android:textColor="@color/material_dynamic_primary0"/>
-
-                        <TextView
-                            android:id="@+id/con_goal_third_data"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:text="목표 순위"
-                            android:textAlignment="center"
-                            android:textSize="16sp"
-                            android:textStyle="bold"
-                            android:padding="4dp"
-                            android:letterSpacing="0.05"
-                            android:fontFamily="sans-serif"
-                            android:textColor="@color/material_dynamic_primary0"/>
-
-                    </LinearLayout>
-
-                </LinearLayout>
-
-                <androidx.recyclerview.widget.RecyclerView
-                    android:id="@+id/con_goal_recycler"
-                    android:layout_width="match_parent"
-                    android:layout_height="0dp"
-                    android:layout_weight="1"
-                    android:visibility="gone"
-                    tools:listitem="@layout/item_ranking"/>
-
-                <com.google.android.material.button.MaterialButton
-                    android:id="@+id/con_button_more_goal"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:backgroundTint="@color/md_theme_primary"
-                    android:textColor="@color/md_theme_surfaceContainerHighest_highContrast"
-                    android:text="더보기"
-                    android:textSize="16sp"
-                    android:textStyle="bold"
-                    app:cornerRadius="8dp"
-                    android:paddingTop="12dp"
-                    android:paddingBottom="12dp" />
-
-            </LinearLayout>
-
-            </com.google.android.material.card.MaterialCardView>
+            </FrameLayout>
 
             <com.google.android.material.divider.MaterialDivider
                 android:layout_width="match_parent"
@@ -1001,5 +1219,23 @@
         </LinearLayout>
 
     </androidx.core.widget.NestedScrollView>
+
+    <FrameLayout
+        android:id="@+id/ll_loading"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:visibility="gone">
+
+        <!-- 로딩 애니메이션 -->
+        <com.airbnb.lottie.LottieAnimationView
+            android:id="@+id/lottie_loading"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_gravity="center"
+            app:lottie_rawRes="@raw/lottie_loading"
+            app:lottie_loop="true"
+            app:lottie_autoPlay="true" />
+
+    </FrameLayout>
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

@@ -31,6 +31,11 @@
 
         <LinearLayout
             android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+        <LinearLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
             android:background="@drawable/rounded_bottom_corners">
@@ -74,28 +79,66 @@
                             <LinearLayout
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:layout_weight="1"
+                                android:layout_weight="2"
                                 android:orientation="vertical">
 
-                                <TextView
-                                    android:id="@+id/tv_group_name"
-                                    android:layout_width="wrap_content"
+                                <LinearLayout
+                                    android:layout_width="match_parent"
                                     android:layout_height="wrap_content"
-                                    android:padding="4dp"
-                                    android:text="그룹명"
-                                    android:textSize="16sp"
-                                    android:letterSpacing="0.05"
-                                    android:textColor="@color/md_theme_surfaceContainerHighest_highContrast"/>
+                                    android:orientation="horizontal">
 
-                                <TextView
-                                    android:id="@+id/tv_group_descriptions"
-                                    android:layout_width="wrap_content"
+                                    <TextView
+                                        android:id="@+id/tv_group_name"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:padding="4dp"
+                                        android:text="그룹명 : "
+                                        android:textSize="16sp"
+                                        android:letterSpacing="0.05"
+                                        android:textColor="@color/md_theme_surfaceContainerHighest_highContrast"/>
+
+                                    <TextView
+                                        android:id="@+id/tv_group_name_value"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:padding="4dp"
+                                        android:text="그룹 명"
+                                        android:maxLines="1"
+                                        android:textSize="12sp"
+                                        android:letterSpacing="0.05"
+                                        android:textColor="@color/md_theme_surfaceContainerHighest_highContrast"/>
+
+                                </LinearLayout>
+
+                                <LinearLayout
+                                    android:layout_width="match_parent"
                                     android:layout_height="wrap_content"
-                                    android:padding="4dp"
-                                    android:text="그룹 설명"
-                                    android:textSize="12sp"
-                                    android:letterSpacing="0.05"
-                                    android:textColor="@color/md_theme_surfaceContainerHighest_highContrast"/>
+                                    android:orientation="vertical">
+
+                                    <TextView
+                                        android:id="@+id/tv_group_descriptions"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:padding="4dp"
+                                        android:text="그룹 설명"
+                                        android:textSize="16sp"
+                                        android:letterSpacing="0.05"
+                                        android:textColor="@color/md_theme_surfaceContainerHighest_highContrast"/>
+
+
+                                    <TextView
+                                        android:id="@+id/tv_group_description_value"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:padding="4dp"
+                                        android:text="그룹 설명"
+                                        android:maxLines="1"
+                                        android:textSize="12sp"
+                                        android:letterSpacing="0.05"
+                                        android:textColor="@color/md_theme_surfaceContainerHighest_highContrast"/>
+
+
+                                </LinearLayout>
 
                             </LinearLayout>
 
@@ -114,6 +157,7 @@
                                     android:text="정보 공개 여부"
                                     android:textSize="12sp"
                                     android:letterSpacing="0.05"
+                                    android:visibility="gone"
                                     android:textColor="@color/md_theme_surfaceContainerHighest_highContrast"/>
 
                                 <ToggleButton
@@ -121,6 +165,7 @@
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
                                     android:layout_gravity="center"
+                                    android:visibility="gone"
                                     android:textOn="공개"
                                     android:textOff="비공개"/>
 
@@ -133,18 +178,19 @@
                             android:layout_height="wrap_content"
                             android:orientation="horizontal">
 
-                            <TextView
-                                android:id="@+id/tv_group_date"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:padding="4dp"
-                                android:layout_weight="1"
-                                android:text="생성 날짜"
-                                android:textSize="12sp"
-                                android:letterSpacing="0.05"
-                                android:textColor="@color/md_theme_surfaceContainerHighest_highContrast"/>
+<!--                            <TextView-->
+<!--                                android:id="@+id/tv_group_date"-->
+<!--                                android:layout_width="wrap_content"-->
+<!--                                android:layout_height="wrap_content"-->
+<!--                                android:padding="4dp"-->
+<!--                                android:layout_weight="1"-->
+<!--                                android:text="생성 날짜"-->
+<!--                                android:textSize="12sp"-->
+<!--                                android:letterSpacing="0.05"-->
+<!--                                android:textColor="@color/md_theme_surfaceContainerHighest_highContrast"/>-->
 
                             <TextView
+                                android:id="@+id/tv_group_member_count"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:padding="4dp"
@@ -161,6 +207,20 @@
                 </LinearLayout>
 
             </LinearLayout>
+
+        </LinearLayout>
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/recycler_view"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                android:clipChildren="false"
+                android:clipToPadding="false"
+                android:paddingTop="16dp"
+                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                tools:itemCount="3"
+                tools:listitem="@layout/item_group_member" />
 
         </LinearLayout>
 
