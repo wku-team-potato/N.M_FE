@@ -77,5 +77,6 @@ class PersonalInformationActivity : AppCompatActivity() {
             addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP or Intent.FLAG_ACTIVITY_CLEAR_TOP)
         })
         finishAffinity()
+
     }
 }
