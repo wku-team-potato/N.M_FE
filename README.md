@@ -51,5 +51,5 @@ N.M_FE
   <img src="./assets/images/app_store.png" alt="스토어" width="200"/>
 </p>
 
-## 개발 문서
+## 문서
 - [화면 정의서](./assets/docs/애플리케이션_화면정의서.pdf)
